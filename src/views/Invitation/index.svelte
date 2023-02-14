@@ -149,18 +149,35 @@
       }
     }
   }
+  .guest-book {
+    &-title {
+      padding: 20px 0;
+      font-size: 1.5vw;
+      font-family: 'Nanum Myeongjo', serif;
+      color: #f79e9e;
+      text-align: center;
+    }
+    &-container {
+      width: 100%;
+    }
+  }
 </style>
 
 <script lang="ts">
   import { fade } from 'svelte/transition'
   import { onMount } from 'svelte'
-  import Carousel from 'svelte-carousel'
-
+  import Carousel from '../../components/Carousel.svelte'
+  import PostIt from '../../components/PostIt.svelte'
   import Opening from '../../components/Opening.svelte'
-  import HeaderImg from '../../assets/img/연0180-1.jpg'
+
+  import image1 from '../../assets/images/photo.jpeg'
+  import image2 from '../../assets/images/photo2.jpeg'
+  import image3 from '../../assets/images/photo3.jpeg'
+
+  const images = [image1, image2, image3]
+  // import HeaderImg from '../../assets/img/연0180-1.jpg'
 
   let isShowOpening = true
-  let carousel
 
   let galleryDatas: { path: string }[] = []
 
@@ -168,39 +185,39 @@
 
   onMount(async () => {
     galleryDatas = [
-      { path: '/src/assets/img/gallery/보정요청-01.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-02.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-03.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-04.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-05.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-06.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-07.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-08.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-09.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-10.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-11.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-12.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-13.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-14.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-15.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-16.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-17.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-18.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-19.jpg' },
-      { path: '/src/assets/img/gallery/보정요청-20.jpg' }
+      // { path: '/src/assets/img/gallery/보정요청-01.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-02.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-03.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-04.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-05.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-06.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-07.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-08.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-09.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-10.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-11.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-12.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-13.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-14.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-15.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-16.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-17.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-18.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-19.jpg' },
+      // { path: '/src/assets/img/gallery/보정요청-20.jpg' }
     ]
   })
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
-<Opening show={isShowOpening} toggle={toggleShowOpening} />
+<!-- <Opening show={isShowOpening} toggle={toggleShowOpening} /> -->
 <div class="main-wrapper" transition:fade>
   <div class="header-container">
     <div class="header-text-top">THE MARRIGE</div>
     <div class="header-text-middle">04.22</div>
     <div class="header-text-bottom">홍성현 이성연 결혼합니다.</div>
-    <img class="header-img" src={HeaderImg} alt="HeaderImg" />
+    <!-- <img class="header-img" src={HeaderImg} alt="HeaderImg" /> -->
   </div>
   <div class="info-container">
     <div class="info-date">2023.04.22. 토요일 4:00 PM</div>
@@ -261,10 +278,17 @@
       {/each}
     </Carousel> -->
   </div>
+
   <div class="calender-container" />
   <div class="map-container" />
   <div class="noti-container" />
-  <div class="guset-book-container" />
+  <div class="guest-book-container">
+    <div class="guest-book-title">축하 글을 남겨주세요!</div>
+    <Carousel interval={300} length={5}>
+      <PostIt />
+    </Carousel>
+  </div>
+
   <div class="contant-us-container" />
   <div class="footer-img-container" />
   <div class="footer-container" />

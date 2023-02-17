@@ -70,6 +70,9 @@
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 20px 0;
+      span {
+        font-size: 0.8vw;
+      }
     }
     &-person {
       font-size: 1.2vw;
@@ -99,6 +102,7 @@
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 40px 0;
+      color: #657098;
     }
     &-text {
       font-size: 1vw;
@@ -124,28 +128,45 @@
   .gallery {
     &-container {
       width: 100%;
-      padding: 40px 20px;
       background-color: #fff;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5vw 1vw;
+      padding: 20px 10px;
     }
     &-item {
-      float: left;
-      position: relative;
-      width: 5vw;
-      aspect-ratio: 1;
-      overflow: hidden;
-      -webkit-mask: url($svgMask);
-      mask: url($svgMask);
-
-      img {
-        z-index: 100;
-        width: 100%;
+      pointer-events: none;
+      border-radius: 30px;
+      width: 405px;
+      height: 100%;
+    }
+    &-thumbnail {
+      &-container {
+        padding: 40px 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5vw 1vw;
+      }
+      &-item {
+        position: relative;
+        width: 5vw;
         aspect-ratio: 1;
+        overflow: hidden;
+        -webkit-mask: url($svgMask);
+        mask: url($svgMask);
+
+        img {
+          z-index: 100;
+          width: 100%;
+          aspect-ratio: 1;
+          pointer-events: none;
+        }
+        &:nth-of-type(2n) {
+          margin-top: 3vh;
+        }
+        &:nth-of-type(2n + 1) {
+          margin-bottom: 3vh;
+        }
       }
     }
   }
@@ -154,11 +175,60 @@
       padding: 20px 0;
       font-size: 1.5vw;
       font-family: 'Nanum Myeongjo', serif;
-      color: #f79e9e;
+      color: #657098;
       text-align: center;
     }
     &-container {
       width: 100%;
+    }
+  }
+  .d-day {
+    &-container {
+      width: 100%;
+      padding: 20px 0;
+      background-color: #fff;
+      color: #999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &-text {
+      font-size: 1.2vw;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+    }
+  }
+  .map {
+    &-container {
+      width: 100%;
+      padding: 40px 0;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &-title {
+      font-size: 1.4vw;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+      padding: 20px 0;
+      color: #657098;
+    }
+    &-location {
+      font-size: 1.2vw;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+      padding: 20px 0 10px;
+      span {
+        font-size: 0.8vw;
+      }
+    }
+    &-address {
+      font-size: 0.8vw;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
     }
   }
 </style>
@@ -167,6 +237,7 @@
   import { fade } from 'svelte/transition'
   import { onMount } from 'svelte'
   import Carousel from '../../components/Carousel.svelte'
+  import Gallery from '../../components/Gallery.svelte'
   import PostIt from '../../components/PostIt.svelte'
   import Comments from '../../components/Comments.svelte'
   import Opening from '../../components/Opening.svelte'
@@ -181,7 +252,9 @@
 
   let isShowOpening = true
 
-  let galleryDatas: { path: string }[] = []
+  let galleryDatas: { path: string; thumbnail: string }[] = []
+
+  let dday = 66
 
   const toggleShowOpening = () => (isShowOpening = !isShowOpening)
 
@@ -189,26 +262,86 @@
 
   onMount(async () => {
     galleryDatas = [
-      // { path: '/src/assets/img/gallery/보정요청-01.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-02.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-03.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-04.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-05.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-06.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-07.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-08.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-09.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-10.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-11.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-12.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-13.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-14.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-15.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-16.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-17.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-18.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-19.jpg' },
-      // { path: '/src/assets/img/gallery/보정요청-20.jpg' }
+      {
+        path: '/src/assets/img/gallery/보정요청-01.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-01.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-02.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-02.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-03.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-03.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-04.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-04.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-05.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-05.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-06.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-06.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-07.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-07.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-08.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-08.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-09.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-09.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-10.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-10.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-11.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-11.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-12.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-12.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-13.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-13.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-14.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-14.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-15.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-15.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-16.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-16.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-17.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-17.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-18.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-18.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-19.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-19.jpg'
+      },
+      {
+        path: '/src/assets/img/gallery/보정요청-20.jpg',
+        thumbnail: '/src/assets/img/thumbnail/보정요청-20.jpg'
+      }
     ]
   })
 </script>
@@ -226,7 +359,7 @@
   </div>
   <div class="info-container">
     <div class="info-date">2023.04.22. 토요일 4:00 PM</div>
-    <div class="info-location">케이터틀 2층, 컨벤션홀</div>
+    <div class="info-location">케이터틀<span>(구. 거구장)</span> , 2층 컨벤션홀</div>
   </div>
   <div class="ment-container">
     <div class="ment-title">초대합니다.</div>
@@ -270,22 +403,30 @@
     </div>
   </div>
   <div class="gallery-container">
-    {#each galleryDatas as item}
-      <div class="gallery-item">
-        <img src={item.path} alt={item.path} />
-      </div>
-    {/each}
-    <!-- <Carousel>
+    <Gallery itemList={galleryDatas} />
+    <div class="gallery-thumbnail-container">
       {#each galleryDatas as item}
-        <div>
-          <img src={item.path} alt={item.path} sizes="10" />
+        <div class="gallery-thumbnail-item">
+          <img src={item.thumbnail} alt={item.thumbnail} />
         </div>
       {/each}
-    </Carousel> -->
+    </div>
   </div>
 
-  <div class="calender-container" />
-  <div class="map-container" />
+  <div class="d-day-container">
+    <div class="d-day-text">
+      성현, 성연 결혼식이 {dday}일 {dday > 0
+        ? '남았습니다.'
+        : dday === 0
+        ? '날입니다.'
+        : '지났습니다.'}
+    </div>
+  </div>
+  <div class="map-container">
+    <div class="map-title">오시는 길</div>
+    <div class="map-location">신촌 케이터틀 <span>(구. 거구장)</span>,2층 컨벤션홀</div>
+    <div class="map-address">서울특별시 마포구 백범로 23(신수동 63-14)</div>
+  </div>
   <div class="noti-container" />
   <div class="guest-book-container">
     <div class="guest-book-title">축하 글을 남겨주세요!</div>

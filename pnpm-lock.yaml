@@ -14,6 +14,7 @@ specifiers:
   svelte: ^3.55.1
   svelte-carousel: ^1.0.22
   svelte-check: ^2.10.3
+  svelte-portal: ^2.2.0
   svelte-preprocess: ^5.0.1
   svelte-spa-router: ^3.3.0
   tslib: ^2.5.0
@@ -23,6 +24,7 @@ specifiers:
 dependencies:
   sass: 1.58.0
   svelte-carousel: 1.0.22
+  svelte-portal: 2.2.0
   svelte-preprocess: 5.0.1_cjyprvzu4kavkaguwtgkgx5cp4
   svelte-spa-router: 3.3.0
 
@@ -1473,6 +1475,10 @@ packages:
     dependencies:
       svelte: 3.55.1
     dev: true
+
+  /svelte-portal/2.2.0:
+    resolution: {integrity: sha512-jhtZWtD6cUE2nMw46dJ5VXWYiqnER+JH+V/BmNBQ5fNP/YdsJCpJi+DemUy9msklqGb0f+wLhJPBtKHLWQvzjg==}
+    dev: false
 
   /svelte-preprocess/4.10.7_cjyprvzu4kavkaguwtgkgx5cp4:
     resolution: {integrity: sha512-sNPBnqYD6FnmdBrUmBCaqS00RyCsCpj2BG58A1JBswNF7b0OKviwxqVrOL/CKyJrLSClrSeqQv5BXNg2RUbPOw==}

@@ -10,6 +10,7 @@
       width: 425px;
       margin: 0 auto;
       background-color: white;
+      overflow-x: hidden;
     }
   }
 </style>

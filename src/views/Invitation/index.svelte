@@ -213,19 +213,70 @@
       font-size: 1.4vw;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      padding: 20px 0;
+      padding: 20px 0 10px;
       color: #657098;
     }
     &-location {
       font-size: 1.2vw;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      padding: 20px 0 10px;
       span {
         font-size: 0.8vw;
       }
     }
     &-address {
+      font-size: 0.8vw;
+      font-family: 'Nanum Myeongjo', serif;
+    }
+    &-navi {
+      &-container {
+        width: 100%;
+        padding: 40px 0 20px;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      &-title {
+        font-size: 1.2vw;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
+        padding: 10px 0;
+        color: #657098;
+      }
+      &-content {
+        width: 20vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+        &-item {
+          font-size: 0.8vw;
+          font-family: 'Nanum Myeongjo', serif;
+        }
+      }
+    }
+  }
+  .noti {
+    &-container {
+      width: 80%;
+      padding: 10px 20px 20px;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      border: 1px double #657098;
+    }
+    &-title {
+      font-size: 1.2vw;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+      padding: 10px 0 20px;
+      color: #657098;
+    }
+    &-content {
       font-size: 0.8vw;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
@@ -240,6 +291,7 @@
   import Gallery from '../../components/Gallery.svelte'
   import PostIt from '../../components/PostIt.svelte'
   import Comments from '../../components/Comments.svelte'
+  import Map from '../../components/Map.svelte'
   import Opening from '../../components/Opening.svelte'
 
   import image1 from '../../assets/images/photo.jpeg'
@@ -415,7 +467,7 @@
 
   <div class="d-day-container">
     <div class="d-day-text">
-      성현, 성연 결혼식이 {dday}일 {dday > 0
+      성현 ♥ 성연 결혼식이 {dday}일 {dday > 0
         ? '남았습니다.'
         : dday === 0
         ? '날입니다.'
@@ -426,8 +478,46 @@
     <div class="map-title">오시는 길</div>
     <div class="map-location">신촌 케이터틀 <span>(구. 거구장)</span>,2층 컨벤션홀</div>
     <div class="map-address">서울특별시 마포구 백범로 23(신수동 63-14)</div>
+    <!-- <Map /> -->
+    <div class="map-navi-container">
+      <div class="map-navi-title">지하철</div>
+      <div class="map-navi-content">
+        <div class="map-navi-content-item">[2호선 신촌역] 6번 출구 - 서강대방면 150m</div>
+        <div class="map-navi-content-item">[6호선 대흥역] 1번 출구 - 서강대방면 600m</div>
+        <div class="map-navi-content-item">
+          [경의중앙선 서강대역] 1번 출구 - 서강대방면 200m
+        </div>
+      </div>
+    </div>
+    <div class="map-navi-container">
+      <div class="map-navi-title">버스</div>
+      <div class="map-navi-content">
+        <div class="map-navi-content-item">
+          [마을버스] 마포 07, 마포 10, 마포 11, 마포 12
+        </div>
+        <div class="map-navi-content-item">[좌석버스] 921</div>
+        <div class="map-navi-content-item">[직행버스] G6000</div>
+        <div class="map-navi-content-item">
+          [지선] 5713, 5714, 6712, 6713, 6716, 7016, 7613
+        </div>
+        <div class="map-navi-content-item">
+          [간선] 110A고려대, 110B국민대, 163, 604, 740, 753
+        </div>
+      </div>
+    </div>
+    <div class="map-navi-container">
+      <div class="map-navi-title">자가용</div>
+      <div class="map-navi-content-item">서울시 마포구 백범로 23 케이터틀 컨벤션홀</div>
+    </div>
   </div>
-  <div class="noti-container" />
+  <div class="noti-container">
+    <div class="noti-title">주차 안내드립니다.</div>
+    <div class="noti-content">* 정문(스타벅스쪽) 우측 주차장 이용</div>
+    <div class="noti-content">* 무료주차 1시간 40분(10분 추가 500원)</div>
+    <div class="noti-content">
+      * 주차권을 반드시 챙겨주시고 연회장 입구에서 주차도장을 받아주시기 바랍니다.
+    </div>
+  </div>
   <div class="guest-book-container">
     <div class="guest-book-title">축하 글을 남겨주세요!</div>
     <Carousel interval={300} length={5}>

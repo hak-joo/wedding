@@ -38,15 +38,10 @@
 </style>
 
 <script lang="ts">
-  import image1 from '../assets/images/photo.jpeg'
-  import image2 from '../assets/images/photo2.jpeg'
-  import image3 from '../assets/images/photo3.jpeg'
-
   // props
   export let interval = 200
   export let length = 5
 
-  const images = [image1, image2, image3]
   let currentIdx = 0
   let startX = 0
   let dX = 0

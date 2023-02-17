@@ -20,19 +20,19 @@
     }
     &-text {
       &-top {
-        font-size: 0.7vw;
+        font-size: 12px;
         font-family: 'Nanum Myeongjo', serif;
         padding: 10px 0;
         color: #441800;
       }
       &-middle {
-        font-size: 3vw;
+        font-size: 48px;
         font-weight: bold;
         font-family: 'Nanum Myeongjo', serif;
         padding: 10px 0;
       }
       &-bottom {
-        font-size: 1.2vw;
+        font-size: 16px;
         font-weight: bold;
         font-family: 'Nanum Myeongjo', serif;
         padding: 20px 0;
@@ -60,37 +60,37 @@
       padding: 10px 0;
     }
     &-date {
-      font-size: 1.2vw;
+      font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 20px 0;
     }
     &-location {
-      font-size: 1.2vw;
+      font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 20px 0;
       span {
-        font-size: 0.8vw;
+        font-size: 12px;
       }
     }
     &-person {
-      font-size: 1.2vw;
+      font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-relation {
-      font-size: 1vw;
+      font-size: 14px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       color: #666;
-      margin: 0 1vw 0 0.3vw;
+      margin: 0 14px 0 5px;
     }
   }
   .ment {
     &-container {
       width: 100%;
-      padding: 40px 0;
+      padding: 20px 0;
       background-color: #fff;
       display: flex;
       flex-direction: column;
@@ -98,14 +98,14 @@
       align-items: center;
     }
     &-title {
-      font-size: 1.6vw;
+      font-size: 24px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      padding: 40px 0;
+      padding: 20px 0;
       color: #657098;
     }
     &-text {
-      font-size: 1vw;
+      font-size: 14px;
       letter-spacing: normal;
       line-height: 3.2vh;
       font-weight: bold;
@@ -145,7 +145,7 @@
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
-        gap: 0.5vw 1vw;
+        gap: 0.5vw 14px;
       }
       &-item {
         position: relative;
@@ -173,12 +173,13 @@
   .guest-book {
     &-title {
       padding: 20px 0;
-      font-size: 1.5vw;
+      font-size: 24px;
       font-family: 'Nanum Myeongjo', serif;
       color: #657098;
       text-align: center;
     }
     &-container {
+      padding: 20px 0;
       width: 100%;
     }
   }
@@ -194,7 +195,7 @@
       align-items: center;
     }
     &-text {
-      font-size: 1.2vw;
+      font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
     }
@@ -202,7 +203,7 @@
   .map {
     &-container {
       width: 100%;
-      padding: 40px 0;
+      padding: 20px 0;
       background-color: #fff;
       display: flex;
       flex-direction: column;
@@ -210,28 +211,28 @@
       align-items: center;
     }
     &-title {
-      font-size: 1.4vw;
+      font-size: 24px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 20px 0 10px;
       color: #657098;
     }
     &-location {
-      font-size: 1.2vw;
+      font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       span {
-        font-size: 0.8vw;
+        font-size: 12px;
       }
     }
     &-address {
-      font-size: 0.8vw;
+      font-size: 12px;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-navi {
       &-container {
         width: 100%;
-        padding: 40px 0 20px;
+        padding: 20px 0 0px;
         background-color: #fff;
         display: flex;
         flex-direction: column;
@@ -239,7 +240,7 @@
         align-items: center;
       }
       &-title {
-        font-size: 1.2vw;
+        font-size: 16px;
         font-weight: bold;
         font-family: 'Nanum Myeongjo', serif;
         padding: 10px 0;
@@ -252,7 +253,7 @@
         justify-content: start;
         align-items: start;
         &-item {
-          font-size: 0.8vw;
+          font-size: 12px;
           font-family: 'Nanum Myeongjo', serif;
         }
       }
@@ -268,16 +269,17 @@
       justify-content: center;
       align-items: start;
       border: 1px double #657098;
+      border-radius: 15px;
     }
     &-title {
-      font-size: 1.2vw;
+      font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 10px 0 20px;
       color: #657098;
     }
     &-content {
-      font-size: 0.8vw;
+      font-size: 12px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
     }
@@ -294,13 +296,9 @@
   import Map from '../../components/Map.svelte'
   import Opening from '../../components/Opening.svelte'
 
-  import image1 from '../../assets/images/photo.jpeg'
-  import image2 from '../../assets/images/photo2.jpeg'
-  import image3 from '../../assets/images/photo3.jpeg'
   import Modal from '../../components/Modal.svelte'
 
-  const images = [image1, image2, image3]
-  // import HeaderImg from '../../assets/img/연0180-1.jpg'
+  import HeaderImg from '../../assets/images/연0180-1.jpg'
 
   let isShowOpening = true
 
@@ -315,84 +313,84 @@
   onMount(async () => {
     galleryDatas = [
       {
-        path: '/src/assets/img/gallery/보정요청-01.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-01.jpg'
+        path: '/src/assets/images/gallery-보정요청-01.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-01.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-02.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-02.jpg'
+        path: '/src/assets/images/gallery-보정요청-02.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-02.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-03.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-03.jpg'
+        path: '/src/assets/images/gallery-보정요청-03.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-03.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-04.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-04.jpg'
+        path: '/src/assets/images/gallery-보정요청-04.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-04.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-05.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-05.jpg'
+        path: '/src/assets/images/gallery-보정요청-05.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-05.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-06.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-06.jpg'
+        path: '/src/assets/images/gallery-보정요청-06.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-06.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-07.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-07.jpg'
+        path: '/src/assets/images/gallery-보정요청-07.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-07.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-08.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-08.jpg'
+        path: '/src/assets/images/gallery-보정요청-08.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-08.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-09.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-09.jpg'
+        path: '/src/assets/images/gallery-보정요청-09.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-09.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-10.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-10.jpg'
+        path: '/src/assets/images/gallery-보정요청-10.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-10.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-11.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-11.jpg'
+        path: '/src/assets/images/gallery-보정요청-11.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-11.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-12.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-12.jpg'
+        path: '/src/assets/images/gallery-보정요청-12.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-12.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-13.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-13.jpg'
+        path: '/src/assets/images/gallery-보정요청-13.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-13.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-14.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-14.jpg'
+        path: '/src/assets/images/gallery-보정요청-14.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-14.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-15.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-15.jpg'
+        path: '/src/assets/images/gallery-보정요청-15.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-15.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-16.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-16.jpg'
+        path: '/src/assets/images/gallery-보정요청-16.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-16.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-17.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-17.jpg'
+        path: '/src/assets/images/gallery-보정요청-17.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-17.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-18.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-18.jpg'
+        path: '/src/assets/images/gallery-보정요청-18.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-18.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-19.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-19.jpg'
+        path: '/src/assets/images/gallery-보정요청-19.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-19.jpg'
       },
       {
-        path: '/src/assets/img/gallery/보정요청-20.jpg',
-        thumbnail: '/src/assets/img/thumbnail/보정요청-20.jpg'
+        path: '/src/assets/images/gallery-보정요청-20.jpg',
+        thumbnail: '/src/assets/images/thumbnail-보정요청-20.jpg'
       }
     ]
   })
@@ -407,7 +405,7 @@
     <div class="header-text-top">THE MARRIGE</div>
     <div class="header-text-middle">04.22</div>
     <div class="header-text-bottom">홍성현 이성연 결혼합니다.</div>
-    <!-- <img class="header-img" src={HeaderImg} alt="HeaderImg" /> -->
+    <img class="header-img" src={HeaderImg} alt="HeaderImg" />
   </div>
   <div class="info-container">
     <div class="info-date">2023.04.22. 토요일 4:00 PM</div>
@@ -511,8 +509,8 @@
     </div>
   </div>
   <div class="noti-container">
-    <div class="noti-title">주차 안내드립니다.</div>
-    <div class="noti-content">* 정문(스타벅스쪽) 우측 주차장 이용</div>
+    <div class="noti-title">주차 안내</div>
+    <div class="noti-content">정문(스타벅스쪽) 우측 주차장 이용</div>
     <div class="noti-content">* 무료주차 1시간 40분(10분 추가 500원)</div>
     <div class="noti-content">
       * 주차권을 반드시 챙겨주시고 연회장 입구에서 주차도장을 받아주시기 바랍니다.

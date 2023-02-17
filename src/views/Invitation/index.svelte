@@ -168,11 +168,13 @@
   import { onMount } from 'svelte'
   import Carousel from '../../components/Carousel.svelte'
   import PostIt from '../../components/PostIt.svelte'
+  import Comments from '../../components/Comments.svelte'
   import Opening from '../../components/Opening.svelte'
 
   import image1 from '../../assets/images/photo.jpeg'
   import image2 from '../../assets/images/photo2.jpeg'
   import image3 from '../../assets/images/photo3.jpeg'
+  import Modal from '../../components/Modal.svelte'
 
   const images = [image1, image2, image3]
   // import HeaderImg from '../../assets/img/연0180-1.jpg'
@@ -182,6 +184,8 @@
   let galleryDatas: { path: string }[] = []
 
   const toggleShowOpening = () => (isShowOpening = !isShowOpening)
+
+  let modalShow = false
 
   onMount(async () => {
     galleryDatas = [
@@ -212,6 +216,7 @@
 <!-- markup (zero or more items) goes here -->
 
 <!-- <Opening show={isShowOpening} toggle={toggleShowOpening} /> -->
+
 <div class="main-wrapper" transition:fade>
   <div class="header-container">
     <div class="header-text-top">THE MARRIGE</div>
@@ -288,6 +293,15 @@
       <PostIt />
     </Carousel>
   </div>
+  <Modal bind:isShow={modalShow} title="방명록">
+    <Comments />
+  </Modal>
+
+  <button
+    on:click={() => {
+      modalShow = true
+    }}>전체 보기</button
+  >
 
   <div class="contant-us-container" />
   <div class="footer-img-container" />

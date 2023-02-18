@@ -143,7 +143,7 @@
       }
       &-item {
         position: relative;
-        width: 5vw;
+        width: 72px;
         aspect-ratio: 1;
         overflow: hidden;
         -webkit-mask: url($svgMask);
@@ -323,6 +323,99 @@
       color: #657098;
     }
   }
+  .contact-us {
+    &-container {
+      width: 100%;
+      padding: 20px 0;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &-title {
+      font-size: 24px;
+      padding: 0px 0 10px;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+      color: #657098;
+    }
+    &-sub {
+      &-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      &-title {
+        font-size: 16px;
+        padding: 0px 0 10px;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
+      }
+    }
+    &-row {
+      &-container {
+        width: 100%;
+        padding: 10px 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+    }
+    &-groom {
+      &-title {
+        font-size: 16px;
+        padding: 0px 0 10px;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
+      }
+      &-sub-title {
+        font-size: 12px;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
+      }
+    }
+    &-bride {
+      &-title {
+        font-size: 16px;
+        padding: 0px 0 10px;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
+      }
+      &-sub-title {
+        font-size: 12px;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
+      }
+    }
+    &-btn {
+      &-icon {
+        width: 24px;
+        cursor: pointer;
+      }
+      &-pay-icon {
+        cursor: pointer;
+        width: 56px;
+      }
+      &-text {
+        cursor: pointer;
+        background-color: #333;
+        color: #fff;
+        border-radius: 30px;
+        font-size: 10px;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 56px;
+        height: 23px;
+      }
+    }
+  }
 </style>
 
 <script lang="ts">
@@ -339,6 +432,7 @@
 
   import HeaderImg from '/images/header.jpg'
   import FooterImg from '/images/footer.jpg'
+  import PayImg from '/images/pay.png'
 
   let isShowOpening = true
 
@@ -583,7 +677,139 @@
     }}>전체 보기</button
   >
 
-  <div class="contant-us-container" />
+  <div class="contact-us-container">
+    <div class="contact-us-title">마음 전하실곳</div>
+    <div class="contact-us-row-container">
+      <div class="contact-us-sub-container">
+        <div class="contact-us-sub-title">신랑에게 연락하기</div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-icon">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </div>
+          <div class="contact-us-btn-icon">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </div>
+        </div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-text">계좌번호</div>
+          <div class="contact-us-btn-pay-icon">
+            <img alt="pay" src={PayImg} />
+          </div>
+        </div>
+      </div>
+      <div class="contact-us-sub-container">
+        <div class="contact-us-sub-title">신부에게 연락하기</div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-icon">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </div>
+          <div class="contact-us-btn-icon">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </div>
+        </div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-text">계좌번호</div>
+          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-us-row-container">
+      <div class="contact-us-sub-container">
+        <div class="contact-us-groom-title">신랑측 혼주</div>
+        <div class="contact-us-groom-sub-title">아버지 홍찬표</div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-icon">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </div>
+          <div class="contact-us-btn-icon">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </div>
+        </div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-text">계좌번호</div>
+          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+        </div>
+        <div class="contact-us-groom-sub-title">어머니 박미선</div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-icon">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </div>
+          <div class="contact-us-btn-icon">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </div>
+        </div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-text">계좌번호</div>
+          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+        </div>
+      </div>
+      <div class="contact-us-sub-container">
+        <div class="contact-us-bride-title">신부측 혼주</div>
+        <div class="contact-us-bride-sub-title">아버지 이재상</div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-icon">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </div>
+          <div class="contact-us-btn-icon">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </div>
+        </div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-text">계좌번호</div>
+          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+        </div>
+        <div class="contact-us-bride-sub-title">어머니 김선희</div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-icon">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </div>
+          <div class="contact-us-btn-icon">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </div>
+        </div>
+        <div class="contact-us-row-container">
+          <div class="contact-us-btn-text">계좌번호</div>
+          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="footer-img-container">
     <img src={FooterImg} alt={FooterImg} class="footer-img" />
     <!-- <div class="footer-img-inner-text">행복하겠습니다.</div> -->

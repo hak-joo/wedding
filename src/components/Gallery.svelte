@@ -27,7 +27,7 @@
       align-items: center;
       height: 100%;
       background-color: #ffffff22;
-      padding: 1vw;
+      padding: 3px;
       &.prev {
         left: 0%;
       }

@@ -53,7 +53,6 @@
 
   $: childLen = document.getElementsByClassName('carousel-content')
 
-  console.log(childLen)
   let isMouseDown = false
 
   const onMouseDown = (e: MouseEvent) => {

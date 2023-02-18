@@ -131,12 +131,6 @@
       background-color: #fff;
       padding: 20px 10px;
     }
-    &-item {
-      pointer-events: none;
-      border-radius: 30px;
-      width: 405px;
-      height: 100%;
-    }
     &-thumbnail {
       &-container {
         padding: 40px 10px;
@@ -284,6 +278,51 @@
       font-family: 'Nanum Myeongjo', serif;
     }
   }
+  .footer {
+    &-img {
+      &-container {
+        margin: 30px 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        img {
+          opacity: 0.8;
+        }
+      }
+      &-inner-text {
+        position: absolute;
+        color: #333;
+        bottom: 80px;
+        font-size: 16px;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
+      }
+    }
+    &-container {
+      width: 100%;
+      padding: 10px 0 30px;
+    }
+    &-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      &-icon {
+        width: 15px;
+        aspect-ratio: 1;
+      }
+    }
+    &-text {
+      font-size: 12px;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+      color: #657098;
+    }
+  }
 </style>
 
 <script lang="ts">
@@ -298,7 +337,8 @@
 
   import Modal from '../../components/Modal.svelte'
 
-  import HeaderImg from '../../assets/images/연0180-1.jpg'
+  import HeaderImg from '/images/header.jpg'
+  import FooterImg from '/images/footer.jpg'
 
   let isShowOpening = true
 
@@ -310,87 +350,98 @@
 
   let modalShow = false
 
+  const sendKakao = () => {
+    // 메시지 공유 함수
+    Kakao.Link.sendScrap({
+      requestUrl: 'https://wedding-invitation-prohong.vercel.app', // 페이지 url
+      templateId: 90201 // 메시지템플릿 번호
+    })
+  }
+
   onMount(async () => {
+    if (!Kakao.isInitialized()) {
+      Kakao.init('037b39715d4b19da434d1ba24c04fbd2')
+    }
     galleryDatas = [
       {
-        path: '/src/assets/images/gallery-보정요청-01.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-01.jpg'
+        path: '/images/gallery-01.jpg',
+        thumbnail: '/images/thumbnail-01.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-02.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-02.jpg'
+        path: '/images/gallery-02.jpg',
+        thumbnail: '/images/thumbnail-02.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-03.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-03.jpg'
+        path: '/images/gallery-03.jpg',
+        thumbnail: '/images/thumbnail-03.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-04.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-04.jpg'
+        path: '/images/gallery-04.jpg',
+        thumbnail: '/images/thumbnail-04.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-05.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-05.jpg'
+        path: '/images/gallery-05.jpg',
+        thumbnail: '/images/thumbnail-05.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-06.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-06.jpg'
+        path: '/images/gallery-06.jpg',
+        thumbnail: '/images/thumbnail-06.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-07.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-07.jpg'
+        path: '/images/gallery-07.jpg',
+        thumbnail: '/images/thumbnail-07.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-08.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-08.jpg'
+        path: '/images/gallery-08.jpg',
+        thumbnail: '/images/thumbnail-08.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-09.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-09.jpg'
+        path: '/images/gallery-09.jpg',
+        thumbnail: '/images/thumbnail-09.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-10.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-10.jpg'
+        path: '/images/gallery-10.jpg',
+        thumbnail: '/images/thumbnail-10.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-11.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-11.jpg'
+        path: '/images/gallery-11.jpg',
+        thumbnail: '/images/thumbnail-11.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-12.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-12.jpg'
+        path: '/images/gallery-12.jpg',
+        thumbnail: '/images/thumbnail-12.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-13.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-13.jpg'
+        path: '/images/gallery-13.jpg',
+        thumbnail: '/images/thumbnail-13.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-14.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-14.jpg'
+        path: '/images/gallery-14.jpg',
+        thumbnail: '/images/thumbnail-14.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-15.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-15.jpg'
+        path: '/images/gallery-15.jpg',
+        thumbnail: '/images/thumbnail-15.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-16.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-16.jpg'
+        path: '/images/gallery-16.jpg',
+        thumbnail: '/images/thumbnail-16.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-17.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-17.jpg'
+        path: '/images/gallery-17.jpg',
+        thumbnail: '/images/thumbnail-17.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-18.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-18.jpg'
+        path: '/images/gallery-18.jpg',
+        thumbnail: '/images/thumbnail-18.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-19.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-19.jpg'
+        path: '/images/gallery-19.jpg',
+        thumbnail: '/images/thumbnail-19.jpg'
       },
       {
-        path: '/src/assets/images/gallery-보정요청-20.jpg',
-        thumbnail: '/src/assets/images/thumbnail-보정요청-20.jpg'
+        path: '/images/gallery-20.jpg',
+        thumbnail: '/images/thumbnail-20.jpg'
       }
     ]
   })
@@ -533,6 +584,20 @@
   >
 
   <div class="contant-us-container" />
-  <div class="footer-img-container" />
-  <div class="footer-container" />
+  <div class="footer-img-container">
+    <img src={FooterImg} alt={FooterImg} class="footer-img" />
+    <!-- <div class="footer-img-inner-text">행복하겠습니다.</div> -->
+  </div>
+  <div class="footer-container">
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="footer-btn" on:click={sendKakao}>
+      <div class="footer-btn-icon">
+        <img
+          src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+          alt="카카오톡 공유 보내기 버튼"
+        />
+      </div>
+      <div class="footer-text">카카오톡으로 공유하기</div>
+    </div>
+  </div>
 </div>

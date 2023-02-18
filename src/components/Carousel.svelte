@@ -83,8 +83,8 @@
 </script>
 
 <div class="carousel-wrapper">
-  <button class="carousel-btn prev" on:click={() => currentIdx--}> prev </button>
-  <button class="carousel-btn next" on:click={() => currentIdx++}> next </button>
+  <!-- <button class="carousel-btn prev" on:click={() => currentIdx--}> prev </button>
+  <button class="carousel-btn next" on:click={() => currentIdx++}> next </button> -->
   <div
     class="carousel-container"
     style="--width:{imageWidth}; --tranx:{transformX}"

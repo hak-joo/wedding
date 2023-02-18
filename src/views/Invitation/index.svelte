@@ -241,7 +241,7 @@
         color: #657098;
       }
       &-content {
-        width: 20vw;
+        width: 80%;
         display: flex;
         flex-direction: column;
         justify-content: start;
@@ -302,7 +302,7 @@
     }
     &-container {
       width: 100%;
-      padding: 10px 0 30px;
+      padding: 0px 0 20px;
     }
     &-btn {
       display: flex;

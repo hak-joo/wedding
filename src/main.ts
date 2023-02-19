@@ -1,4 +1,5 @@
 import './assets/styles/global.scss'
+import './assets/styles/utils.scss'
 import './assets/styles/reset.css'
 import App from './App.svelte'
 

@@ -1,13 +1,13 @@
 <style lang="scss">
   .root {
     &-wrapper {
-      width: 100vw;
+      width: 100%;
       margin: 0 auto;
       background-color: #657098;
     }
     &-container {
       position: relative;
-      width: 425px;
+      width: fit-content;
       margin: 0 auto;
       background-color: white;
       overflow-x: hidden;

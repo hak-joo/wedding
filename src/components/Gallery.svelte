@@ -1,4 +1,37 @@
 <style lang="scss">
+  /*반응형 화면 크기*/
+  $mobile: 767px;
+  $tablet: 1023px;
+  $desktop: 1024px;
+
+  /*반응형, 브라우저 크기가 767px 이하일때*/
+  @mixin mobile {
+    @media (max-width: $mobile) {
+      @content;
+    }
+  }
+
+  /*반응형, 브라우저 크기가 768이상, 1023px 이하일때*/
+  @mixin tablet {
+    @media (min-width: ($mobile + 1)) and (max-width: $tablet) {
+      @content;
+    }
+  }
+
+  /*반응형, 브라우저 크기가 1024px 이상일때*/
+  @mixin desktop {
+    @media (min-width: $desktop) {
+      @content;
+    }
+  }
+
+  /*넓이, 높이 자동 계산함수*/
+  @mixin square($size) {
+    $calculated: 32px * $size;
+    width: $calculated;
+    height: $calculated;
+  }
+
   .carousel {
     &-wrapper {
       width: 100%;
@@ -18,6 +51,10 @@
       border-radius: 30px;
       width: 405px;
       height: 100%;
+      @include mobile {
+        /*브라우저 사이즈767px이하일때*/
+        width: 100vw;
+      }
     }
     &-btn {
       z-index: 1;
@@ -39,11 +76,15 @@
 </style>
 
 <script lang="ts">
+  import { onMount } from 'svelte'
+
   // props
   export let itemList: any[] = []
 
   let itemTags: any[] = itemList.map(() => {})
+  let carouselTag: any
 
+  let containerWidth = 405
   let currentIdx = 0
   let startX = 0
   let dX = 0
@@ -51,14 +92,8 @@
   $: imageHeight =
     currentIdx === 0 ? 'auto' : `${(itemTags[currentIdx] as HTMLElement).offsetHeight}px`
   $: transformX = !isMouseDown
-    ? `translateX(-${currentIdx * 405}px)`
-    : `translateX(-${currentIdx * 405 + dX}px)`
-
-  $: if (currentIdx) {
-    console.log(currentIdx)
-    console.log(startX)
-    console.log(dX)
-  }
+    ? `translateX(-${currentIdx * containerWidth}px)`
+    : `translateX(-${currentIdx * containerWidth + dX}px)`
 
   let isMouseDown = false
 
@@ -85,6 +120,10 @@
   }
 
   window.addEventListener('mouseup', onMouseUp)
+
+  onMount(() => {
+    containerWidth = (carouselTag as HTMLElement).offsetWidth
+  })
 </script>
 
 <div
@@ -107,7 +146,7 @@
   >
     {'>'}
   </button>
-  <div class="carousel-container" style="--tranx:{transformX}">
+  <div bind:this={carouselTag} class="carousel-container" style="--tranx:{transformX}">
     {#each itemList as item, idx}
       <img
         bind:this={itemTags[idx]}

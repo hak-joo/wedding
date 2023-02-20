@@ -38,6 +38,7 @@
 </style>
 
 <script lang="ts">
+  import { fly } from 'svelte/transition'
   // props
   export let interval = 200
   export let length = 5
@@ -82,7 +83,7 @@
   window.addEventListener('mouseup', onMouseUp)
 </script>
 
-<div class="carousel-wrapper">
+<div class="carousel-wrapper" transition:fly={{ y: 100, duration: 500 }}>
   <!-- <button class="carousel-btn prev" on:click={() => currentIdx--}> prev </button>
   <button class="carousel-btn next" on:click={() => currentIdx++}> next </button> -->
   <div

@@ -454,11 +454,35 @@
       }
     }
   }
+  .navigation {
+    &-container {
+      position: fixed;
+      display: flex;
+
+      height: 50px;
+      bottom: 20px;
+      z-index: 100;
+    }
+    &-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 20px;
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      background-color: gray;
+      font-size: 5px;
+      cursor: pointer;
+    }
+  }
 </style>
 
 <script lang="ts">
-  import { fade } from 'svelte/transition'
+  import { fade, fly, slide } from 'svelte/transition'
+  import { inview } from 'svelte-inview'
   import { onMount } from 'svelte'
+  import Saos from 'saos'
   import Carousel from '../../components/Carousel.svelte'
   import Gallery from '../../components/Gallery.svelte'
   import PostIt from '../../components/PostIt.svelte'
@@ -473,6 +497,19 @@
   import PayImg from '/images/pay.png'
 
   let isShowOpening = true
+  let navOpen = false
+  const isView = {
+    header: false,
+    locationInfo: false,
+    ment: false,
+    contactInfo: false,
+    galleryInfo: false,
+    dDay: false,
+    map: false,
+    noti: false,
+    guestBook: false,
+    contactUs: false
+  }
 
   let galleryDatas: { path: string; thumbnail: string }[] = []
 
@@ -487,6 +524,15 @@
     Kakao.Link.sendScrap({
       requestUrl: 'https://wedding-invitation-prohong.vercel.app', // 페이지 url
       templateId: 90201 // 메시지템플릿 번호
+    })
+  }
+
+  const scrollToElement = (menu: string) => {
+    const el = document.getElementsByClassName(`${menu}-container`)
+    if (!el) return
+    el[0].scrollIntoView({
+      behavior: 'smooth',
+      inline: 'nearest'
     })
   }
 
@@ -577,133 +623,282 @@
       }
     ]
   })
+
+  const sleep = (time: number) => {
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        resolve()
+      }, time)
+    })
+  }
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
 <!-- <Opening show={isShowOpening} toggle={toggleShowOpening} /> -->
-
+<div class="navigation-container">
+  <button class="navigation-button" on:click={() => (navOpen = !navOpen)} />
+  {#if navOpen}
+    <button
+      class="navigation-button"
+      on:click={() => {
+        scrollToElement('gallery')
+      }}
+      transition:fly={{ x: -50, duration: 300 }}
+    >
+      갤러리
+    </button>
+    <button
+      class="navigation-button"
+      on:click={() => {
+        scrollToElement('map')
+      }}
+      transition:fly={{ x: -50, duration: 300 }}
+    >
+      오시는 길
+    </button>
+    <button
+      class="navigation-button"
+      on:click={() => {
+        scrollToElement('contact-us')
+      }}
+      transition:fly={{ x: -50, duration: 300 }}
+    >
+      연락처
+    </button>
+    <button
+      class="navigation-button"
+      on:click={() => {
+        scrollToElement('guest-book')
+      }}
+      transition:fly={{ x: -50, duration: 300 }}
+    >
+      방명록
+    </button>
+  {/if}
+</div>
 <div class="main-wrapper" transition:fade>
-  <div class="header-container">
-    <div class="header-text-top">THE MARRIGE</div>
-    <div class="header-text-middle">04.22</div>
-    <div class="header-text-bottom">홍성현 이성연 결혼합니다.</div>
-    <img class="header-img" src={HeaderImg} alt="HeaderImg" />
+  <div
+    class="header-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: '0%' }}
+    on:change={({ detail }) => {
+      isView.header = detail.inView
+    }}
+  >
+    {#if isView.header}
+      <div class="header-text-top" transition:fade={{ duration: 500 }}>THE MARRIGE</div>
+      <div class="header-text-middle" transition:fade={{ duration: 500 }}>04.22</div>
+      <div class="header-text-bottom" transition:fade={{ duration: 500 }}>
+        홍성현 이성연 결혼합니다.
+      </div>
+      <img
+        class="header-img"
+        src={HeaderImg}
+        alt="HeaderImg"
+        transition:fade={{ duration: 2000 }}
+      />
+    {/if}
   </div>
-  <div class="info-container">
-    <div class="info-date">2023.04.22. 토요일 4:00 PM</div>
-    <div class="info-location">케이터틀<span>(구. 거구장)</span> , 2층 컨벤션홀</div>
+  <div
+    class="info-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    on:change={({ detail }) => {
+      isView.locationInfo = detail.inView
+    }}
+  >
+    {#if isView.locationInfo}
+      <div class="info-date" transition:fly={{ y: 100, duration: 500 }}>
+        2023.04.22. 토요일 4:00 PM
+      </div>
+      <div class="info-location" transition:fly={{ y: 100, duration: 500 }}>
+        케이터틀<span>(구. 거구장)</span> , 2층 컨벤션홀
+      </div>
+    {/if}
   </div>
-  <div class="ment-container">
-    <div class="ment-title">초대합니다.</div>
-    <div class="ment-text">
-      저희 두 사람의 작은 만남이
-      <br />
-      사랑의 결실을 이루어
-      <br />
-      <span style="background-color:#f79e9e;color:#ffffff;"
-        ><strong>소중한 결혼식</strong></span
-      >
-      을 올리게 되었습니다.
-      <br />
-      <br />
-      <br />
-      첫 마음 그대로 존중하고 배려하며 살겠습니다.
-      <br />
-      <br />
-      오로지 믿음과 사랑을 약속하는 날
-      <br />
-      오셔서 축복해 주시면 더없는 기쁨으로
-      <br />
-      간직하겠습니다.
-    </div>
+  <div
+    class="ment-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    on:change={({ detail }) => {
+      isView.ment = detail.inView
+    }}
+  >
+    {#if isView.ment}
+      <div class="ment-title" transition:fly={{ y: 100, duration: 500 }}>초대합니다.</div>
+      <div class="ment-text" transition:fly={{ y: 100, duration: 500 }}>
+        저희 두 사람의 작은 만남이
+        <br />
+        사랑의 결실을 이루어
+        <br />
+        <span style="background-color:#f79e9e;color:#ffffff;"
+          ><strong>소중한 결혼식</strong></span
+        >
+        을 올리게 되었습니다.
+        <br />
+        <br />
+        <br />
+        첫 마음 그대로 존중하고 배려하며 살겠습니다.
+        <br />
+        <br />
+        오로지 믿음과 사랑을 약속하는 날
+        <br />
+        오셔서 축복해 주시면 더없는 기쁨으로
+        <br />
+        간직하겠습니다.
+      </div>
+    {/if}
   </div>
   <div class="divider" />
-  <div class="info-container">
-    <div class="info-line">
-      <div class="info-person">홍찬표</div>
-      <div class="separator" />
-      <div class="info-person">박미선</div>
-      <div class="info-relation">의 장남</div>
-      <div class="info-person">홍성현</div>
-    </div>
-    <div class="info-line">
-      <div class="info-person">이재상</div>
-      <div class="separator" />
-      <div class="info-person">김선희</div>
-      <div class="info-relation">의 장녀</div>
-      <div class="info-person">이성연</div>
-    </div>
+  <div
+    class="info-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    on:change={({ detail }) => {
+      console.log('info', detail.inView)
+      isView.contactInfo = detail.inView
+    }}
+  >
+    {#if isView.contactInfo}
+      <div class="info-line" transition:fly={{ y: 100, duration: 500 }}>
+        <div class="info-person">홍찬표</div>
+        <div class="separator" />
+        <div class="info-person">박미선</div>
+        <div class="info-relation">의 장남</div>
+        <div class="info-person">홍성현</div>
+      </div>
+      <div class="info-line" transition:fly={{ y: 100, duration: 500 }}>
+        <div class="info-person">이재상</div>
+        <div class="separator" />
+        <div class="info-person">김선희</div>
+        <div class="info-relation">의 장녀</div>
+        <div class="info-person">이성연</div>
+      </div>
+    {/if}
   </div>
-  <div class="gallery-container">
-    <Gallery itemList={galleryDatas} />
-    <div class="gallery-thumbnail-container">
-      {#each galleryDatas as item}
-        <div class="gallery-thumbnail-item">
-          <img src={item.thumbnail} alt={item.thumbnail} />
-        </div>
-      {/each}
-    </div>
+  <div
+    class="gallery-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    on:change={({ detail }) => {
+      console.log('gallery', detail.inView)
+      isView.galleryInfo = detail.inView
+    }}
+  >
+    {#if isView.galleryInfo}
+      <Gallery itemList={galleryDatas} />
+      <div class="gallery-thumbnail-container" transition:fly={{ y: 100, duration: 500 }}>
+        {#each galleryDatas as item}
+          <div class="gallery-thumbnail-item">
+            <img src={item.thumbnail} alt={item.thumbnail} />
+          </div>
+        {/each}
+      </div>
+    {/if}
   </div>
 
-  <div class="d-day-container">
-    <div class="d-day-text">
-      성현 ♥ 성연 결혼식이 {dday}일 {dday > 0
-        ? '남았습니다.'
-        : dday === 0
-        ? '날입니다.'
-        : '지났습니다.'}
-    </div>
+  <div
+    class="d-day-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    on:change={({ detail }) => {
+      console.log('dday', detail.inView)
+      isView.dDay = detail.inView
+    }}
+  >
+    {#if isView.dDay}
+      <div class="d-day-text" transition:fly={{ y: 100, duration: 500 }}>
+        성현 ♥ 성연 결혼식이 {dday}일 {dday > 0
+          ? '남았습니다.'
+          : dday === 0
+          ? '날입니다.'
+          : '지났습니다.'}
+      </div>
+    {/if}
   </div>
-  <div class="map-container">
-    <div class="map-title">오시는 길</div>
-    <div class="map-location">신촌 케이터틀 <span>(구. 거구장)</span>,2층 컨벤션홀</div>
-    <div class="map-address">서울특별시 마포구 백범로 23(신수동 63-14)</div>
-    <!-- <Map /> -->
-    <div class="map-navi-container">
-      <div class="map-navi-title">지하철</div>
-      <div class="map-navi-content">
-        <div class="map-navi-content-item">[2호선 신촌역] 6번 출구 - 서강대방면 150m</div>
-        <div class="map-navi-content-item">[6호선 대흥역] 1번 출구 - 서강대방면 600m</div>
-        <div class="map-navi-content-item">
-          [경의중앙선 서강대역] 1번 출구 - 서강대방면 200m
+  <div
+    class="map-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    on:change={({ detail }) => {
+      console.log('map', detail.inView)
+      isView.map = detail.inView
+    }}
+  >
+    {#if isView.map}
+      <div class="map-title" transition:fly={{ y: 100, duration: 500 }}>오시는 길</div>
+      <div class="map-location" transition:fly={{ y: 100, duration: 500 }}>
+        신촌 케이터틀 <span>(구. 거구장)</span>,2층 컨벤션홀
+      </div>
+      <div class="map-address" transition:fly={{ y: 100, duration: 500 }}>
+        서울특별시 마포구 백범로 23(신수동 63-14)
+      </div>
+      <!-- <Map /> -->
+      <div class="map-navi-container" transition:fly={{ y: 100, duration: 500 }}>
+        <div class="map-navi-title">지하철</div>
+        <div class="map-navi-content">
+          <div class="map-navi-content-item">
+            [2호선 신촌역] 6번 출구 - 서강대방면 150m
+          </div>
+          <div class="map-navi-content-item">
+            [6호선 대흥역] 1번 출구 - 서강대방면 600m
+          </div>
+          <div class="map-navi-content-item">
+            [경의중앙선 서강대역] 1번 출구 - 서강대방면 200m
+          </div>
         </div>
       </div>
-    </div>
-    <div class="map-navi-container">
-      <div class="map-navi-title">버스</div>
-      <div class="map-navi-content">
-        <div class="map-navi-content-item">
-          [마을버스] 마포 07, 마포 10, 마포 11, 마포 12
-        </div>
-        <div class="map-navi-content-item">[좌석버스] 921</div>
-        <div class="map-navi-content-item">[직행버스] G6000</div>
-        <div class="map-navi-content-item">
-          [지선] 5713, 5714, 6712, 6713, 6716, 7016, 7613
-        </div>
-        <div class="map-navi-content-item">
-          [간선] 110A고려대, 110B국민대, 163, 604, 740, 753
+      <div class="map-navi-container" transition:fly={{ y: 100, duration: 500 }}>
+        <div class="map-navi-title">버스</div>
+        <div class="map-navi-content">
+          <div class="map-navi-content-item">
+            [마을버스] 마포 07, 마포 10, 마포 11, 마포 12
+          </div>
+          <div class="map-navi-content-item">[좌석버스] 921</div>
+          <div class="map-navi-content-item">[직행버스] G6000</div>
+          <div class="map-navi-content-item">
+            [지선] 5713, 5714, 6712, 6713, 6716, 7016, 7613
+          </div>
+          <div class="map-navi-content-item">
+            [간선] 110A고려대, 110B국민대, 163, 604, 740, 753
+          </div>
         </div>
       </div>
-    </div>
-    <div class="map-navi-container">
-      <div class="map-navi-title">자가용</div>
-      <div class="map-navi-content-item">서울시 마포구 백범로 23 케이터틀 컨벤션홀</div>
-    </div>
+      <div class="map-navi-container" transition:fly={{ y: 100, duration: 500 }}>
+        <div class="map-navi-title">자가용</div>
+        <div class="map-navi-content-item">서울시 마포구 백범로 23 케이터틀 컨벤션홀</div>
+      </div>
+    {/if}
   </div>
-  <div class="noti-container">
-    <div class="noti-title">주차 안내</div>
-    <div class="noti-content">정문(스타벅스쪽) 우측 주차장 이용</div>
-    <div class="noti-content">* 무료주차 1시간 40분(10분 추가 500원)</div>
-    <div class="noti-content">
-      * 주차권을 반드시 챙겨주시고 연회장 입구에서 주차도장을 받아주시기 바랍니다.
-    </div>
+  <div
+    class="noti-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    on:change={({ detail }) => {
+      isView.noti = detail.inView
+    }}
+  >
+    {#if isView.noti}
+      <div class="noti-title" transition:fly={{ y: 100, duration: 500 }}>주차 안내</div>
+      <div class="noti-content" transition:fly={{ y: 100, duration: 500 }}>
+        정문(스타벅스쪽) 우측 주차장 이용
+      </div>
+      <div class="noti-content" transition:fly={{ y: 100, duration: 500 }}>
+        * 무료주차 1시간 40분(10분 추가 500원)
+      </div>
+      <div class="noti-content" transition:fly={{ y: 100, duration: 500 }}>
+        * 주차권을 반드시 챙겨주시고 연회장 입구에서 주차도장을 받아주시기 바랍니다.
+      </div>
+    {/if}
   </div>
-  <div class="guest-book-container">
-    <div class="guest-book-title">축하 글을 남겨주세요!</div>
-    <Carousel interval={300} length={5}>
-      <PostIt />
-    </Carousel>
+  <div
+    class="guest-book-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    on:change={({ detail }) => {
+      isView.guestBook = detail.inView
+    }}
+  >
+    {#if isView.guestBook}
+      <div class="guest-book-title" transition:fly={{ y: 100, duration: 500 }}>
+        축하 글을 남겨주세요!
+      </div>
+      <Carousel interval={300} length={5}>
+        <PostIt />
+      </Carousel>
+    {/if}
   </div>
   <Modal bind:isShow={modalShow} title="방명록">
     <Comments />
@@ -715,138 +910,148 @@
     }}>전체 보기</button
   >
 
-  <div class="contact-us-container">
-    <div class="contact-us-title">마음 전하실곳</div>
-    <div class="contact-us-row-container">
-      <div class="contact-us-sub-container">
-        <div class="contact-us-sub-title">신랑에게 연락하기</div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
+  <div
+    class="contact-us-container"
+    use:inview={{ unobserveOnEnter: true, rootMargin: '-40%' }}
+    on:change={({ detail }) => {
+      isView.contactUs = detail.inView
+    }}
+  >
+    {#if isView.contactUs}
+      <div class="contact-us-title" transition:fly={{ y: 100, duration: 500 }}>
+        마음 전하실곳
+      </div>
+      <div class="contact-us-row-container">
+        <div class="contact-us-sub-container" transition:fly={{ y: 100, duration: 500 }}>
+          <div class="contact-us-sub-title">신랑에게 연락하기</div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-icon">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </div>
+            <div class="contact-us-btn-icon">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </div>
           </div>
-          <div class="contact-us-btn-icon">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-text">계좌번호</div>
+            <div class="contact-us-btn-pay-icon">
+              <img alt="pay" src={PayImg} />
+            </div>
           </div>
         </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon">
-            <img alt="pay" src={PayImg} />
+        <div class="contact-us-sub-container" transition:fly={{ y: 100, duration: 500 }}>
+          <div class="contact-us-sub-title">신부에게 연락하기</div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-icon">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </div>
+            <div class="contact-us-btn-icon">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </div>
+          </div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-text">계좌번호</div>
+            <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
           </div>
         </div>
       </div>
-      <div class="contact-us-sub-container">
-        <div class="contact-us-sub-title">신부에게 연락하기</div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
+      <div class="contact-us-row-container">
+        <div class="contact-us-sub-container" transition:fly={{ y: 100, duration: 500 }}>
+          <div class="contact-us-groom-title">신랑측 혼주</div>
+          <div class="contact-us-groom-sub-title">아버지 홍찬표</div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-icon">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </div>
+            <div class="contact-us-btn-icon">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </div>
           </div>
-          <div class="contact-us-btn-icon">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-text">계좌번호</div>
+            <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+          </div>
+          <div class="contact-us-groom-sub-title">어머니 박미선</div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-icon">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </div>
+            <div class="contact-us-btn-icon">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </div>
+          </div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-text">계좌번호</div>
+            <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
           </div>
         </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+        <div class="contact-us-sub-container" transition:fly={{ y: 100, duration: 500 }}>
+          <div class="contact-us-bride-title">신부측 혼주</div>
+          <div class="contact-us-bride-sub-title">아버지 이재상</div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-icon">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </div>
+            <div class="contact-us-btn-icon">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </div>
+          </div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-text">계좌번호</div>
+            <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+          </div>
+          <div class="contact-us-bride-sub-title">어머니 김선희</div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-icon">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </div>
+            <div class="contact-us-btn-icon">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </div>
+          </div>
+          <div class="contact-us-row-container">
+            <div class="contact-us-btn-text">계좌번호</div>
+            <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="contact-us-row-container">
-      <div class="contact-us-sub-container">
-        <div class="contact-us-groom-title">신랑측 혼주</div>
-        <div class="contact-us-groom-sub-title">아버지 홍찬표</div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </div>
-          <div class="contact-us-btn-icon">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </div>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
-        </div>
-        <div class="contact-us-groom-sub-title">어머니 박미선</div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </div>
-          <div class="contact-us-btn-icon">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </div>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
-        </div>
-      </div>
-      <div class="contact-us-sub-container">
-        <div class="contact-us-bride-title">신부측 혼주</div>
-        <div class="contact-us-bride-sub-title">아버지 이재상</div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </div>
-          <div class="contact-us-btn-icon">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </div>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
-        </div>
-        <div class="contact-us-bride-sub-title">어머니 김선희</div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </div>
-          <div class="contact-us-btn-icon">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </div>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
-        </div>
-      </div>
-    </div>
+    {/if}
   </div>
   <div class="footer-img-container">
     <img src={FooterImg} alt={FooterImg} class="footer-img" />

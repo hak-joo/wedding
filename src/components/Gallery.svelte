@@ -76,6 +76,7 @@
 </style>
 
 <script lang="ts">
+  import { fly } from 'svelte/transition'
   import { onMount } from 'svelte'
 
   // props
@@ -129,6 +130,7 @@
 <div
   class="carousel-wrapper"
   style="--height:{imageHeight}; "
+  transition:fly={{ y: 100, duration: 1000 }}
   on:mousedown={onMouseDown}
   on:mousemove={onMouseMove}
   on:mouseup={onMouseUp}

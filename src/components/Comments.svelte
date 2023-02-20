@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
 
-    padding: 10px;
+    padding: 15px;
     margin: 20px 0;
 
     background-color: white;
@@ -14,6 +14,7 @@
     &-container {
       width: 100%;
       padding: 10px 10px;
+      margin-bottom: 50px;
     }
 
     &-header {
@@ -24,6 +25,7 @@
 
       height: 30px;
       border-bottom: 1px solid #a3acce;
+      padding-bottom: 10px;
       margin-bottom: 10px;
     }
     &-from {
@@ -31,11 +33,20 @@
       font-family: 'Nanum Myeongjo', serif;
       color: #7667ae;
     }
+    &-created {
+      font-size: 1vw;
+      color: #999;
+    }
+    &-content {
+      color: #666;
+      line-height: 20px;
+    }
   }
 </style>
 
 <script lang="ts">
   import { guestBooks } from './guestBookDatas'
+  import dayjs from 'dayjs'
 </script>
 
 <div class="comment-container">
@@ -46,8 +57,8 @@
           <span class="comment-from">FROM </span>
           {comment.sender}
         </div>
-        <div>
-          {comment.createdDate}
+        <div class="comment-created">
+          {dayjs(comment.createdDate).format('YYYY-MM-DD hh-mm')}
         </div>
       </div>
       <div class="comment-content">

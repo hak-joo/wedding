@@ -204,15 +204,29 @@
   }
   .guest-book {
     &-title {
-      padding: 20px 0;
       font-size: 24px;
+      font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
+      padding: 20px 0;
       color: #657098;
-      text-align: center;
     }
     &-container {
-      padding: 20px 0;
       width: 100%;
+      padding: 10px 0;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    &-btn {
+      font-size: 12px;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+      border-radius: 15px;
+      background-color: #657098;
+      color: #fff;
+      padding: 5px 15px;
     }
   }
   .d-day {
@@ -482,7 +496,6 @@
   import { fade, fly, slide } from 'svelte/transition'
   import { inview } from 'svelte-inview'
   import { onMount } from 'svelte'
-  import Saos from 'saos'
   import Carousel from '../../components/Carousel.svelte'
   import Gallery from '../../components/Gallery.svelte'
   import PostIt from '../../components/PostIt.svelte'
@@ -680,7 +693,7 @@
 <div class="main-wrapper" transition:fade>
   <div
     class="header-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: '0%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       isView.header = detail.inView
     }}
@@ -701,7 +714,7 @@
   </div>
   <div
     class="info-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       isView.locationInfo = detail.inView
     }}
@@ -717,7 +730,7 @@
   </div>
   <div
     class="ment-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       isView.ment = detail.inView
     }}
@@ -750,7 +763,7 @@
   <div class="divider" />
   <div
     class="info-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       console.log('info', detail.inView)
       isView.contactInfo = detail.inView
@@ -775,7 +788,7 @@
   </div>
   <div
     class="gallery-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       console.log('gallery', detail.inView)
       isView.galleryInfo = detail.inView
@@ -795,7 +808,7 @@
 
   <div
     class="d-day-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       console.log('dday', detail.inView)
       isView.dDay = detail.inView
@@ -813,7 +826,7 @@
   </div>
   <div
     class="map-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       console.log('map', detail.inView)
       isView.map = detail.inView
@@ -866,7 +879,7 @@
   </div>
   <div
     class="noti-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       isView.noti = detail.inView
     }}
@@ -885,34 +898,8 @@
     {/if}
   </div>
   <div
-    class="guest-book-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: ' -35%' }}
-    on:change={({ detail }) => {
-      isView.guestBook = detail.inView
-    }}
-  >
-    {#if isView.guestBook}
-      <div class="guest-book-title" transition:fly={{ y: 100, duration: 500 }}>
-        축하 글을 남겨주세요!
-      </div>
-      <Carousel interval={300} length={5}>
-        <PostIt />
-      </Carousel>
-    {/if}
-  </div>
-  <Modal bind:isShow={modalShow} title="방명록">
-    <Comments />
-  </Modal>
-
-  <button
-    on:click={() => {
-      modalShow = true
-    }}>전체 보기</button
-  >
-
-  <div
     class="contact-us-container"
-    use:inview={{ unobserveOnEnter: true, rootMargin: '-40%' }}
+    use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
       isView.contactUs = detail.inView
     }}
@@ -1053,6 +1040,33 @@
       </div>
     {/if}
   </div>
+  <div
+    class="guest-book-container"
+    use:inview={{ unobserveOnEnter: true }}
+    on:change={({ detail }) => {
+      isView.guestBook = detail.inView
+    }}
+  >
+    {#if isView.guestBook}
+      <div class="guest-book-title" transition:fly={{ y: 100, duration: 500 }}>
+        축하 글을 남겨주세요!
+      </div>
+      <Carousel interval={300} length={5}>
+        <PostIt />
+      </Carousel>
+    {/if}
+  </div>
+  <Modal bind:isShow={modalShow} title="방명록">
+    <Comments />
+  </Modal>
+
+  <button
+    class="guest-book-btn"
+    on:click={() => {
+      modalShow = true
+    }}>전체 보기</button
+  >
+
   <div class="footer-img-container">
     <img src={FooterImg} alt={FooterImg} class="footer-img" />
     <!-- <div class="footer-img-inner-text">행복하겠습니다.</div> -->

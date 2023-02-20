@@ -1,4 +1,36 @@
 <style lang="scss">
+  /*반응형 화면 크기*/
+  $mobile: 767px;
+  $tablet: 1023px;
+  $desktop: 1024px;
+
+  /*반응형, 브라우저 크기가 767px 이하일때*/
+  @mixin mobile {
+    @media (max-width: $mobile) {
+      @content;
+    }
+  }
+
+  /*반응형, 브라우저 크기가 768이상, 1023px 이하일때*/
+  @mixin tablet {
+    @media (min-width: ($mobile + 1)) and (max-width: $tablet) {
+      @content;
+    }
+  }
+
+  /*반응형, 브라우저 크기가 1024px 이상일때*/
+  @mixin desktop {
+    @media (min-width: $desktop) {
+      @content;
+    }
+  }
+
+  /*넓이, 높이 자동 계산함수*/
+  @mixin square($size) {
+    $calculated: 32px * $size;
+    width: $calculated;
+    height: $calculated;
+  }
   .modal {
     &-wrapper {
       position: fixed;
@@ -15,6 +47,10 @@
       width: 440px;
       height: 100%;
       background-color: #ced2df;
+      @include mobile {
+        /*브라우저 사이즈767px이하일때*/
+        width: 100vw;
+      }
     }
     &-header {
       position: relative;
@@ -32,7 +68,7 @@
     }
 
     &-title {
-      font-size: 1.6vw;
+      font-size: 24px;
       font-family: 'Nanum Myeongjo', serif;
       &-close {
         position: absolute;

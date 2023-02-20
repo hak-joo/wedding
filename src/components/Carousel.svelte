@@ -80,6 +80,31 @@
     isMouseDown = false
   }
 
+  const onTouchStart = (e: TouchEvent) => {
+    startX = e.touches[0].screenX
+    isMouseDown = true
+  }
+
+  const onTouchMove = (e: TouchEvent) => {
+    if (!isMouseDown) return
+    let moveX = startX - e.touches[0].screenX
+    if (moveX + (currentIdx + 1) * interval > length * interval) {
+      moveX = 0
+    }
+    dX = moveX
+  }
+
+  const onTouchEnd = (e: TouchEvent) => {
+    if (dX > 150 && currentIdx + 1 < length) {
+      currentIdx++
+    } else if (dX < -150 && currentIdx + 1 <= length) {
+      currentIdx--
+    }
+    dX = 0
+    startX = 0
+    isMouseDown = false
+  }
+
   window.addEventListener('mouseup', onMouseUp)
 </script>
 
@@ -92,6 +117,9 @@
     on:mousedown={onMouseDown}
     on:mousemove={onMouseMove}
     on:mouseup={onMouseUp}
+    on:touchstart={onTouchStart}
+    on:touchmove={onTouchMove}
+    on:touchend={onTouchEnd}
   >
     <slot />
   </div>

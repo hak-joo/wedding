@@ -53,7 +53,7 @@
       height: 100%;
       @include mobile {
         /*브라우저 사이즈767px이하일때*/
-        width: 100vw;
+        width: 90vw;
       }
     }
     &-btn {
@@ -120,6 +120,29 @@
     isMouseDown = false
   }
 
+  const onTouchStart = (e: TouchEvent) => {
+    startX = e.touches[0].screenX
+    isMouseDown = true
+  }
+
+  const onTouchMove = (e: TouchEvent) => {
+    if (!isMouseDown) return
+    let moveX = startX - e.touches[0].screenX
+    dX = moveX
+  }
+
+  const onTouchEnd = (e: TouchEvent) => {
+    if (dX > 0) {
+      currentIdx = currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1
+    } else if (dX < 0) {
+      currentIdx = currentIdx - 1 < 0 ? itemList.length - 1 : currentIdx - 1
+    }
+
+    dX = 0
+    startX = 0
+    isMouseDown = false
+  }
+
   window.addEventListener('mouseup', onMouseUp)
 
   onMount(() => {
@@ -134,6 +157,9 @@
   on:mousedown={onMouseDown}
   on:mousemove={onMouseMove}
   on:mouseup={onMouseUp}
+  on:touchstart={onTouchStart}
+  on:touchmove={onTouchMove}
+  on:touchend={onTouchEnd}
 >
   <button
     class="carousel-btn prev"

@@ -86,6 +86,7 @@
   }
 
   const onTouchMove = (e: TouchEvent) => {
+    e.preventDefault()
     if (!isMouseDown) return
     let moveX = startX - e.touches[0].screenX
     if (moveX + (currentIdx + 1) * interval > length * interval) {

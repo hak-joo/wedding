@@ -48,7 +48,6 @@
     }
     &-item {
       pointer-events: none;
-      border-radius: 30px;
       width: 405px;
       height: 100%;
       @include mobile {
@@ -81,17 +80,22 @@
 
   // props
   export let itemList: any[] = []
+  export let currentIdx = 0
+  export let setCurrentIdx: (idx: number) => void = () => {}
+
+  export let toggoleModal: () => void = () => {}
 
   let itemTags: any[] = itemList.map(() => {})
   let carouselTag: any
 
   let containerWidth = 405
-  let currentIdx = 0
   let startX = 0
   let dX = 0
 
   $: imageHeight =
-    currentIdx === 0 ? 'auto' : `${(itemTags[currentIdx] as HTMLElement).offsetHeight}px`
+    currentIdx !== 0 && itemTags[currentIdx]
+      ? `${(itemTags[currentIdx] as HTMLElement).offsetHeight ?? 0}px`
+      : 'auto'
   $: transformX = !isMouseDown
     ? `translateX(-${currentIdx * containerWidth}px)`
     : `translateX(-${currentIdx * containerWidth + dX}px)`
@@ -101,6 +105,8 @@
   const onMouseDown = (e: MouseEvent) => {
     startX = e.screenX
     isMouseDown = true
+
+    window.addEventListener('mouseup', onMouseUp)
   }
 
   const onMouseMove = (e: MouseEvent) => {
@@ -110,14 +116,18 @@
   }
   const onMouseUp = (e: MouseEvent) => {
     if (dX > 0) {
-      currentIdx = currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1
+      setCurrentIdx(currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1)
     } else if (dX < 0) {
-      currentIdx = currentIdx - 1 < 0 ? itemList.length - 1 : currentIdx - 1
+      setCurrentIdx(currentIdx - 1 < 0 ? itemList.length - 1 : currentIdx - 1)
+    } else {
+      toggoleModal()
     }
 
     dX = 0
     startX = 0
     isMouseDown = false
+
+    window.removeEventListener('mouseup', onMouseUp)
   }
 
   const onTouchStart = (e: TouchEvent) => {
@@ -126,6 +136,7 @@
   }
 
   const onTouchMove = (e: TouchEvent) => {
+    e.preventDefault()
     if (!isMouseDown) return
     let moveX = startX - e.touches[0].screenX
     dX = moveX
@@ -133,17 +144,17 @@
 
   const onTouchEnd = (e: TouchEvent) => {
     if (dX > 0) {
-      currentIdx = currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1
+      setCurrentIdx(currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1)
     } else if (dX < 0) {
-      currentIdx = currentIdx - 1 < 0 ? itemList.length - 1 : currentIdx - 1
+      setCurrentIdx(currentIdx - 1 < 0 ? itemList.length - 1 : currentIdx - 1)
+    } else {
+      toggoleModal()
     }
 
     dX = 0
     startX = 0
     isMouseDown = false
   }
-
-  window.addEventListener('mouseup', onMouseUp)
 
   onMount(() => {
     containerWidth = (carouselTag as HTMLElement).offsetWidth

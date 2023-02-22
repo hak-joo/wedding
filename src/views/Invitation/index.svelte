@@ -471,22 +471,29 @@
   .navigation {
     &-container {
       position: fixed;
+      width: fit-content;
       display: flex;
+      justify-content: center;
+      align-items: center;
 
-      height: 50px;
+      left: 15px;
       bottom: 20px;
       z-index: 100;
+      background-color: #edededdd;
+      border-radius: 15px;
+
+      gap: 5px;
     }
     &-button {
       display: flex;
       justify-content: center;
       align-items: center;
-      margin-left: 20px;
-      width: 30px;
+      width: 20%;
       height: 30px;
+      border: 1px solid #999;
       border-radius: 30px;
-      background-color: gray;
-      font-size: 5px;
+      font-size: 0.5px;
+      padding: 0px 10px;
       cursor: pointer;
     }
   }
@@ -504,6 +511,7 @@
   import Opening from '../../components/Opening.svelte'
 
   import Modal from '../../components/Modal.svelte'
+  import ImageModal from '../../components/ImageModal.svelte'
 
   import HeaderImg from '/images/header.jpg'
   import FooterImg from '/images/footer.jpg'
@@ -525,12 +533,14 @@
   }
 
   let galleryDatas: { path: string; thumbnail: string }[] = []
+  let currentIdx = 0
 
   let dday = 66
 
   const toggleShowOpening = () => (isShowOpening = !isShowOpening)
 
   let modalShow = false
+  let isOpenImageModal = false
 
   const sendKakao = () => {
     // 메시지 공유 함수
@@ -650,45 +660,42 @@
 
 <!-- <Opening show={isShowOpening} toggle={toggleShowOpening} /> -->
 <div class="navigation-container">
-  <button class="navigation-button" on:click={() => (navOpen = !navOpen)} />
-  {#if navOpen}
-    <button
-      class="navigation-button"
-      on:click={() => {
-        scrollToElement('gallery')
-      }}
-      transition:fly={{ x: -50, duration: 300 }}
-    >
-      갤러리
-    </button>
-    <button
-      class="navigation-button"
-      on:click={() => {
-        scrollToElement('map')
-      }}
-      transition:fly={{ x: -50, duration: 300 }}
-    >
-      오시는 길
-    </button>
-    <button
-      class="navigation-button"
-      on:click={() => {
-        scrollToElement('contact-us')
-      }}
-      transition:fly={{ x: -50, duration: 300 }}
-    >
-      연락처
-    </button>
-    <button
-      class="navigation-button"
-      on:click={() => {
-        scrollToElement('guest-book')
-      }}
-      transition:fly={{ x: -50, duration: 300 }}
-    >
-      방명록
-    </button>
-  {/if}
+  <button
+    class="navigation-button"
+    on:click={() => {
+      scrollToElement('gallery')
+    }}
+    transition:fly={{ x: -50, duration: 300 }}
+  >
+    G
+  </button>
+  <button
+    class="navigation-button"
+    on:click={() => {
+      scrollToElement('map')
+    }}
+    transition:fly={{ x: -50, duration: 300 }}
+  >
+    M
+  </button>
+  <button
+    class="navigation-button"
+    on:click={() => {
+      scrollToElement('contact-us')
+    }}
+    transition:fly={{ x: -50, duration: 300 }}
+  >
+    C
+  </button>
+  <button
+    class="navigation-button"
+    on:click={() => {
+      scrollToElement('guest-book')
+    }}
+    transition:fly={{ x: -50, duration: 300 }}
+  >
+    B
+  </button>
 </div>
 <div class="main-wrapper" transition:fade>
   <div
@@ -786,6 +793,24 @@
       </div>
     {/if}
   </div>
+
+  <ImageModal
+    isShow={isOpenImageModal}
+    title=""
+    toggoleModal={() => {
+      isOpenImageModal = !isOpenImageModal
+    }}
+  >
+    {#if galleryDatas.length > 0}
+      <Gallery
+        itemList={galleryDatas}
+        {currentIdx}
+        setCurrentIdx={idx => {
+          currentIdx = idx
+        }}
+      />
+    {/if}
+  </ImageModal>
   <div
     class="gallery-container"
     use:inview={{ unobserveOnEnter: true }}
@@ -795,10 +820,27 @@
     }}
   >
     {#if isView.galleryInfo}
-      <Gallery itemList={galleryDatas} />
+      {#if galleryDatas.length > 0}
+        <Gallery
+          itemList={galleryDatas}
+          {currentIdx}
+          setCurrentIdx={idx => {
+            currentIdx = idx
+          }}
+          toggoleModal={() => {
+            isOpenImageModal = !isOpenImageModal
+          }}
+        />
+      {/if}
       <div class="gallery-thumbnail-container" transition:fly={{ y: 100, duration: 500 }}>
-        {#each galleryDatas as item}
-          <div class="gallery-thumbnail-item">
+        {#each galleryDatas as item, idx}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <div
+            class="gallery-thumbnail-item"
+            on:click={() => {
+              currentIdx = idx
+            }}
+          >
             <img src={item.thumbnail} alt={item.thumbnail} />
           </div>
         {/each}

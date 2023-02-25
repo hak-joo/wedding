@@ -516,6 +516,7 @@
   import HeaderImg from '/images/header.jpg'
   import FooterImg from '/images/footer.jpg'
   import PayImg from '/images/pay.png'
+  import WriteModal from '../../components/WriteModal.svelte'
 
   let isShowOpening = true
   let navOpen = false
@@ -541,6 +542,8 @@
 
   let modalShow = false
   let isOpenImageModal = false
+  let writeModalShow = false
+  let writeModalStartY = 0
 
   const sendKakao = () => {
     // 메시지 공유 함수
@@ -1102,11 +1105,20 @@
     <Comments />
   </Modal>
 
+  <WriteModal bind:isShow={writeModalShow} startY={writeModalStartY} title="방명록" />
+
   <button
     class="guest-book-btn"
     on:click={() => {
       modalShow = true
     }}>전체 보기</button
+  >
+  <button
+    class="guest-book-btn"
+    on:click={e => {
+      writeModalStartY = e.clientY
+      writeModalShow = true
+    }}>작성 하기</button
   >
 
   <div class="footer-img-container">

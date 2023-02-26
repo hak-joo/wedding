@@ -78,8 +78,11 @@
     }
     &-header {
       display: flex;
+      color: #ffadc5;
       padding: 40px 0;
       justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
     }
     &-close-button {
       position: absolute;
@@ -92,12 +95,38 @@
         padding: 10px;
       }
       width: 100%;
+      margin-bottom: 70px;
+    }
+    &-message {
+      display: flex;
+      position: relative;
+      p {
+        padding: 10px;
+      }
+      width: 100%;
     }
     &-content {
       display: flex;
       flex-direction: column;
       padding: 10px;
       flex: 1;
+    }
+    &-footer {
+      display: flex;
+      justify-content: center;
+      button {
+        width: 100px;
+        height: 40px;
+        color: #ffadc5;
+        border: 1px solid #ffadc5;
+        border-radius: 5px;
+        transition: all 0.5s;
+        &:hover {
+          color: #f998b5;
+          font-weight: bold;
+          border: 1px solid #f998b5;
+        }
+      }
     }
   }
 </style>
@@ -112,6 +141,7 @@
   export let isShow: boolean = true
   export let title = ''
 
+  let textAreaRef: HTMLElement
   const makePostIt = (node: Element, { delay = 0, duration = 400 }) => {
     return {
       delay,
@@ -124,6 +154,12 @@
           height: ${t * 75}%;
           `
     }
+  }
+
+  const onResizeTextArea = (e: KeyboardEvent) => {
+    if (textAreaRef.scrollHeight > 170) return
+    textAreaRef.style.height = 'auto'
+    textAreaRef.style.height = `${textAreaRef.scrollHeight}px`
   }
 </script>
 
@@ -148,13 +184,25 @@
         >
         <div class="form-content">
           <div class="form-sender">
-            <input type="text" required />
-            <label>작성자</label>
+            <input class="form-input" type="text" required />
+            <label class="input-label">작성자</label>
             <span />
           </div>
-
-          <p>내용</p>
-          <textarea />
+          <div class="form-message">
+            <span />
+            <textarea
+              required
+              rows={1}
+              bind:this={textAreaRef}
+              on:keyup={e => onResizeTextArea(e)}
+              on:keydown={e => onResizeTextArea(e)}
+            />
+            <label class="textarea-label">내용</label>
+            <span />
+          </div>
+        </div>
+        <div class="form-footer">
+          <button>전송</button>
         </div>
       </div>
     </div>

@@ -817,7 +817,6 @@
     class="gallery-container"
     use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
-      console.log('gallery', detail.inView)
       isView.galleryInfo = detail.inView
     }}
   >
@@ -857,7 +856,6 @@
     class="d-day-container"
     use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
-      console.log('dday', detail.inView)
       isView.dDay = detail.inView
     }}
   >
@@ -875,7 +873,6 @@
     class="map-container"
     use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
-      console.log('map', detail.inView)
       isView.map = detail.inView
     }}
   >

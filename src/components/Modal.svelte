@@ -90,7 +90,7 @@
   <div class="modal-wrapper" use:portal={'#portal'} transition:fade>
     <div class="modal-container" transition:fly={{ y: 3000 }}>
       <div class="modal-header">
-        <span class="modal-title">{title}</span>
+        <div class="modal-title">{title}</div>
         <button
           class="modal-title-close"
           on:click={() => {

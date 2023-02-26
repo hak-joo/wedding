@@ -775,7 +775,6 @@
     class="info-container"
     use:inview={{ unobserveOnEnter: true }}
     on:change={({ detail }) => {
-      console.log('info', detail.inView)
       isView.contactInfo = detail.inView
     }}
   >
@@ -849,6 +848,9 @@
         {/each}
       </div>
     {/if}
+  </div>
+  <div class="gallery-thumbnail-container">
+    <div class="gallery-thumbnail-item">hello</div>
   </div>
 
   <div

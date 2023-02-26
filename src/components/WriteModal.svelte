@@ -186,10 +186,10 @@
           <div class="form-sender">
             <input class="form-input" type="text" required />
             <label class="input-label">작성자</label>
-            <span />
+            <span class="bottom-deco" />
           </div>
           <div class="form-message">
-            <span />
+            <span class="bottom-deco" />
             <textarea
               required
               rows={1}

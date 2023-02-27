@@ -39,7 +39,6 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-      background-color: #657098;
     }
     &-container {
       display: flex;
@@ -65,6 +64,13 @@
       max-height: 100%;
       overflow-y: scroll;
       scroll-behavior: smooth;
+
+      @media (max-width: 767px) {
+        padding: 0px 40px;
+      }
+      @media (max-width: 567px) {
+        padding: 0;
+      }
     }
 
     &-title {

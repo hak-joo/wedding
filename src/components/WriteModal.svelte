@@ -32,7 +32,6 @@
     height: $calculated;
   }
   * {
-    font-family: 'Nanum Myeongjo', serif;
   }
   .modal {
     &-wrapper {
@@ -96,6 +95,7 @@
       }
       width: 100%;
       margin-bottom: 70px;
+      font-family: 'Hi Melody', cursive;
     }
     &-message {
       display: flex;
@@ -104,6 +104,7 @@
         padding: 10px;
       }
       width: 100%;
+      font-family: 'Hi Melody', cursive;
     }
     &-content {
       display: flex;

@@ -44,19 +44,24 @@
     }
   }
 
-  .heart {
+  /* .heart {
     &-container {
       width: 100%;
 
       padding: 0px 10px;
-      &:nth-of-type(2n) {
+      &:nth-of-type(3n) {
         .heart-thumbnail-container {
           justify-content: left;
         }
       }
-      &:nth-of-type(2n + 1) {
+      &:nth-of-type(3n + 1) {
         .heart-thumbnail-container {
           justify-content: right;
+        }
+      }
+      &:nth-of-type(3n + 2) {
+        .heart-thumbnail-container {
+          justify-content: center;
         }
       }
     }
@@ -69,9 +74,7 @@
       }
       &-item {
         position: relative;
-        margin-top: -25px;
-        margin-bottom: -25px;
-        width: 270px;
+        width: 170px;
         aspect-ratio: 1;
         overflow: hidden;
         -webkit-mask: url($svgMask);
@@ -91,26 +94,104 @@
   }
   .content {
     display: flex;
-    width: 200px;
-    height: 100px;
-    left: 12.5%;
-    top: 25%;
+    border: 1px solid red;
+    width: 120px;
+    height: 60px;
+    left: 14%;
+    top: 20%;
     justify-content: center;
     align-items: center;
     text-align: center;
     color: black;
     position: absolute;
+    font-size: 10px;
     font-family: 'Nanum Myeongjo', serif;
   }
   .sender {
-    width: 150px;
+    width: 70px;
     height: 30px;
 
     position: absolute;
-    left: 22.5%;
+    left: 28%;
     bottom: 25%;
     display: flex;
     justify-content: center;
+    font-size: 12px;
+  } */
+
+  .comment-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .heart {
+    &-container {
+      display: flex;
+      height: 220px;
+      flex-direction: row;
+      justify-content: left;
+      &:nth-of-type(2n) {
+        margin-bottom: -25px;
+      }
+      &:nth-of-type(2n + 1) {
+        margin-top: -50px;
+      }
+      &:nth-of-type(3n) {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    &-thumbnail {
+      &-container {
+        display: flex;
+        align-items: center;
+      }
+      &-item {
+        position: relative;
+        width: 170px;
+        aspect-ratio: 1;
+        overflow: hidden;
+        -webkit-mask: url($svgMask);
+        mask: url($svgMask);
+
+        .item {
+          z-index: 100;
+          width: 100%;
+          aspect-ratio: 1;
+          pointer-events: none;
+          background-color: #fccac3;
+          height: 100%;
+          box-shadow: 1px 2px 3px 0 #ccc;
+        }
+      }
+    }
+  }
+  .content {
+    display: flex;
+
+    width: 120px;
+    height: 60px;
+    left: 14%;
+    top: 20%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: black;
+    position: absolute;
+    font-size: 14px;
+    font-family: 'Hi Melody', cursive;
+  }
+  .sender {
+    width: 70px;
+    height: 30px;
+
+    position: absolute;
+    left: 30%;
+    bottom: 15%;
+    display: flex;
+    justify-content: center;
+    font-size: 16px;
+    font-family: 'Hi Melody', cursive;
   }
 </style>
 
@@ -154,29 +235,31 @@
     </div>
   {/each} -->
 
-{#each guestBooks as comment, idx}
-  <div
-    use:inview={{ unobserveOnEnter: true }}
-    on:change={({ detail }) => {
-      if (detail.inView && viewIndex <= idx) {
-        viewIndex = idx
-      }
-      console.log(viewIndex)
-    }}
-    class="heart-container"
-  >
-    {#if viewIndex >= idx}
-      <div
-        class="heart-thumbnail-container"
-        transition:fly={{ y: 100 * idx, duration: 500, delay: 100 }}
-      >
-        <div class="heart-thumbnail-item">
-          <div class="item">
-            <div class="content">{comment.comment}</div>
-            <div class="sender">- {comment.sender} -</div>
+<div class="comment-list">
+  {#each guestBooks as comment, idx}
+    <div
+      use:inview={{ unobserveOnEnter: true }}
+      on:change={({ detail }) => {
+        if (detail.inView && viewIndex <= idx) {
+          viewIndex = idx
+        }
+        console.log(viewIndex)
+      }}
+      class="heart-container"
+    >
+      {#if viewIndex >= idx}
+        <div
+          class="heart-thumbnail-container"
+          transition:fly={{ y: 100 * idx, duration: 500, delay: 100 }}
+        >
+          <div class="heart-thumbnail-item">
+            <div class="item">
+              <div class="content">{comment.comment}</div>
+              <div class="sender">- {comment.sender} -</div>
+            </div>
           </div>
         </div>
-      </div>
-    {/if}
-  </div>
-{/each}
+      {/if}
+    </div>
+  {/each}
+</div>

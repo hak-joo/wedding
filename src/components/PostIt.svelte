@@ -38,8 +38,8 @@
       aspect-ratio: 1 / 1.5;
       padding: 10px 8px;
       margin: 10px 10px;
-      box-shadow: 1px 2px 3px 0 #ccc;
-      border-radius: 5px;
+      box-shadow: 3px 1px 7px 0px rgba(183, 183, 183, 0.87);
+      border-radius: 7px;
       background-color: #fef6f5;
       @include mobile {
         /*브라우저 사이즈767px이하일때*/
@@ -50,16 +50,25 @@
       display: flex;
       height: 100%;
       flex-direction: column;
+      align-items: center;
     }
     &-header {
-      height: 30px;
+      display: flex;
+      width: 30px;
+      justify-content: center;
+      flex: 0.7;
+      img {
+        width: 30px;
+        height: 30px;
+        aspect-ratio: 1;
+      }
     }
     &-content {
       flex: 1;
       overflow: hidden;
 
       font-weight: bold;
-      font-family: 'Nanum Myeongjo', serif;
+      font-family: 'Hi Melody', cursive;
       font-size: 16px;
       text-align: center;
       @include mobile {
@@ -74,12 +83,12 @@
       height: 50px;
       text-align: center;
       p {
-        font-size: 14px;
+        font-size: 12px;
         font-weight: bold;
         font-family: 'Nanum Myeongjo', serif;
         @include mobile {
           /*브라우저 사이즈767px이하일때*/
-          font-size: 12px;
+          font-size: 10px;
         }
       }
     }
@@ -88,6 +97,7 @@
 
 <script lang="ts">
   import { guestBooks } from './guestBookDatas'
+  import PinIcon from '../assets/styles/ic-pin.png'
   const dateFormat = (date: any) => {
     let month = date.getMonth() + 1
     let day = date.getDate()
@@ -109,7 +119,10 @@
   <div class="carousel-content">
     <div class="postit-wrapper">
       <div class="postit-container">
-        <div class="postit-header" />
+        <div class="postit-header">
+          <img src={PinIcon} alt="pin" />
+        </div>
+
         <div class="postit-content">
           {guest.comment}
         </div>

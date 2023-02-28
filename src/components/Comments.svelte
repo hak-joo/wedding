@@ -196,43 +196,12 @@
 </style>
 
 <script lang="ts">
-  import { guestBooks } from './guestBookDatas'
-  import dayjs from 'dayjs'
-  import { randomInt } from 'crypto'
+  import { Comment } from '../views/Invitation/type'
+  export let comments: Comment[] = []
 </script>
 
-<div class="comment-container" />
-<!-- {#each guestBooks as comment, idx}
-    <div
-      use:inview={{ unobserveOnEnter: true }}
-      on:change={({ detail }) => {
-        console.log(detail.inView)
-        if (detail.inView && viewIndex <= idx) {
-          viewIndex = idx
-        }
-      }}
-    >
-      <div class="comment" transition:fly={{ y: 100 * idx, duration: 500, delay: 300 }}>
-        {#if viewIndex >= idx}
-          <div class="comment-header">
-            <div>
-              <span class="comment-from">FROM</span>
-              {comment.sender}
-            </div>
-            <div class="comment-created">
-              {dayjs(comment.createdDate).format('YYYY-MM-DD hh-mm')}
-            </div>
-          </div>
-          <div class="comment-content">
-            {comment.comment}
-          </div>
-        {/if}
-      </div>
-    </div>
-  {/each} -->
-
 <div class="comment-list">
-  {#each guestBooks as comment, idx}
+  {#each comments as comment}
     <div class="heart-container">
       <div class="heart-thumbnail-container">
         <div class="heart-thumbnail-item">

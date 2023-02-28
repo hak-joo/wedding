@@ -31,8 +31,7 @@
     width: $calculated;
     height: $calculated;
   }
-  * {
-  }
+
   .modal {
     &-wrapper {
       position: fixed;
@@ -74,6 +73,14 @@
       padding: 10px 8px;
       box-shadow: 1px 2px 3px 0 #ccc;
       border-radius: 5px;
+      transition: width, height 0.5s ease;
+      &.sended {
+        width: 70%;
+        height: 20%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
     &-header {
       display: flex;
@@ -130,6 +137,16 @@
       }
     }
   }
+  .noti {
+    &-sender {
+      font-size: 20px;
+      color: #7667ae;
+      margin-right: 10px;
+    }
+    &-message {
+      font-size: 14px;
+    }
+  }
 </style>
 
 <script lang="ts">
@@ -137,13 +154,33 @@
 
   import { portal } from 'svelte-portal'
   import './style.scss'
+  import dayjs from 'dayjs'
+  import { sendComments } from '../api'
 
   export let startY = 0
   export let isShow: boolean = true
   export let title = ''
 
+  let sended = false
+
   let textAreaRef: HTMLElement
   const makePostIt = (node: Element, { delay = 0, duration = 400 }) => {
+    if (sended) {
+      sended = false
+      sender = ''
+      comment = ''
+      return {
+        delay,
+        duration,
+        css: (t: number) => `
+
+          max-width: 300Px;
+          width: ${t * 80}%;
+          max-height: 200px;
+          height: ${t * 75}%;
+          `
+      }
+    }
     return {
       delay,
       duration,
@@ -157,11 +194,33 @@
     }
   }
 
+  const sleep = (time: number) => {
+    return new Promise<void>(resolve => {
+      setTimeout(() => {
+        resolve()
+      }, time)
+    })
+  }
+
+  const sendMessage = async () => {
+    // isShow = false
+    sended = true
+    await sendComments({
+      sender,
+      comment,
+      createdDate: dayjs().toISOString()
+    })
+    await sleep(1000)
+    isShow = false
+  }
+
   const onResizeTextArea = (e: KeyboardEvent) => {
     if (textAreaRef.scrollHeight > 170) return
     textAreaRef.style.height = 'auto'
     textAreaRef.style.height = `${textAreaRef.scrollHeight}px`
   }
+  let sender = ''
+  let comment = ''
 </script>
 
 {#if isShow}
@@ -169,42 +228,49 @@
     <div class="modal-container">
       <div
         class="form-container"
+        class:sended
         in:makePostIt={{ duration: 500 }}
         out:makePostIt={{ duration: 500 }}
       >
-        <p class="form-header" transition:fade={{ duration: 500 }}>
-          축하 글을 남겨주세요!
-        </p>
+        {#if !sended}
+          <p class="form-header">축하 글을 남겨주세요!</p>
 
-        <div class="form-noti" />
-        <button
-          class="form-close-button"
-          on:click={() => {
-            isShow = false
-          }}>X</button
-        >
-        <div class="form-content">
-          <div class="form-sender">
-            <input class="form-input" type="text" required />
-            <label class="input-label">작성자</label>
-            <span class="bottom-deco" />
+          <div class="form-noti" />
+          <button
+            class="form-close-button"
+            on:click={() => {
+              isShow = false
+            }}>X</button
+          >
+          <div class="form-content">
+            <div class="form-sender">
+              <input bind:value={sender} class="sender-input" type="text" required />
+              <label class="sender-label">작성자</label>
+              <span class="bottom-deco" />
+            </div>
+            <div class="form-message">
+              <textarea
+                class="message-input"
+                bind:value={comment}
+                required
+                rows={1}
+                bind:this={textAreaRef}
+                on:keyup={e => onResizeTextArea(e)}
+                on:keydown={e => onResizeTextArea(e)}
+              />
+              <label class="message-label">내용</label>
+              <span class="bottom-deco" />
+            </div>
           </div>
-          <div class="form-message">
-            <span class="bottom-deco" />
-            <textarea
-              required
-              rows={1}
-              bind:this={textAreaRef}
-              on:keyup={e => onResizeTextArea(e)}
-              on:keydown={e => onResizeTextArea(e)}
-            />
-            <label class="textarea-label">내용</label>
-            <span />
+          <div class="form-footer">
+            <button on:click={sendMessage}>전송</button>
           </div>
-        </div>
-        <div class="form-footer">
-          <button>전송</button>
-        </div>
+        {:else}
+          <div class="noti" transition:fade={{ duration: 500 }}>
+            <span class="noti-sender">{sender}</span>
+            <span class="noti-message">님, 감사합니다.</span>
+          </div>
+        {/if}
       </div>
     </div>
   </div>

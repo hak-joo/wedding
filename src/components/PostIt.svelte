@@ -96,14 +96,21 @@
 </style>
 
 <script lang="ts">
+  import { Comment } from './../views/Invitation/type'
+
   import { guestBooks } from './guestBookDatas'
   import PinIcon from '../assets/styles/ic-pin.png'
+  import dayjs from 'dayjs'
+
+  export let comments: Comment[] = []
+
   const dateFormat = (date: any) => {
-    let month = date.getMonth() + 1
-    let day = date.getDate()
-    let hour = date.getHours()
-    let minute = date.getMinutes()
-    let second = date.getSeconds()
+    const ddate = new Date(date)
+    let month = ddate.getMonth() + 1
+    let day = ddate.getDate()
+    let hour = ddate.getHours()
+    let minute = ddate.getMinutes()
+    let second = ddate.getSeconds()
 
     month = month >= 10 ? month : '0' + month
     day = day >= 10 ? day : '0' + day
@@ -115,7 +122,7 @@
   }
 </script>
 
-{#each guestBooks as guest, idx}
+{#each comments as guest, idx}
   <div class="carousel-content">
     <div class="postit-wrapper">
       <div class="postit-container">

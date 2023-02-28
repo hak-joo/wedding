@@ -520,6 +520,8 @@
   import Modal from '../../components/Modal.svelte'
   import ImageModal from '../../components/ImageModal.svelte'
 
+  import type { Comment } from './type'
+
   import HeaderImg from '/images/header.jpg'
   import FooterImg from '/images/footer.jpg'
   import PayImg from '/images/pay.png'
@@ -533,6 +535,7 @@
 
   import AOS from 'aos'
   import 'aos/dist/aos.css' // You can also use <link> for styles
+  import { getDatabase, onValue, ref } from 'firebase/database'
 
   AOS.init()
   let isShowOpening = true
@@ -549,6 +552,8 @@
   let isOpenImageModal = false
   let writeModalShow = false
   let writeModalStartY = 0
+
+  let listComment: Comment[] = []
 
   const sendKakao = () => {
     // 메시지 공유 함수
@@ -568,7 +573,6 @@
   }
 
   onMount(async () => {
-    console.log(dayjs().format('YYYY-MM-DD'), dday)
     if (!Kakao.isInitialized()) {
       Kakao.init('037b39715d4b19da434d1ba24c04fbd2')
     }
@@ -654,6 +658,18 @@
         thumbnail: '/images/thumbnail-20.jpg'
       }
     ]
+    const database = getDatabase(
+      undefined,
+      'https://wedding-6978f-default-rtdb.asia-southeast1.firebasedatabase.app/'
+    )
+    const commentRef = ref(database, '/')
+    onValue(commentRef, snapshot => {
+      let data: Comment[] = []
+      Object.keys(snapshot.val()).forEach(key => {
+        data.push(snapshot.val()[key])
+      })
+      listComment = data
+    })
   })
 
   const sleep = (time: number) => {
@@ -1077,8 +1093,8 @@
     data-aos-once="true"
   >
     <div class="guest-book-title">축하 글을 남겨주세요!</div>
-    <Carousel interval={300} length={5}>
-      <PostIt />
+    <Carousel interval={185} length={listComment.length}>
+      <PostIt comments={listComment} />
     </Carousel>
     <div class="guest-book-btn-container">
       <button
@@ -1097,7 +1113,7 @@
     </div>
   </div>
   <Modal bind:isShow={modalShow} title="방명록">
-    <Comments />
+    <Comments comments={listComment} />
   </Modal>
 
   <WriteModal bind:isShow={writeModalShow} startY={writeModalStartY} title="방명록" />

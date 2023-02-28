@@ -1,19 +1,19 @@
-.form-input {
+.sender-input {
   font-size: 15px;
   color: #222222;
   width: 100%;
   border: none;
-  border-bottom: solid pink 1px;
+  border-bottom: 1px solid pink;
   padding-bottom: 10px;
 
   background: none;
   z-index: 5;
 }
 
-.form-input::placeholder {
+.sender-input::placeholder {
   color: #ffadc5;
 }
-.form-input:focus {
+.sender-input:focus {
   outline: none;
 }
 
@@ -30,7 +30,7 @@
   transition: 0.5s;
 }
 
-.input-label {
+.sender-label {
   position: absolute;
   color: #f8bfd1;
 
@@ -39,33 +39,33 @@
   transition: all 0.2s;
 }
 
-.form-input:focus ~ .input-label,
-.form-input:valid ~ .input-label {
+.sender-input:focus ~ .sender-label,
+.sender-input:valid ~ .sender-label {
   font-size: 16px;
   bottom: 40px;
   color: #f998b5;
   font-weight: bold;
 }
 
-.form-input:focus ~ span,
-.form-input:valid ~ span {
+.sender-input:focus ~ .bottom-deco,
+.sender-input:valid ~ .bottom-deco {
   width: 100%;
 }
 
-textarea {
+.message-input {
   font-size: 15px;
   color: #222222;
   width: 100%;
   border: none;
-  border-bottom: solid pink 1px;
+  border-bottom: 1px solid pink;
   padding-bottom: 10px;
   background: none;
   z-index: 5;
   resize: none;
 }
 
-textarea:focus ~ .textarea-label,
-textarea:valid ~ .textarea-label {
+.message-input:focus ~ .message-label,
+.message-input:valid ~ .message-label {
   font-size: 16px;
   top: -30px;
   color: #f998b5;
@@ -73,19 +73,19 @@ textarea:valid ~ .textarea-label {
   background: none;
 }
 
-textarea:focus ~ span,
-textarea:valid ~ span {
+.message-input:focus ~ .bottom-deco,
+.message-input:valid ~ .bottom-deco {
   width: 100%;
 }
 
-textarea::placeholder {
+.message-input::placeholder {
   color: #ffadc5;
 }
-textarea:focus {
+.message-input:focus {
   outline: none;
 }
 
-.textarea-label {
+.message-label {
   position: absolute;
   color: #f8bfd1;
 

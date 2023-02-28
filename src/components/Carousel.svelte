@@ -52,8 +52,6 @@
     ? `translateX(-${currentIdx * interval}px)`
     : `translateX(-${currentIdx * interval + dX}px)`
 
-  $: childLen = document.getElementsByClassName('carousel-content')
-
   let isMouseDown = false
 
   const onMouseDown = (e: MouseEvent) => {
@@ -70,9 +68,9 @@
     dX = moveX
   }
   const onMouseUp = (e: MouseEvent) => {
-    if (dX > 150 && currentIdx + 1 < length) {
+    if (dX > interval && currentIdx + 1 < length) {
       currentIdx++
-    } else if (dX < -150 && currentIdx + 1 <= length) {
+    } else if (dX < -1 * interval && currentIdx + 1 <= length) {
       currentIdx--
     }
     dX = 0
@@ -96,9 +94,9 @@
   }
 
   const onTouchEnd = (e: TouchEvent) => {
-    if (dX > 150 && currentIdx + 1 < length) {
+    if (dX > interval && currentIdx + 1 < length) {
       currentIdx++
-    } else if (dX < -150 && currentIdx + 1 <= length) {
+    } else if (dX < -1 * interval && currentIdx + 1 <= length) {
       currentIdx--
     }
     dX = 0

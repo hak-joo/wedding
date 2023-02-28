@@ -68,7 +68,7 @@
       overflow: hidden;
 
       font-weight: bold;
-      font-family: 'Hi Melody', cursive;
+      font-family: 'Nanum Myeongjo', serif;
       font-size: 16px;
       text-align: center;
       @include mobile {

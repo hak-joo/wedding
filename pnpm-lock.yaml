@@ -3,9 +3,11 @@ lockfileVersion: 5.4
 specifiers:
   '@sveltejs/vite-plugin-svelte': ^2.0.2
   '@tsconfig/svelte': ^3.0.0
+  '@types/aos': ^3.0.4
   '@types/node': ^18.13.0
   '@typescript-eslint/eslint-plugin': ^5.51.0
   '@typescript-eslint/parser': ^5.51.0
+  aos: 3.0.0-beta.6
   dayjs: ^1.11.7
   eslint: ^8.33.0
   eslint-plugin-svelte3: ^4.0.0
@@ -14,7 +16,6 @@ specifiers:
   sass: ^1.58.0
   svelte: ^3.55.1
   svelte-check: ^2.10.3
-  svelte-inview: ^3.0.2
   svelte-portal: ^2.2.0
   svelte-preprocess: ^5.0.1
   svelte-spa-router: ^3.3.0
@@ -23,9 +24,10 @@ specifiers:
   vite: ^4.1.0
 
 dependencies:
+  '@types/aos': 3.0.4
+  aos: 3.0.0-beta.6
   dayjs: 1.11.7
   sass: 1.58.0
-  svelte-inview: 3.0.2_svelte@3.55.1
   svelte-portal: 2.2.0
   svelte-preprocess: 5.0.1_cjyprvzu4kavkaguwtgkgx5cp4
   svelte-spa-router: 3.3.0
@@ -342,6 +344,10 @@ packages:
     resolution: {integrity: sha512-pYrtLtOwku/7r1i9AMONsJMVYAtk3hzOfiGNekhtq5tYBGA7unMve8RvUclKLMT3PrihvJqUmzsRGh0RP84hKg==}
     dev: true
 
+  /@types/aos/3.0.4:
+    resolution: {integrity: sha512-mna6Jd6bdK1NpwarLopGvXOgUoCfj0470IwLxuVOFDElTGI0JTd7xSGQ0AjbAEnHErC/b3fA9t2uB3IXVKmckA==}
+    dev: false
+
   /@types/json-schema/7.0.11:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
@@ -533,6 +539,14 @@ packages:
       normalize-path: 3.0.0
       picomatch: 2.3.1
 
+  /aos/3.0.0-beta.6:
+    resolution: {integrity: sha512-VLWrpq8bfAWcetynVHMMrqdC+89Qq/Ym6UBJbHB4crIwp3RR8uq1dNGgsFzoDl03S43rlVMK+na3r5+oUCZsYw==}
+    dependencies:
+      classlist-polyfill: 1.2.0
+      lodash.debounce: 4.0.8
+      lodash.throttle: 4.1.1
+    dev: false
+
   /argparse/2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
     dev: true
@@ -590,6 +604,10 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.2
+
+  /classlist-polyfill/1.2.0:
+    resolution: {integrity: sha512-GzIjNdcEtH4ieA2S8NmrSxv7DfEV5fmixQeyTmqmRmRJPGpRBaSnA2a0VrCjyT8iW8JjEdMbKzDotAJf+ajgaQ==}
+    dev: false
 
   /color-convert/2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -1068,9 +1086,17 @@ packages:
       p-locate: 5.0.0
     dev: true
 
+  /lodash.debounce/4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+    dev: false
+
   /lodash.merge/4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
     dev: true
+
+  /lodash.throttle/4.1.1:
+    resolution: {integrity: sha512-wIkUCfVKpVsWo3JSZlc+8MB5it+2AN5W8J7YVMST30UrvcQNZ1Okbj+rbVniijTWE6FGYy4XJq/rHkas8qJMLQ==}
+    dev: false
 
   /lru-cache/6.0.0:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
@@ -1463,14 +1489,6 @@ packages:
     dependencies:
       svelte: 3.55.1
     dev: true
-
-  /svelte-inview/3.0.2_svelte@3.55.1:
-    resolution: {integrity: sha512-QdMGe8oE/dsoqbQHppeNgz9zK0Ahir+RYDqw5JwKJcbdzLOkgPGp0Dzt8c9PIdEQXoJD+piOeMGdQGrCmlyMag==}
-    peerDependencies:
-      svelte: ^3.0.0
-    dependencies:
-      svelte: 3.55.1
-    dev: false
 
   /svelte-portal/2.2.0:
     resolution: {integrity: sha512-jhtZWtD6cUE2nMw46dJ5VXWYiqnER+JH+V/BmNBQ5fNP/YdsJCpJi+DemUy9msklqGb0f+wLhJPBtKHLWQvzjg==}

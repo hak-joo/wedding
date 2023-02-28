@@ -95,7 +95,7 @@
       }
       width: 100%;
       margin-bottom: 70px;
-      font-family: 'Hi Melody', cursive;
+      font-family: 'Nanum Myeongjo', serif;
     }
     &-message {
       display: flex;
@@ -104,7 +104,7 @@
         padding: 10px;
       }
       width: 100%;
-      font-family: 'Hi Melody', cursive;
+      font-family: 'Nanum Myeongjo', serif;
     }
     &-content {
       display: flex;

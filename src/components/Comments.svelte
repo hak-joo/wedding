@@ -179,7 +179,7 @@
     color: black;
     position: absolute;
     font-size: 14px;
-    font-family: 'Hi Melody', cursive;
+    font-family: 'Nanum Myeongjo', serif;
   }
   .sender {
     width: 70px;
@@ -191,18 +191,14 @@
     display: flex;
     justify-content: center;
     font-size: 16px;
-    font-family: 'Hi Melody', cursive;
+    font-family: 'Nanum Myeongjo', serif;
   }
 </style>
 
 <script lang="ts">
-  import { fly } from 'svelte/transition'
   import { guestBooks } from './guestBookDatas'
-  import { inview } from 'svelte-inview'
   import dayjs from 'dayjs'
   import { randomInt } from 'crypto'
-
-  let viewIndex = -1
 </script>
 
 <div class="comment-container" />
@@ -237,29 +233,15 @@
 
 <div class="comment-list">
   {#each guestBooks as comment, idx}
-    <div
-      use:inview={{ unobserveOnEnter: true }}
-      on:change={({ detail }) => {
-        if (detail.inView && viewIndex <= idx) {
-          viewIndex = idx
-        }
-        console.log(viewIndex)
-      }}
-      class="heart-container"
-    >
-      {#if viewIndex >= idx}
-        <div
-          class="heart-thumbnail-container"
-          transition:fly={{ y: 100 * idx, duration: 500, delay: 100 }}
-        >
-          <div class="heart-thumbnail-item">
-            <div class="item">
-              <div class="content">{comment.comment}</div>
-              <div class="sender">- {comment.sender} -</div>
-            </div>
+    <div class="heart-container">
+      <div class="heart-thumbnail-container">
+        <div class="heart-thumbnail-item">
+          <div class="item">
+            <div class="content">{comment.comment}</div>
+            <div class="sender">- {comment.sender} -</div>
           </div>
         </div>
-      {/if}
+      </div>
     </div>
   {/each}
 </div>

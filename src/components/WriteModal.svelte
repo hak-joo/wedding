@@ -245,6 +245,7 @@
           <div class="form-content">
             <div class="form-sender">
               <input bind:value={sender} class="sender-input" type="text" required />
+              <!-- svelte-ignore a11y-label-has-associated-control -->
               <label class="sender-label">작성자</label>
               <span class="bottom-deco" />
             </div>
@@ -258,6 +259,7 @@
                 on:keyup={e => onResizeTextArea(e)}
                 on:keydown={e => onResizeTextArea(e)}
               />
+              <!-- svelte-ignore a11y-label-has-associated-control -->
               <label class="message-label">내용</label>
               <span class="bottom-deco" />
             </div>

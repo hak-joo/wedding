@@ -98,28 +98,10 @@
 <script lang="ts">
   import { Comment } from './../views/Invitation/type'
 
-  import { guestBooks } from './guestBookDatas'
   import PinIcon from '../assets/styles/ic-pin.png'
   import dayjs from 'dayjs'
 
   export let comments: Comment[] = []
-
-  const dateFormat = (date: any) => {
-    const ddate = new Date(date)
-    let month = ddate.getMonth() + 1
-    let day = ddate.getDate()
-    let hour = ddate.getHours()
-    let minute = ddate.getMinutes()
-    let second = ddate.getSeconds()
-
-    month = month >= 10 ? month : '0' + month
-    day = day >= 10 ? day : '0' + day
-    hour = hour >= 10 ? hour : '0' + hour
-    minute = minute >= 10 ? minute : '0' + minute
-    second = second >= 10 ? second : '0' + second
-
-    return month + '-' + day + ' ' + hour + ':' + minute + ':' + second
-  }
 </script>
 
 {#each comments as guest, idx}
@@ -127,7 +109,7 @@
     <div class="postit-wrapper">
       <div class="postit-container">
         <div class="postit-header">
-          <img src={PinIcon} alt="pin" />
+          <!-- <img src={PinIcon} alt="pin" /> -->
         </div>
 
         <div class="postit-content">
@@ -135,7 +117,7 @@
         </div>
         <div class="postit-footer">
           <p>- {guest.sender} -</p>
-          <p>{dateFormat(guest.createdDate)}</p>
+          <p>{dayjs(guest.createdDate).format('MM-DD HH:mm:ss')}</p>
         </div>
       </div>
     </div>

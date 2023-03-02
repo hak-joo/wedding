@@ -3,9 +3,9 @@ import { getDatabase, ref, push } from 'firebase/database'
 export const sendComments = async (form: object) => {
   const database = getDatabase(
     undefined,
-    'https://wedding-6978f-default-rtdb.asia-southeast1.firebasedatabase.app/'
+    import.meta.env.VITE_FIREBASE_RDB_URL
   )
-  push(ref(database, '/'), form)
+  push(ref(database, '/comments'), form)
     .then(() => {
       return true
     })

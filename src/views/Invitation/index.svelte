@@ -520,18 +520,12 @@
   import Modal from '../../components/Modal.svelte'
   import ImageModal from '../../components/ImageModal.svelte'
 
-  import type { Comment } from './type'
+  import type { Comment, GalleryItem, Info } from './type'
 
-  import HeaderImg from '/images/header.jpg'
-  import FooterImg from '/images/footer.jpg'
-  import PayImg from '/images/pay.png'
   import WriteModal from '../../components/WriteModal.svelte'
   import dayjs from 'dayjs'
-  import timezone from 'dayjs/plugin/timezone'
-  import utc from 'dayjs/plugin/utc'
-  dayjs.extend(utc)
-  dayjs.extend(timezone)
-  dayjs.tz.setDefault('Asia/Seoul')
+  import 'dayjs/locale/ko'
+  dayjs.locale('ko')
 
   import AOS from 'aos'
   import 'aos/dist/aos.css' // You can also use <link> for styles
@@ -541,10 +535,94 @@
   let isShowOpening = true
   let navOpen = false
 
-  let galleryDatas: { path: string; thumbnail: string }[] = []
+  let galleryDatas: GalleryItem[] = []
   let currentIdx = 0
 
-  let dday = dayjs('2023-04-22').diff(dayjs(), 'day')
+  let assets: any = {}
+  let info: Info = {
+    header: {
+      img: ''
+    },
+
+    footer: {
+      img: '',
+      text: ''
+    },
+
+    weddingDay: '',
+    weddingTime: '',
+    weddingHole: {
+      name: '',
+      address: '',
+      subway: [],
+      bus: [],
+      car: []
+    },
+    inviteMent: '',
+    noti: {
+      title: '',
+      contents: []
+    },
+    groom: {
+      name: '',
+      relation: '',
+      phone: '',
+      account: {
+        bank: '',
+        nubmer: ''
+      },
+      pay: ''
+    },
+    groomFather: {
+      name: '',
+      phone: '',
+      account: {
+        bank: '',
+        nubmer: ''
+      },
+      pay: ''
+    },
+    groomMother: {
+      name: '',
+      phone: '',
+      account: {
+        bank: '',
+        nubmer: ''
+      },
+      pay: ''
+    },
+    bride: {
+      name: '',
+      relation: '',
+      phone: '',
+      account: {
+        bank: '',
+        nubmer: ''
+      },
+      pay: ''
+    },
+    brideFather: {
+      name: '',
+      phone: '',
+      account: {
+        bank: '',
+        nubmer: ''
+      },
+      pay: ''
+    },
+    brideMother: {
+      name: '',
+      phone: '',
+      account: {
+        bank: '',
+        nubmer: ''
+      },
+      pay: ''
+    }
+  }
+
+  let weddingDay = dayjs()
+  let dday = 0
 
   const toggleShowOpening = () => (isShowOpening = !isShowOpening)
 
@@ -571,98 +649,30 @@
       inline: 'nearest'
     })
   }
-
   onMount(async () => {
     if (!Kakao.isInitialized()) {
       Kakao.init('037b39715d4b19da434d1ba24c04fbd2')
     }
-    galleryDatas = [
-      {
-        path: '/images/gallery-01.jpg',
-        thumbnail: '/images/thumbnail-01.jpg'
-      },
-      {
-        path: '/images/gallery-02.jpg',
-        thumbnail: '/images/thumbnail-02.jpg'
-      },
-      {
-        path: '/images/gallery-03.jpg',
-        thumbnail: '/images/thumbnail-03.jpg'
-      },
-      {
-        path: '/images/gallery-04.jpg',
-        thumbnail: '/images/thumbnail-04.jpg'
-      },
-      {
-        path: '/images/gallery-05.jpg',
-        thumbnail: '/images/thumbnail-05.jpg'
-      },
-      {
-        path: '/images/gallery-06.jpg',
-        thumbnail: '/images/thumbnail-06.jpg'
-      },
-      {
-        path: '/images/gallery-07.jpg',
-        thumbnail: '/images/thumbnail-07.jpg'
-      },
-      {
-        path: '/images/gallery-08.jpg',
-        thumbnail: '/images/thumbnail-08.jpg'
-      },
-      {
-        path: '/images/gallery-09.jpg',
-        thumbnail: '/images/thumbnail-09.jpg'
-      },
-      {
-        path: '/images/gallery-10.jpg',
-        thumbnail: '/images/thumbnail-10.jpg'
-      },
-      {
-        path: '/images/gallery-11.jpg',
-        thumbnail: '/images/thumbnail-11.jpg'
-      },
-      {
-        path: '/images/gallery-12.jpg',
-        thumbnail: '/images/thumbnail-12.jpg'
-      },
-      {
-        path: '/images/gallery-13.jpg',
-        thumbnail: '/images/thumbnail-13.jpg'
-      },
-      {
-        path: '/images/gallery-14.jpg',
-        thumbnail: '/images/thumbnail-14.jpg'
-      },
-      {
-        path: '/images/gallery-15.jpg',
-        thumbnail: '/images/thumbnail-15.jpg'
-      },
-      {
-        path: '/images/gallery-16.jpg',
-        thumbnail: '/images/thumbnail-16.jpg'
-      },
-      {
-        path: '/images/gallery-17.jpg',
-        thumbnail: '/images/thumbnail-17.jpg'
-      },
-      {
-        path: '/images/gallery-18.jpg',
-        thumbnail: '/images/thumbnail-18.jpg'
-      },
-      {
-        path: '/images/gallery-19.jpg',
-        thumbnail: '/images/thumbnail-19.jpg'
-      },
-      {
-        path: '/images/gallery-20.jpg',
-        thumbnail: '/images/thumbnail-20.jpg'
-      }
-    ]
-    const database = getDatabase(
-      undefined,
-      'https://wedding-6978f-default-rtdb.asia-southeast1.firebasedatabase.app/'
-    )
-    const commentRef = ref(database, '/')
+    const database = getDatabase(undefined, import.meta.env.VITE_FIREBASE_RDB_URL)
+    const galleryRef = ref(database, '/gallery')
+    onValue(galleryRef, snapshot => {
+      let data: { path: string; thumbnail: string }[] = []
+      Object.keys(snapshot.val()).forEach(key => {
+        data.push(snapshot.val()[key])
+      })
+      galleryDatas = data
+    })
+    const infoRef = ref(database, '/info')
+    onValue(infoRef, snapshot => {
+      info = snapshot.val()
+      weddingDay = dayjs(info.weddingDay)
+      dday = weddingDay.diff(dayjs(), 'day')
+    })
+    const assetRef = ref(database, '/assets')
+    onValue(assetRef, snapshot => {
+      assets = snapshot.val()
+    })
+    const commentRef = ref(database, '/comments')
     onValue(commentRef, snapshot => {
       let data: Comment[] = []
       Object.keys(snapshot.val()).forEach(key => {
@@ -725,9 +735,9 @@
 <div class="main-wrapper" transition:fade>
   <div class="header-container">
     <div class="header-text-top">THE MARRIGE</div>
-    <div class="header-text-middle">04.22</div>
-    <div class="header-text-bottom">홍성현 이성연 결혼합니다.</div>
-    <img class="header-img" src={HeaderImg} alt="HeaderImg" />
+    <div class="header-text-middle">{weddingDay.format('MM.DD')}</div>
+    <div class="header-text-bottom">{info.groom.name} {info.bride.name} 결혼합니다.</div>
+    <img class="header-img" src={info.header.img} alt="HeaderImg" />
   </div>
   <div
     class="info-container"
@@ -739,9 +749,11 @@
     data-aos-mirror="false"
     data-aos-once="true"
   >
-    <div class="info-date">2023.04.22. 토요일 4:00 PM</div>
+    <div class="info-date">
+      {weddingDay.format('YYYY.MM.DD. ddd')}요일 {info.weddingTime}
+    </div>
     <div class="info-location">
-      케이터틀<span>(구. 거구장)</span> , 2층 컨벤션홀
+      {@html info.weddingHole.name}
     </div>
   </div>
   <div
@@ -756,25 +768,7 @@
   >
     <div class="ment-title">초대합니다.</div>
     <div class="ment-text">
-      저희 두 사람의 작은 만남이
-      <br />
-      사랑의 결실을 이루어
-      <br />
-      <span style="background-color:#f79e9e;color:#ffffff;"
-        ><strong>소중한 결혼식</strong></span
-      >
-      을 올리게 되었습니다.
-      <br />
-      <br />
-      <br />
-      첫 마음 그대로 존중하고 배려하며 살겠습니다.
-      <br />
-      <br />
-      오로지 믿음과 사랑을 약속하는 날
-      <br />
-      오셔서 축복해 주시면 더없는 기쁨으로
-      <br />
-      간직하겠습니다.
+      {@html info.inviteMent}
     </div>
   </div>
   <div class="divider" />
@@ -789,18 +783,18 @@
     data-aos-once="true"
   >
     <div class="info-line">
-      <div class="info-person">홍찬표</div>
+      <div class="info-person">{info.groomFather.name}</div>
       <div class="separator" />
-      <div class="info-person">박미선</div>
-      <div class="info-relation">의 장남</div>
-      <div class="info-person">홍성현</div>
+      <div class="info-person">{info.groomMother.name}</div>
+      <div class="info-relation">의 {info.groom.relation}</div>
+      <div class="info-person">{info.groom.name}</div>
     </div>
     <div class="info-line">
-      <div class="info-person">이재상</div>
+      <div class="info-person">{info.brideFather.name}</div>
       <div class="separator" />
-      <div class="info-person">김선희</div>
-      <div class="info-relation">의 장녀</div>
-      <div class="info-person">이성연</div>
+      <div class="info-person">{info.brideMother.name}</div>
+      <div class="info-relation">의 {info.bride.relation}</div>
+      <div class="info-person">{info.bride.name}</div>
     </div>
   </div>
 
@@ -869,7 +863,7 @@
     data-aos-once="true"
   >
     <div class="d-day-text">
-      성현 ♥ 성연 결혼식이 {dday}일 {dday > 0
+      {info.groom.name.slice(1)} ♥ {info.bride.name.slice(1)} 결혼식이 {dday}일 {dday > 0
         ? '남았습니다.'
         : dday === 0
         ? '날입니다.'
@@ -888,39 +882,31 @@
   >
     <div class="map-title">오시는 길</div>
     <div class="map-location">
-      신촌 케이터틀 <span>(구. 거구장)</span>,2층 컨벤션홀
+      {@html info.weddingHole.name}
     </div>
-    <div class="map-address">서울특별시 마포구 백범로 23(신수동 63-14)</div>
+    <div class="map-address">{@html info.weddingHole.address}</div>
     <Map />
     <div class="map-navi-container">
       <div class="map-navi-title">지하철</div>
       <div class="map-navi-content">
-        <div class="map-navi-content-item">[2호선 신촌역] 6번 출구 - 서강대방면 150m</div>
-        <div class="map-navi-content-item">[6호선 대흥역] 1번 출구 - 서강대방면 600m</div>
-        <div class="map-navi-content-item">
-          [경의중앙선 서강대역] 1번 출구 - 서강대방면 200m
-        </div>
+        {#each info.weddingHole.subway as subway}
+          <div class="map-navi-content-item">{@html subway}</div>
+        {/each}
       </div>
     </div>
     <div class="map-navi-container">
       <div class="map-navi-title">버스</div>
       <div class="map-navi-content">
-        <div class="map-navi-content-item">
-          [마을버스] 마포 07, 마포 10, 마포 11, 마포 12
-        </div>
-        <div class="map-navi-content-item">[좌석버스] 921</div>
-        <div class="map-navi-content-item">[직행버스] G6000</div>
-        <div class="map-navi-content-item">
-          [지선] 5713, 5714, 6712, 6713, 6716, 7016, 7613
-        </div>
-        <div class="map-navi-content-item">
-          [간선] 110A고려대, 110B국민대, 163, 604, 740, 753
-        </div>
+        {#each info.weddingHole.bus as bus}
+          <div class="map-navi-content-item">{@html bus}</div>
+        {/each}
       </div>
     </div>
     <div class="map-navi-container">
       <div class="map-navi-title">자가용</div>
-      <div class="map-navi-content-item">서울시 마포구 백범로 23 케이터틀 컨벤션홀</div>
+      {#each info.weddingHole.car as car}
+        <div class="map-navi-content-item">{@html car}</div>
+      {/each}
     </div>
   </div>
   <div
@@ -933,12 +919,10 @@
     data-aos-mirror="false"
     data-aos-once="true"
   >
-    <div class="noti-title">주차 안내</div>
-    <div class="noti-content">정문(스타벅스쪽) 우측 주차장 이용</div>
-    <div class="noti-content">* 무료주차 1시간 40분(10분 추가 500원)</div>
-    <div class="noti-content">
-      * 주차권을 반드시 챙겨주시고 연회장 입구에서 주차도장을 받아주시기 바랍니다.
-    </div>
+    <div class="noti-title">{@html info.noti.title}</div>
+    {#each info.noti.contents as content}
+      <div class="noti-content">{@html content}</div>
+    {/each}
   </div>
   <div
     class="contact-us-container"
@@ -955,129 +939,139 @@
       <div class="contact-us-sub-container">
         <div class="contact-us-sub-title">신랑에게 연락하기</div>
         <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
+          <a class="contact-us-btn-icon" href="tel:{info.groom.phone}">
             <img
               alt="phone"
               src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
             />
-          </div>
-          <div class="contact-us-btn-icon">
+          </a>
+          <a class="contact-us-btn-icon" href="sms:{info.groom.phone}">
             <img
               alt="message"
               src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
             />
-          </div>
+          </a>
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
           <div class="contact-us-btn-pay-icon">
-            <img alt="pay" src={PayImg} />
+            <img alt="pay" src={assets.payIcon} />
           </div>
         </div>
       </div>
       <div class="contact-us-sub-container">
         <div class="contact-us-sub-title">신부에게 연락하기</div>
         <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
+          <a class="contact-us-btn-icon" href="tel:{info.bride.phone}">
             <img
               alt="phone"
               src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
             />
-          </div>
-          <div class="contact-us-btn-icon">
+          </a>
+          <a class="contact-us-btn-icon" href="sms:{info.bride.phone}">
             <img
               alt="message"
               src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
             />
-          </div>
+          </a>
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+          <div class="contact-us-btn-pay-icon">
+            <img alt="pay" src={assets.payIcon} />
+          </div>
         </div>
       </div>
     </div>
     <div class="contact-us-row-container">
       <div class="contact-us-sub-container">
         <div class="contact-us-groom-title">신랑측 혼주</div>
-        <div class="contact-us-groom-sub-title">아버지 홍찬표</div>
+        <div class="contact-us-groom-sub-title">아버지 {info.groomFather.name}</div>
         <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
+          <a class="contact-us-btn-icon" href="tel:{info.groomFather.phone}">
             <img
               alt="phone"
               src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
             />
-          </div>
-          <div class="contact-us-btn-icon">
+          </a>
+          <a class="contact-us-btn-icon" href="sms:{info.groomFather.phone}">
             <img
               alt="message"
               src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
             />
-          </div>
+          </a>
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+          <div class="contact-us-btn-pay-icon">
+            <img alt="pay" src={assets.payIcon} />
+          </div>
         </div>
-        <div class="contact-us-groom-sub-title">어머니 박미선</div>
+        <div class="contact-us-groom-sub-title">어머니 {info.groomMother.name}</div>
         <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
+          <a class="contact-us-btn-icon" href="tel:{info.groomMother.phone}">
             <img
               alt="phone"
               src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
             />
-          </div>
-          <div class="contact-us-btn-icon">
+          </a>
+          <a class="contact-us-btn-icon" href="sms:{info.groomMother.phone}">
             <img
               alt="message"
               src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
             />
-          </div>
+          </a>
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+          <div class="contact-us-btn-pay-icon">
+            <img alt="pay" src={assets.payIcon} />
+          </div>
         </div>
       </div>
       <div class="contact-us-sub-container">
         <div class="contact-us-bride-title">신부측 혼주</div>
-        <div class="contact-us-bride-sub-title">아버지 이재상</div>
+        <div class="contact-us-bride-sub-title">아버지 {info.brideFather.name}</div>
         <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
+          <a class="contact-us-btn-icon" href="tel:{info.brideFather.phone}">
             <img
               alt="phone"
               src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
             />
-          </div>
-          <div class="contact-us-btn-icon">
+          </a>
+          <a class="contact-us-btn-icon" href="sms:{info.brideFather.phone}">
             <img
               alt="message"
               src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
             />
-          </div>
+          </a>
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+          <div class="contact-us-btn-pay-icon">
+            <img alt="pay" src={assets.payIcon} />
+          </div>
         </div>
-        <div class="contact-us-bride-sub-title">어머니 김선희</div>
+        <div class="contact-us-bride-sub-title">어머니 {info.brideMother.name}</div>
         <div class="contact-us-row-container">
-          <div class="contact-us-btn-icon">
+          <a class="contact-us-btn-icon" href="tel:{info.brideMother.phone}">
             <img
               alt="phone"
               src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
             />
-          </div>
-          <div class="contact-us-btn-icon">
+          </a>
+          <a class="contact-us-btn-icon" href="sms:{info.brideMother.phone}">
             <img
               alt="message"
               src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
             />
-          </div>
+          </a>
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon"><img alt="pay" src={PayImg} /></div>
+          <div class="contact-us-btn-pay-icon">
+            <img alt="pay" src={assets.payIcon} />
+          </div>
         </div>
       </div>
     </div>
@@ -1119,7 +1113,7 @@
   <WriteModal bind:isShow={writeModalShow} startY={writeModalStartY} title="방명록" />
 
   <div class="footer-img-container">
-    <img src={FooterImg} alt={FooterImg} class="footer-img" />
+    <img src={info.footer.img} alt={'FooterImg'} class="footer-img" />
     <!-- <div class="footer-img-inner-text">행복하겠습니다.</div> -->
   </div>
   <div class="footer-container">

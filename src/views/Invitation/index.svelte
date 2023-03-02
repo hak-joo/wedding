@@ -636,7 +636,7 @@
   const sendKakao = () => {
     // 메시지 공유 함수
     Kakao.Link.sendScrap({
-      requestUrl: 'https://wedding-invitation-prohong.vercel.app', // 페이지 url
+      requestUrl: 'https://transcendent-clafoutis-f42ed4.netlify.app', // 페이지 url
       templateId: 90201 // 메시지템플릿 번호
     })
   }

@@ -173,7 +173,6 @@
         delay,
         duration,
         css: (t: number) => `
-
           max-width: 300Px;
           width: ${t * 80}%;
           max-height: 200px;

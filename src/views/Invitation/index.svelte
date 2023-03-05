@@ -529,7 +529,7 @@
 
   import AOS from 'aos'
   import 'aos/dist/aos.css' // You can also use <link> for styles
-  import { getDatabase, onValue, ref } from 'firebase/database'
+  import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database'
 
   AOS.init()
   let isShowOpening = true
@@ -641,13 +641,20 @@
     })
   }
 
-  const scrollToElement = (menu: string) => {
+  const scrollToElement = (menu: string, behavior?: ScrollBehavior) => {
     const el = document.getElementsByClassName(`${menu}-container`)
     if (!el) return
+    if (!el[0]) return
     el[0].scrollIntoView({
-      behavior: 'smooth',
+      behavior,
       inline: 'nearest'
     })
+  }
+  $: modalShow, writeModalShow, scrollController()
+  const scrollController = () => {
+    if (!modalShow && !writeModalShow) {
+      scrollToElement('guest-book')
+    }
   }
   onMount(async () => {
     if (!Kakao.isInitialized()) {
@@ -672,7 +679,7 @@
     onValue(assetRef, snapshot => {
       assets = snapshot.val()
     })
-    const commentRef = ref(database, '/comments')
+    const commentRef = query(ref(database, '/comments'), orderByChild('createdDate'))
     onValue(commentRef, snapshot => {
       let data: Comment[] = []
       Object.keys(snapshot.val()).forEach(key => {
@@ -698,7 +705,7 @@
   <button
     class="navigation-button"
     on:click={() => {
-      scrollToElement('gallery')
+      scrollToElement('gallery', 'smooth')
     }}
     transition:fly={{ x: -50, duration: 300 }}
   >
@@ -707,7 +714,7 @@
   <button
     class="navigation-button"
     on:click={() => {
-      scrollToElement('map')
+      scrollToElement('map', 'smooth')
     }}
     transition:fly={{ x: -50, duration: 300 }}
   >
@@ -716,7 +723,7 @@
   <button
     class="navigation-button"
     on:click={() => {
-      scrollToElement('contact-us')
+      scrollToElement('contact-us', 'smooth')
     }}
     transition:fly={{ x: -50, duration: 300 }}
   >
@@ -725,13 +732,14 @@
   <button
     class="navigation-button"
     on:click={() => {
-      scrollToElement('guest-book')
+      scrollToElement('guest-book', 'smooth')
     }}
     transition:fly={{ x: -50, duration: 300 }}
   >
     B
   </button>
 </div>
+
 <div class="main-wrapper" transition:fade>
   <div class="header-container">
     <div class="header-text-top">THE MARRIGE</div>

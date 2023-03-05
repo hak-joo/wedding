@@ -39,13 +39,17 @@
       justify-content: center;
       width: 100%;
       height: 100%;
+
+      background-color: rgba(101, 112, 152, 0.95);
     }
     &-container {
       display: flex;
       flex-direction: column;
+      position: absolute;
+      top: var(--top);
       width: 440px;
       height: 100%;
-      background-color: #ced2df;
+      background-color: #f2f2f2;
       @include mobile {
         /*브라우저 사이즈767px이하일때*/
         width: 100vw;
@@ -58,9 +62,13 @@
       justify-content: center;
       width: 100%;
       height: 60px;
-      background-color: #e2e2e2;
+      background-color: #657098;
+      border-radius: 10px 10px 0 0;
     }
     &-slot {
+      flex: 1;
+      margin: 10px;
+
       max-height: 100%;
       overflow-y: scroll;
       scroll-behavior: smooth;
@@ -76,33 +84,86 @@
     &-title {
       font-size: 24px;
       font-family: 'Nanum Myeongjo', serif;
+      color: white;
+      font-weight: bold;
+
       &-close {
         position: absolute;
         right: 5%;
+        img {
+          width: 20px;
+          height: 20px;
+        }
       }
     }
   }
 </style>
 
 <script lang="ts">
-  import { fly, fade } from 'svelte/transition'
+  import { fade, fly } from 'svelte/transition'
   import { portal } from 'svelte-portal'
+  import CloseIcon from '../assets/styles/ic-close.png'
 
   export let isShow: boolean = true
   export let title = ''
+
+  let startY = 0
+  let dY = 0
+  let isMouseDown = false
+  $: top = `${dY}px`
+
+  const onTouchStart = (e: TouchEvent) => {
+    startY = e.touches[0].screenY
+    isMouseDown = true
+  }
+
+  const onTouchMove = (e: TouchEvent) => {
+    e.preventDefault()
+    if (!isMouseDown) return
+
+    let moveY = e.touches[0].screenY - startY
+    if (moveY < 0) return
+    dY = moveY
+  }
+
+  const onTouchEnd = async (e: TouchEvent) => {
+    if (!isMouseDown) return
+    if (dY > 180) {
+      startY = 0
+      isMouseDown = false
+      isShow = false
+      dY = 0
+    } else {
+      dY = 0
+      startY = 0
+    }
+    isMouseDown = false
+  }
 </script>
 
 {#if isShow}
-  <div class="modal-wrapper" use:portal={'#portal'} transition:fade>
-    <div class="modal-container" transition:fly={{ y: 3000 }}>
-      <div class="modal-header">
-        <div class="modal-title">{title}</div>
+  <div
+    class="modal-wrapper"
+    use:portal={'#portal'}
+    transition:fly={{ y: 300 }}
+    style="--top:{top};"
+  >
+    <div class="modal-container">
+      <div
+        class="modal-header"
+        on:touchstart={onTouchStart}
+        on:touchmove={onTouchMove}
+        on:touchend={onTouchEnd}
+      >
+        <div class="modal-title ">{title}</div>
         <button
           class="modal-title-close"
           on:click={() => {
             isShow = false
-          }}>X</button
+          }}
         >
+          <img src={CloseIcon} alt="close" />
+        </button>
       </div>
       <div class="modal-slot">
         <slot />

@@ -1,6 +1,7 @@
 import './assets/styles/global.scss'
 import './assets/styles/utils.scss'
 import './assets/styles/reset.css'
+import './assets/styles/falling.scss'
 import App from './App.svelte'
 
 // Import the functions you need from the SDKs you need

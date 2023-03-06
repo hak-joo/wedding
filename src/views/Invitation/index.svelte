@@ -234,6 +234,7 @@
         justify-content: center;
         align-items: center;
         gap: 20px;
+        margin-top: 15px;
       }
     }
   }
@@ -685,7 +686,7 @@
       Object.keys(snapshot.val()).forEach(key => {
         data.push(snapshot.val()[key])
       })
-      listComment = data
+      listComment = data.reverse()
     })
   })
 

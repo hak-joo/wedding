@@ -756,7 +756,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     <div class="info-date">
       {weddingDay.format('YYYY.MM.DD. ddd')}요일 {info.weddingTime}
@@ -773,7 +773,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     <div class="ment-title">초대합니다.</div>
     <div class="ment-text">
@@ -789,7 +789,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     <div class="info-line">
       <div class="info-person">{info.groomFather.name}</div>
@@ -832,7 +832,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     {#if galleryDatas.length > 0}
       <Gallery
@@ -869,7 +869,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     <div class="d-day-text">
       {info.groom.name.slice(1)} ♥ {info.bride.name.slice(1)} 결혼식이 {dday}일 {dday > 0
@@ -887,7 +887,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     <div class="map-title">오시는 길</div>
     <div class="map-location">
@@ -926,7 +926,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     <div class="noti-title">{@html info.noti.title}</div>
     {#each info.noti.contents as content}
@@ -941,7 +941,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     <div class="contact-us-title">마음 전하실곳</div>
     <div class="contact-us-row-container">
@@ -1093,7 +1093,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="true"
+    data-aos-once="false"
   >
     <div class="guest-book-title">축하 글을 남겨주세요!</div>
     <Carousel interval={185} length={listComment.length}>

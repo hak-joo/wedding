@@ -509,6 +509,7 @@
 </style>
 
 <script lang="ts">
+	
   import { fade, fly, slide } from 'svelte/transition'
   import { onMount } from 'svelte'
   import Carousel from '../../components/Carousel.svelte'
@@ -516,7 +517,10 @@
   import PostIt from '../../components/PostIt.svelte'
   import Comments from '../../components/Comments.svelte'
   import Map from '../../components/Map.svelte'
+
   import Opening from '../../components/Opening.svelte'
+
+  import '../../assets/styles/wave.scss'
 
   import Modal from '../../components/Modal.svelte'
   import ImageModal from '../../components/ImageModal.svelte'
@@ -531,6 +535,8 @@
   import AOS from 'aos'
   import 'aos/dist/aos.css' // You can also use <link> for styles
   import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database'
+
+  import { ActivateSnow } from './../../lib/snow.ts';
 
   AOS.init()
   let isShowOpening = true
@@ -688,6 +694,7 @@
       })
       listComment = data.reverse()
     })
+    ActivateSnow();
   })
 
   const sleep = (time: number) => {
@@ -746,7 +753,53 @@
     <div class="header-text-top">THE MARRIGE</div>
     <div class="header-text-middle">{weddingDay.format('MM.DD')}</div>
     <div class="header-text-bottom">{info.groom.name} {info.bride.name} 결혼합니다.</div>
+    <div class="wave-top">
+      <svg
+        class="waves"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28"
+        preserveAspectRatio="none"
+        shape-rendering="auto"
+      >
+        <defs
+          ><path
+            id="gentle-wave"
+            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+          /></defs
+        >
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(250, 250, 250,0.7)" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(250, 250, 250,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(250, 250, 250,0.3)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(250, 250, 250,0.2)" />
+        </g>
+      </svg>
+    </div>
     <img class="header-img" src={info.header.img} alt="HeaderImg" />
+    <div class="wave-bottom">
+      <svg
+        class="waves"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="0 24 150 28"
+        preserveAspectRatio="none"
+        shape-rendering="auto"
+      >
+        <defs
+          ><path
+            id="gentle-wave"
+            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+          /></defs
+        >
+        <g class="parallax">
+          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(250, 250, 250,0.7)" />
+          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(250, 250, 250,0.5)" />
+          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(250, 250, 250,0.3)" />
+          <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(250, 250, 250,0.2)" />
+        </g>
+      </svg>
+    </div>
   </div>
   <div
     class="info-container"
@@ -756,7 +809,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     <div class="info-date">
       {weddingDay.format('YYYY.MM.DD. ddd')}요일 {info.weddingTime}
@@ -773,7 +826,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     <div class="ment-title">초대합니다.</div>
     <div class="ment-text">
@@ -789,7 +842,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     <div class="info-line">
       <div class="info-person">{info.groomFather.name}</div>
@@ -832,7 +885,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     {#if galleryDatas.length > 0}
       <Gallery
@@ -869,7 +922,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     <div class="d-day-text">
       {info.groom.name.slice(1)} ♥ {info.bride.name.slice(1)} 결혼식이 {dday}일 {dday > 0
@@ -887,7 +940,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     <div class="map-title">오시는 길</div>
     <div class="map-location">
@@ -926,7 +979,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     <div class="noti-title">{@html info.noti.title}</div>
     {#each info.noti.contents as content}
@@ -941,7 +994,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     <div class="contact-us-title">마음 전하실곳</div>
     <div class="contact-us-row-container">
@@ -1093,7 +1146,7 @@
     data-aos-duration="1000"
     data-aos-easing="ease-in-out"
     data-aos-mirror="false"
-    data-aos-once="false"
+    data-aos-once="true"
   >
     <div class="guest-book-title">축하 글을 남겨주세요!</div>
     <Carousel interval={185} length={listComment.length}>

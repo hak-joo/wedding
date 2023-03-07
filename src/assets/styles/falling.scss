@@ -3,4 +3,17 @@
   z-index: auto;
   color: #ff0000;
   display: block;
+  animation: rotation random(5000) + 4000ms linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotateY(360deg);
+  }
 }

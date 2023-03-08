@@ -11,7 +11,7 @@ export const ActivateSnow = () => {
 
       const startLeft = getRandomNumber(0, screenWidth)
 
-      const timeRun = getRandomNumber(17000, 20000)
+      const timeRun = getRandomNumber(40000, 50000)
       const opacityR = Math.random() * (1 - 0.2) + 0.2
       const sizeR = getRandomNumber(5, 20)
       const endLeft = getRandomNumber(startLeft - 100, startLeft + 100)

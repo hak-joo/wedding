@@ -662,7 +662,7 @@
     }
   }
   onMount(async () => {
-    if (!Kakao.isInitialized()) {
+    if (Kakao && !Kakao.isInitialized()) {
       Kakao.init('037b39715d4b19da434d1ba24c04fbd2')
     }
     const database = getDatabase(undefined, import.meta.env.VITE_FIREBASE_RDB_URL)

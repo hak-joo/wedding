@@ -527,6 +527,7 @@
   import type { Comment, GalleryItem, Info } from './type'
 
   import WriteModal from '../../components/WriteModal.svelte'
+  import AccountModal from '../../components/AccountModal.svelte'
   import dayjs from 'dayjs'
   import 'dayjs/locale/ko'
   dayjs.locale('ko')
@@ -574,7 +575,7 @@
       phone: '',
       account: {
         bank: '',
-        nubmer: ''
+        number: ''
       },
       pay: ''
     },
@@ -583,7 +584,7 @@
       phone: '',
       account: {
         bank: '',
-        nubmer: ''
+        number: ''
       },
       pay: ''
     },
@@ -592,7 +593,7 @@
       phone: '',
       account: {
         bank: '',
-        nubmer: ''
+        number: ''
       },
       pay: ''
     },
@@ -602,7 +603,7 @@
       phone: '',
       account: {
         bank: '',
-        nubmer: ''
+        number: ''
       },
       pay: ''
     },
@@ -611,7 +612,7 @@
       phone: '',
       account: {
         bank: '',
-        nubmer: ''
+        number: ''
       },
       pay: ''
     },
@@ -620,7 +621,7 @@
       phone: '',
       account: {
         bank: '',
-        nubmer: ''
+        number: ''
       },
       pay: ''
     }
@@ -1014,9 +1015,9 @@
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon">
+          <a class="contact-us-btn-pay-icon" href={info.groom.pay}>
             <img alt="pay" src={assets.payIcon} />
-          </div>
+          </a>
         </div>
       </div>
       <div class="contact-us-sub-container">
@@ -1037,9 +1038,9 @@
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon">
+          <a class="contact-us-btn-pay-icon" href={info.bride.pay}>
             <img alt="pay" src={assets.payIcon} />
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -1063,9 +1064,9 @@
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon">
+          <a class="contact-us-btn-pay-icon" href={info.groomFather.pay}>
             <img alt="pay" src={assets.payIcon} />
-          </div>
+          </a>
         </div>
         <div class="contact-us-groom-sub-title">어머니 {info.groomMother.name}</div>
         <div class="contact-us-row-container">
@@ -1084,9 +1085,9 @@
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon">
+          <a class="contact-us-btn-pay-icon" href={info.groomMother.pay}>
             <img alt="pay" src={assets.payIcon} />
-          </div>
+          </a>
         </div>
       </div>
       <div class="contact-us-sub-container">
@@ -1108,9 +1109,9 @@
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon">
+          <a class="contact-us-btn-pay-icon" href={info.brideFather.pay}>
             <img alt="pay" src={assets.payIcon} />
-          </div>
+          </a>
         </div>
         <div class="contact-us-bride-sub-title">어머니 {info.brideMother.name}</div>
         <div class="contact-us-row-container">
@@ -1129,9 +1130,9 @@
         </div>
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
-          <div class="contact-us-btn-pay-icon">
+          <a class="contact-us-btn-pay-icon" href={info.brideMother.pay}>
             <img alt="pay" src={assets.payIcon} />
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -1171,6 +1172,7 @@
   </Modal>
 
   <WriteModal bind:isShow={writeModalShow} startY={writeModalStartY} title="방명록" />
+  <AccountModal isShow={false} startY={writeModalStartY} payIcon={assets.payIcon} />
 
   <div class="footer-img-container">
     <div class="wave-top">

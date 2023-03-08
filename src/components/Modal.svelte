@@ -90,9 +90,10 @@
       &-close {
         position: absolute;
         right: 5%;
-        img {
-          width: 20px;
-          height: 20px;
+        &:after {
+          display: inline-block;
+          content: '\00d7';
+          font-size: 24px;
         }
       }
     }
@@ -102,7 +103,6 @@
 <script lang="ts">
   import { fade, fly } from 'svelte/transition'
   import { portal } from 'svelte-portal'
-  import CloseIcon from '../assets/styles/ic-close.png'
 
   export let isShow: boolean = true
   export let title = ''
@@ -161,9 +161,7 @@
           on:click={() => {
             isShow = false
           }}
-        >
-          <img src={CloseIcon} alt="close" />
-        </button>
+        />
       </div>
       <div class="modal-slot">
         <slot />

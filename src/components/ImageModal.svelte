@@ -73,6 +73,11 @@
       &-close {
         position: absolute;
         right: 5%;
+        &:after {
+          display: inline-block;
+          content: '\00d7';
+          font-size: 24px;
+        }
       }
     }
   }
@@ -92,7 +97,7 @@
     <div class="modal-container" transition:fly={{ y: 3000 }}>
       <div class="modal-header">
         <span class="modal-title">{title}</span>
-        <button class="modal-title-close" on:click={() => toggoleModal()}>X</button>
+        <button class="modal-title-close" on:click={() => toggoleModal()} />
       </div>
       <div class="modal-slot">
         <slot />

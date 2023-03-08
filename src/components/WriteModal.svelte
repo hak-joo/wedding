@@ -93,6 +93,11 @@
     &-close-button {
       position: absolute;
       right: 15px;
+      &:after {
+        display: inline-block;
+        content: '\00d7';
+        font-size: 24px;
+      }
     }
     &-sender {
       display: flex;
@@ -239,8 +244,8 @@
             class="form-close-button"
             on:click={() => {
               isShow = false
-            }}>X</button
-          >
+            }}
+          />
           <div class="form-content">
             <div class="form-sender">
               <input bind:value={sender} class="sender-input" type="text" required />

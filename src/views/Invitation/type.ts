@@ -34,7 +34,7 @@ export interface Info {
     phone: string,
     account: {
       bank: string,
-      nubmer: string
+      number: string
     },
     pay: string
   },
@@ -43,7 +43,7 @@ export interface Info {
     phone: string,
     account: {
       bank: string,
-      nubmer: string
+      number: string
     },
     pay: string
   },
@@ -52,7 +52,7 @@ export interface Info {
     phone: string,
     account: {
       bank: string,
-      nubmer: string
+      number: string
     },
     pay: string
   },
@@ -62,7 +62,7 @@ export interface Info {
     phone: string,
     account: {
       bank: string,
-      nubmer: string
+      number: string
     },
     pay: string
   },
@@ -71,7 +71,7 @@ export interface Info {
     phone: string,
     account: {
       bank: string,
-      nubmer: string
+      number: string
     },
     pay: string
   },
@@ -80,7 +80,7 @@ export interface Info {
     phone: string,
     account: {
       bank: string,
-      nubmer: string
+      number: string
     },
     pay: string
   }

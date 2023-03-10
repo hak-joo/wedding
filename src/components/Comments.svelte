@@ -33,14 +33,22 @@
   .comment {
     display: flex;
     flex-direction: column;
-    padding: 10px;
-    margin: 30px 10px;
+    padding: 15px 20px;
+    margin: 20px 10px;
 
     background-color: white;
 
-    border-radius: 5px;
+    border-radius: 15px;
 
     line-height: 15px;
+    box-shadow: 1px 1px 4px rgb(0 0 0 / 15%);
+    font-family: 'Nanum Myeongjo', serif;
+    &:nth-of-type(1) {
+      margin-top: 0;
+    }
+    &:nth-last-of-type(1) {
+      margin-bottom: 30px;
+    }
 
     &-header {
       display: flex;
@@ -51,21 +59,25 @@
       padding-bottom: 10px;
       margin-bottom: 10px;
     }
-    &-from {
+    &-sender {
       margin-right: 5px;
-      font-size: 18px;
       font-family: 'Nanum Myeongjo', serif;
       color: #7667ae;
+      font-size: 14px;
     }
     &-list {
+      margin-top: 20px;
       width: 100%;
+      max-height: calc(100vh - 80px);
+      overflow-y: scroll;
     }
     &-content {
       line-height: 20px;
+      font-size: 13px;
     }
     &-date {
       color: #999;
-      font-size: 13px;
+      font-size: 12px;
     }
   }
 </style>
@@ -94,8 +106,7 @@
     >
       <div class="comment-header">
         <div>
-          <span class="comment-from">FROM </span>
-          {comment.sender}
+          <span class="comment-sender">{comment.sender}</span>
         </div>
         <div class="comment-date">
           {getTimeDiff(dayjs(comment.createdDate))}

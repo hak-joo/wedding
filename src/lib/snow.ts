@@ -28,15 +28,9 @@ export const ActivateSnow = () => {
         fontSize: ${sizeR}px;
         animationDuration: ${timeRun}px;
       `
-      // snow.style.transform = `translate3d(${startLeft + 'px'}, 0px, 0px)`
-      // snow.style.webkitTransform = `translate3d(${startLeft + 'px'}, 0px, 0px)`
-      // snow.style.top = '0px'
-      // snow.style.left = startLeft + 'px'
-      // snow.style.opacity = opacityR.toString()
-      // snow.style.fontSize = sizeR + 'px'
-      // snow.style.animationDuration = timeRun + 'px'
       snow.textContent = '♥'
       snow.classList.add('snow-heart')
+
       snow
         .animate(
           [
@@ -51,10 +45,12 @@ export const ActivateSnow = () => {
             easing: 'linear'
           }
         )
-        .addEventListener('finish', e => {
+        .addEventListener('finish', () => {
+          el.removeChild(snow)
           snow.remove()
         })
+
       el.append(snow)
-    }, 500)
+    }, 800)
   }
 }

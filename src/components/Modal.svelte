@@ -39,8 +39,6 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-
-      background-color: rgba(101, 112, 152, 0.95);
     }
     &-container {
       display: flex;
@@ -49,7 +47,7 @@
       top: var(--top);
       width: 440px;
       height: 100%;
-      background-color: #f2f2f2;
+      background-color: #fff;
       @include mobile {
         /*브라우저 사이즈767px이하일때*/
         width: 100vw;
@@ -61,17 +59,14 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      height: 60px;
-      background-color: #657098;
-      border-radius: 10px 10px 0 0;
+      height: 80px;
+      color: #657098;
     }
     &-slot {
       flex: 1;
-      margin: 10px;
-
-      max-height: 100%;
-      overflow-y: scroll;
-      scroll-behavior: smooth;
+      padding-top: 10px;
+      background-color: #f2f2f2;
+      border-radius: 20px 20px 0 0;
 
       @media (max-width: 767px) {
         padding: 0px 40px;
@@ -84,8 +79,8 @@
     &-title {
       font-size: 24px;
       font-family: 'Nanum Myeongjo', serif;
-      color: white;
       font-weight: bold;
+      border-bottom: 2px dotted #657098;
 
       &-close {
         position: absolute;

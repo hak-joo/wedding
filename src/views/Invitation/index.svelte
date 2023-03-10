@@ -384,6 +384,7 @@
       color: #657098;
     }
   }
+  // 구버전
   .contact-us {
     &-container {
       width: 100%;
@@ -477,6 +478,58 @@
       }
     }
   }
+
+  //수정 적용
+  .contacting {
+    &-title {
+      font-size: 24px;
+      padding: 0px 10px;
+      padding-top: 30px;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+      color: #657098;
+    }
+
+    &-container {
+      width: 80%;
+      border: 1px solid #657098;
+      border-radius: 15px;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 30px 0;
+    }
+    &-sub-container {
+      padding: 0 30px;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      border-bottom: 1px solid #657098;
+      &:nth-last-child(1) {
+        border-bottom: none;
+      }
+    }
+    &-to {
+      flex: 2;
+    }
+    &-icons {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &-btn {
+      &-icon {
+        width: 20px;
+        cursor: pointer;
+      }
+      &-pay-icon {
+        width: 20px;
+      }
+    }
+  }
   .navigation {
     &-container {
       position: fixed;
@@ -524,7 +577,7 @@
   import Modal from '../../components/Modal.svelte'
   import ImageModal from '../../components/ImageModal.svelte'
 
-  import type { Comment, GalleryItem, Info } from './type'
+  import type { Comment, GalleryItem, Info, PersonInfo } from './type'
 
   import WriteModal from '../../components/WriteModal.svelte'
   import AccountModal from '../../components/AccountModal.svelte'
@@ -637,6 +690,13 @@
   let writeModalShow = false
   let writeModalStartY = 0
 
+  let isAccountModalShow = false
+  let accountInfo: PersonInfo
+  const toggleAccountModal = (info: PersonInfo) => {
+    accountInfo = info
+    isAccountModalShow = true
+  }
+
   let listComment: Comment[] = []
 
   const sendKakao = () => {
@@ -695,19 +755,11 @@
     })
     ActivateSnow()
   })
-
-  const sleep = (time: number) => {
-    return new Promise<void>(resolve => {
-      setTimeout(() => {
-        resolve()
-      }, time)
-    })
-  }
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
-<Opening show={isShowOpening} toggle={toggleShowOpening} />
+<!-- <Opening show={isShowOpening} toggle={toggleShowOpening} /> -->
 <div class="navigation-container">
   <button
     class="navigation-button"
@@ -995,8 +1047,153 @@
     data-aos-mirror="false"
     data-aos-once="true"
   >
-    <div class="contact-us-title">마음 전하실곳</div>
-    <div class="contact-us-row-container">
+    <div class="contacting-title">축하 연락처</div>
+    <div class="contacting-container">
+      <div class="contacting-sub-container">
+        <div class="contacting-to">신랑 {info.groom.name}</div>
+        <div class="contacting-icons">
+          <a class="contacting-btn-icon" href="tel:{info.groom.phone}">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </a>
+          <a class="contacting-btn-icon" href="sms:{info.groom.phone}">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </a>
+          <button
+            class="contacting-btn-pay-icon"
+            on:click={() => toggleAccountModal(info.groom)}
+          >
+            계좌
+          </button>
+        </div>
+      </div>
+      <div class="contacting-sub-container">
+        <div class="contacting-to">아버님 {info.groomFather.name}</div>
+        <div class="contacting-icons">
+          <a class="contacting-btn-icon" href="tel:{info.groomFather.phone}">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </a>
+          <a class="contacting-btn-icon" href="sms:{info.groomFather.phone}">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </a>
+          <button
+            class="contacting-btn-pay-icon"
+            on:click={() => toggleAccountModal(info.groomFather)}
+          >
+            계좌
+          </button>
+        </div>
+      </div>
+      <div class="contacting-sub-container">
+        <div class="contacting-to">어머님 {info.groomMother.name}</div>
+        <div class="contacting-icons">
+          <a class="contacting-btn-icon" href="tel:{info.groomMother.phone}">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </a>
+          <a class="contacting-btn-icon" href="sms:{info.groomMother.phone}">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </a>
+          <button
+            class="contacting-btn-pay-icon"
+            on:click={() => toggleAccountModal(info.groomMother)}
+          >
+            계좌
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="contacting-container">
+      <div class="contacting-sub-container">
+        <div class="contacting-to">신부 {info.bride.name}</div>
+        <div class="contacting-icons">
+          <a class="contacting-btn-icon" href="tel:{info.bride.phone}">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </a>
+          <a class="contacting-btn-icon" href="sms:{info.bride.phone}">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </a>
+          <button
+            class="contacting-btn-pay-icon"
+            on:click={() => toggleAccountModal(info.bride)}
+          >
+            계좌
+          </button>
+        </div>
+      </div>
+      <div class="contacting-sub-container">
+        <div class="contacting-to">아버님 {info.brideFather.name}</div>
+        <div class="contacting-icons">
+          <a class="contacting-btn-icon" href="tel:{info.brideFather.phone}">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </a>
+          <a class="contacting-btn-icon" href="sms:{info.brideFather.phone}">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </a>
+          <button
+            class="contacting-btn-pay-icon"
+            on:click={() => toggleAccountModal(info.brideFather)}
+          >
+            계좌
+          </button>
+        </div>
+      </div>
+      <div class="contacting-sub-container">
+        <div class="contacting-to">어머님 {info.brideMother.name}</div>
+        <div class="contacting-icons">
+          <a class="contacting-btn-icon" href="tel:{info.brideMother.phone}">
+            <img
+              alt="phone"
+              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+            />
+          </a>
+          <a class="contacting-btn-icon" href="sms:{info.brideMother.phone}">
+            <img
+              alt="message"
+              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+            />
+          </a>
+          <button
+            class="contacting-btn-pay-icon"
+            on:click={() => toggleAccountModal(info.brideMother)}
+          >
+            계좌
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="contact-us-title">마음 전하실곳</div> -->
+    <!-- <div class="contact-us-row-container">
       <div class="contact-us-sub-container">
         <div class="contact-us-sub-title">신랑에게 연락하기</div>
         <div class="contact-us-row-container">
@@ -1134,8 +1331,8 @@
             <img alt="pay" src={assets.payIcon} />
           </a>
         </div>
-      </div>
-    </div>
+      </div> 
+    </div>-->
   </div>
   <div
     class="guest-book-container"
@@ -1172,7 +1369,12 @@
   </Modal>
 
   <WriteModal bind:isShow={writeModalShow} startY={writeModalStartY} title="방명록" />
-  <AccountModal isShow={false} startY={writeModalStartY} payIcon={assets.payIcon} />
+  <AccountModal
+    bind:isShow={isAccountModalShow}
+    bind:accountInfo
+    startY={writeModalStartY}
+    payIcon={assets.payIcon}
+  />
 
   <div class="footer-img-container">
     <div class="wave-top">

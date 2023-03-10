@@ -8,12 +8,13 @@
 @keyframes rotation {
   0% {
     transform: rotateY(0deg);
-  }
-  50% {
     opacity: 1;
   }
-  100% {
+  50% {
     opacity: 0;
+  }
+  100% {
+    opacity: 1;
     transform: rotateY(360deg);
   }
 }

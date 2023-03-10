@@ -68,9 +68,18 @@
     dX = moveX
   }
   const onMouseUp = (e: MouseEvent) => {
-    if (dX > interval && currentIdx + 1 < length) {
+    console.log('dX', dX)
+    if (dX > 120) {
+      if (currentIdx + 2 < length) {
+        currentIdx += 2
+      } else if (currentIdx + 1 < length) {
+        currentIdx++
+      }
+    } else if (dX > 50 && currentIdx + 1 < length) {
       currentIdx++
-    } else if (dX < -1 * interval && currentIdx + 1 <= length) {
+    } else if (dX < -120 && currentIdx + 2 <= length) {
+      currentIdx -= 2
+    } else if (dX < -50 && currentIdx + 1 <= length) {
       currentIdx--
     }
     dX = 0

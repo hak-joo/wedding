@@ -169,7 +169,12 @@
     <div class="modal-container">
       <div class="account-container">
         <div class="modal-header">
-          <div class="modal-btn-close" />
+          <button
+            class="modal-btn-close"
+            on:click={() => {
+              isShow = false
+            }}
+          />
         </div>
         <div class="account-row">
           <div class="account-label">성명</div>

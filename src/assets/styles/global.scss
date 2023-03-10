@@ -10,7 +10,9 @@
     display: none !important;
   }
 }
-
+::-webkit-scrollbar {
+  display: none !important;
+}
 .wrapper {
   position: relative;
   width: 100%;

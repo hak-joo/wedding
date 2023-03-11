@@ -3,7 +3,7 @@
   color: #222222;
   width: 100%;
   border: none;
-  border-bottom: 1px solid pink;
+  border-bottom: 1px solid #666;
   padding-bottom: 10px;
 
   background: none;
@@ -11,7 +11,7 @@
 }
 
 .sender-input::placeholder {
-  color: #ffadc5;
+  color: #666;
 }
 .sender-input:focus {
   outline: none;
@@ -22,7 +22,7 @@
   position: absolute;
   bottom: 0;
   left: 50%; /* right로만 바꿔주면 오 - 왼 */
-  background-color: #ffadc5;
+  background-color: #666;
   width: 0;
   height: 2px;
   border-radius: 2px;
@@ -32,7 +32,7 @@
 
 .sender-label {
   position: absolute;
-  color: #f8bfd1;
+  color: #666;
 
   font-size: 15px;
   bottom: 8px;
@@ -43,7 +43,7 @@
 .sender-input:valid ~ .sender-label {
   font-size: 16px;
   bottom: 40px;
-  color: #f998b5;
+  color: #666;
   font-weight: bold;
 }
 
@@ -57,7 +57,7 @@
   color: #222222;
   width: 100%;
   border: none;
-  border-bottom: 1px solid pink;
+  border-bottom: 1px solid #666;
   padding-bottom: 10px;
   background: none;
   z-index: 5;
@@ -68,7 +68,7 @@
 .message-input:valid ~ .message-label {
   font-size: 16px;
   top: -30px;
-  color: #f998b5;
+  color: #666;
   font-weight: bold;
   background: none;
 }
@@ -79,7 +79,7 @@
 }
 
 .message-input::placeholder {
-  color: #ffadc5;
+  color: #666;
 }
 .message-input:focus {
   outline: none;
@@ -87,7 +87,7 @@
 
 .message-label {
   position: absolute;
-  color: #f8bfd1;
+  color: #666;
 
   font-size: 15px;
   top: 8px;

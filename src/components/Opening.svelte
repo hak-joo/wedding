@@ -103,7 +103,7 @@
   export let show = true
   export let toggle = () => {}
 
-  const text = '홍성현 이성연 결혼합니다.'
+  export let text = '결혼식에 초대합니다.'
 </script>
 
 {#if show}

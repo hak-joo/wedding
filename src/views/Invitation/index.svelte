@@ -108,9 +108,6 @@
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 20px 0;
-      span {
-        font-size: 12px;
-      }
     }
     &-person {
       font-size: 16px;
@@ -276,9 +273,6 @@
       font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      span {
-        font-size: 12px;
-      }
     }
     &-address {
       font-size: 12px;
@@ -491,33 +485,52 @@
     }
 
     &-container {
-      width: 80%;
+      width: 45%;
       border: 1px solid #657098;
       border-radius: 15px;
-      height: 200px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      margin: 30px 0;
+      align-items: center;
+      &-main {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        margin: 30px 0;
+      }
     }
     &-sub-container {
-      padding: 0 30px;
-      flex: 1;
+      width: 100%;
+      padding: 0px 30px 10px;
       display: flex;
+      flex-direction: row;
       align-items: center;
-      justify-content: space-around;
+      justify-content: center;
+      gap: 5px;
       border-bottom: 1px solid #657098;
       &:nth-last-child(1) {
         border-bottom: none;
       }
     }
     &-to {
-      flex: 2;
+      padding: 10px 0;
+      color: #657098;
+      font-size: 16px;
+      font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
+
+      span {
+        color: #999;
+        font-size: 12px;
+      }
     }
     &-icons {
       flex: 1;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
     }
     &-btn {
@@ -527,6 +540,8 @@
       }
       &-pay-icon {
         width: 20px;
+        font-size: 12px;
+        white-space: nowrap;
       }
     }
   }
@@ -587,9 +602,22 @@
 
   import AOS from 'aos'
   import 'aos/dist/aos.css' // You can also use <link> for styles
-  import { getDatabase, onValue, orderByChild, query, ref } from 'firebase/database'
+  import {
+    getDatabase,
+    onValue,
+    orderByChild,
+    query,
+    ref as databaseRef
+  } from 'firebase/database'
+  import {
+    getStorage,
+    listAll,
+    getDownloadURL,
+    ref as storageRef
+  } from 'firebase/storage'
 
   import { ActivateSnow } from './../../lib/snow'
+  import { firebaseApp } from '../../lib/firebase'
 
   AOS.init()
   let isShowOpening = true
@@ -600,14 +628,16 @@
   let assets: any = {}
   let info: Info = {
     header: {
-      img: ''
+      img: '',
+      imgPath: ''
     },
 
     footer: {
       img: '',
+      imgPath: '',
       text: ''
     },
-
+    openingMsg: '',
     weddingDay: '',
     weddingTime: '',
     weddingHole: {
@@ -726,40 +756,66 @@
     if (Kakao && !Kakao.isInitialized()) {
       Kakao.init('037b39715d4b19da434d1ba24c04fbd2')
     }
-    const database = getDatabase(undefined, import.meta.env.VITE_FIREBASE_RDB_URL)
-    const galleryRef = ref(database, '/gallery')
-    onValue(galleryRef, snapshot => {
-      let data: { path: string; thumbnail: string }[] = []
-      Object.keys(snapshot.val()).forEach(key => {
-        data.push(snapshot.val()[key])
-      })
-      galleryDatas = data
-    })
-    const infoRef = ref(database, '/info')
+    const database = getDatabase(firebaseApp, import.meta.env.VITE_FIREBASE_RDB_URL)
+    const infoRef = databaseRef(database, '/info')
     onValue(infoRef, snapshot => {
       info = snapshot.val()
       weddingDay = dayjs(info.weddingDay)
       dday = weddingDay.diff(dayjs(), 'day')
     })
-    const assetRef = ref(database, '/assets')
-    onValue(assetRef, snapshot => {
-      assets = snapshot.val()
-    })
-    const commentRef = query(ref(database, '/comments'), orderByChild('createdDate'))
+    const commentRef = query(
+      databaseRef(database, '/comments'),
+      orderByChild('createdDate')
+    )
     onValue(commentRef, snapshot => {
       let data: Comment[] = []
       Object.keys(snapshot.val()).forEach(key => {
         data.push(snapshot.val()[key])
       })
-      listComment = data.reverse()
+      listComment = data
     })
+
+    const storage = await getStorage(
+      firebaseApp,
+      import.meta.env.VITE_FIREBASE_STORAGE_BUCKET
+    )
+    const galleryList = await listAll(storageRef(storage, '/gallery'))
+    galleryDatas = await Promise.all(
+      galleryList.items.map(async item => {
+        const { name, fullPath } = item
+        const path = await getDownloadURL(storageRef(storage, fullPath))
+        const itemIdx = name.split('-')[1].split('.')[0]
+        const thumbnailPath = `thumbnail/thumbnail-${itemIdx}_100x100.jpg`
+        const thumbnail = await getDownloadURL(storageRef(storage, thumbnailPath))
+        if (info.header.img === name) {
+          info.header.imgPath = path
+        }
+        if (info.footer.img === name) {
+          info.footer.imgPath = path
+        }
+        return {
+          name,
+          path,
+          fullPath,
+          thumbnail,
+          thumbnailPath
+        }
+      })
+    )
+    const assetList = await listAll(storageRef(storage, '/assets'))
+    for (let asset of assetList.items) {
+      const { name, fullPath } = asset
+      const path = await getDownloadURL(storageRef(storage, fullPath))
+      assets[name.split('.')[0].split('_')[0]] = path
+    }
+    console.log(assets)
     ActivateSnow()
   })
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
-<!-- <Opening show={isShowOpening} toggle={toggleShowOpening} /> -->
+<Opening show={isShowOpening} toggle={toggleShowOpening} text={info.openingMsg} />
 <div class="navigation-container">
   <button
     class="navigation-button"
@@ -827,7 +883,7 @@
         </g>
       </svg>
     </div>
-    <img class="header-img" src={info.header.img} alt="HeaderImg" />
+    <img class="header-img" src={info.header.imgPath} alt="HeaderImg" />
     <div class="wave-bottom">
       <svg
         class="waves"
@@ -1048,146 +1104,148 @@
     data-aos-once="true"
   >
     <div class="contacting-title">축하 연락처</div>
-    <div class="contacting-container">
-      <div class="contacting-sub-container">
-        <div class="contacting-to">신랑 {info.groom.name}</div>
-        <div class="contacting-icons">
-          <a class="contacting-btn-icon" href="tel:{info.groom.phone}">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </a>
-          <a class="contacting-btn-icon" href="sms:{info.groom.phone}">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </a>
-          <button
-            class="contacting-btn-pay-icon"
-            on:click={() => toggleAccountModal(info.groom)}
-          >
-            계좌
-          </button>
+    <div class="contacting-container-main">
+      <div class="contacting-container">
+        <div class="contacting-to"><span>신랑</span> {info.groom.name}</div>
+        <div class="contacting-sub-container">
+          <div class="contacting-icons">
+            <a class="contacting-btn-icon" href="tel:{info.groom.phone}">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </a>
+            <a class="contacting-btn-icon" href="sms:{info.groom.phone}">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </a>
+            <button
+              class="contacting-btn-pay-icon"
+              on:click={() => toggleAccountModal(info.groom)}
+            >
+              계좌
+            </button>
+          </div>
+        </div>
+        <div class="contacting-to"><span>아버님</span> {info.groomFather.name}</div>
+        <div class="contacting-sub-container">
+          <div class="contacting-icons">
+            <a class="contacting-btn-icon" href="tel:{info.groomFather.phone}">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </a>
+            <a class="contacting-btn-icon" href="sms:{info.groomFather.phone}">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </a>
+            <button
+              class="contacting-btn-pay-icon"
+              on:click={() => toggleAccountModal(info.groomFather)}
+            >
+              계좌
+            </button>
+          </div>
+        </div>
+        <div class="contacting-to"><span>어머님</span> {info.groomMother.name}</div>
+        <div class="contacting-sub-container">
+          <div class="contacting-icons">
+            <a class="contacting-btn-icon" href="tel:{info.groomMother.phone}">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </a>
+            <a class="contacting-btn-icon" href="sms:{info.groomMother.phone}">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </a>
+            <button
+              class="contacting-btn-pay-icon"
+              on:click={() => toggleAccountModal(info.groomMother)}
+            >
+              계좌
+            </button>
+          </div>
         </div>
       </div>
-      <div class="contacting-sub-container">
-        <div class="contacting-to">아버님 {info.groomFather.name}</div>
-        <div class="contacting-icons">
-          <a class="contacting-btn-icon" href="tel:{info.groomFather.phone}">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </a>
-          <a class="contacting-btn-icon" href="sms:{info.groomFather.phone}">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </a>
-          <button
-            class="contacting-btn-pay-icon"
-            on:click={() => toggleAccountModal(info.groomFather)}
-          >
-            계좌
-          </button>
-        </div>
-      </div>
-      <div class="contacting-sub-container">
-        <div class="contacting-to">어머님 {info.groomMother.name}</div>
-        <div class="contacting-icons">
-          <a class="contacting-btn-icon" href="tel:{info.groomMother.phone}">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </a>
-          <a class="contacting-btn-icon" href="sms:{info.groomMother.phone}">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </a>
-          <button
-            class="contacting-btn-pay-icon"
-            on:click={() => toggleAccountModal(info.groomMother)}
-          >
-            계좌
-          </button>
-        </div>
-      </div>
-    </div>
 
-    <div class="contacting-container">
-      <div class="contacting-sub-container">
-        <div class="contacting-to">신부 {info.bride.name}</div>
-        <div class="contacting-icons">
-          <a class="contacting-btn-icon" href="tel:{info.bride.phone}">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </a>
-          <a class="contacting-btn-icon" href="sms:{info.bride.phone}">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </a>
-          <button
-            class="contacting-btn-pay-icon"
-            on:click={() => toggleAccountModal(info.bride)}
-          >
-            계좌
-          </button>
+      <div class="contacting-container">
+        <div class="contacting-to"><span>신부</span> {info.bride.name}</div>
+        <div class="contacting-sub-container">
+          <div class="contacting-icons">
+            <a class="contacting-btn-icon" href="tel:{info.bride.phone}">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </a>
+            <a class="contacting-btn-icon" href="sms:{info.bride.phone}">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </a>
+            <button
+              class="contacting-btn-pay-icon"
+              on:click={() => toggleAccountModal(info.bride)}
+            >
+              계좌
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="contacting-sub-container">
-        <div class="contacting-to">아버님 {info.brideFather.name}</div>
-        <div class="contacting-icons">
-          <a class="contacting-btn-icon" href="tel:{info.brideFather.phone}">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </a>
-          <a class="contacting-btn-icon" href="sms:{info.brideFather.phone}">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </a>
-          <button
-            class="contacting-btn-pay-icon"
-            on:click={() => toggleAccountModal(info.brideFather)}
-          >
-            계좌
-          </button>
+        <div class="contacting-to"><span>아버님</span> {info.brideFather.name}</div>
+        <div class="contacting-sub-container">
+          <div class="contacting-icons">
+            <a class="contacting-btn-icon" href="tel:{info.brideFather.phone}">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </a>
+            <a class="contacting-btn-icon" href="sms:{info.brideFather.phone}">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </a>
+            <button
+              class="contacting-btn-pay-icon"
+              on:click={() => toggleAccountModal(info.brideFather)}
+            >
+              계좌
+            </button>
+          </div>
         </div>
-      </div>
-      <div class="contacting-sub-container">
-        <div class="contacting-to">어머님 {info.brideMother.name}</div>
-        <div class="contacting-icons">
-          <a class="contacting-btn-icon" href="tel:{info.brideMother.phone}">
-            <img
-              alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-            />
-          </a>
-          <a class="contacting-btn-icon" href="sms:{info.brideMother.phone}">
-            <img
-              alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-            />
-          </a>
-          <button
-            class="contacting-btn-pay-icon"
-            on:click={() => toggleAccountModal(info.brideMother)}
-          >
-            계좌
-          </button>
+        <div class="contacting-to"><span>어머님</span> {info.brideMother.name}</div>
+        <div class="contacting-sub-container">
+          <div class="contacting-icons">
+            <a class="contacting-btn-icon" href="tel:{info.brideMother.phone}">
+              <img
+                alt="phone"
+                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              />
+            </a>
+            <a class="contacting-btn-icon" href="sms:{info.brideMother.phone}">
+              <img
+                alt="message"
+                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              />
+            </a>
+            <button
+              class="contacting-btn-pay-icon"
+              on:click={() => toggleAccountModal(info.brideMother)}
+            >
+              계좌
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1213,7 +1271,7 @@
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
           <a class="contact-us-btn-pay-icon" href={info.groom.pay}>
-            <img alt="pay" src={assets.payIcon} />
+            <img alt="pay" src={assets.pay} />
           </a>
         </div>
       </div>
@@ -1236,7 +1294,7 @@
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
           <a class="contact-us-btn-pay-icon" href={info.bride.pay}>
-            <img alt="pay" src={assets.payIcon} />
+            <img alt="pay" src={assets.pay} />
           </a>
         </div>
       </div>
@@ -1262,7 +1320,7 @@
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
           <a class="contact-us-btn-pay-icon" href={info.groomFather.pay}>
-            <img alt="pay" src={assets.payIcon} />
+            <img alt="pay" src={assets.pay} />
           </a>
         </div>
         <div class="contact-us-groom-sub-title">어머니 {info.groomMother.name}</div>
@@ -1283,7 +1341,7 @@
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
           <a class="contact-us-btn-pay-icon" href={info.groomMother.pay}>
-            <img alt="pay" src={assets.payIcon} />
+            <img alt="pay" src={assets.pay} />
           </a>
         </div>
       </div>
@@ -1307,7 +1365,7 @@
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
           <a class="contact-us-btn-pay-icon" href={info.brideFather.pay}>
-            <img alt="pay" src={assets.payIcon} />
+            <img alt="pay" src={assets.pay} />
           </a>
         </div>
         <div class="contact-us-bride-sub-title">어머니 {info.brideMother.name}</div>
@@ -1328,7 +1386,7 @@
         <div class="contact-us-row-container">
           <div class="contact-us-btn-text">계좌번호</div>
           <a class="contact-us-btn-pay-icon" href={info.brideMother.pay}>
-            <img alt="pay" src={assets.payIcon} />
+            <img alt="pay" src={assets.pay} />
           </a>
         </div>
       </div> 
@@ -1373,7 +1431,7 @@
     bind:isShow={isAccountModalShow}
     bind:accountInfo
     startY={writeModalStartY}
-    payIcon={assets.payIcon}
+    payIcon={assets.pay}
   />
 
   <div class="footer-img-container">
@@ -1400,7 +1458,7 @@
         </g>
       </svg>
     </div>
-    <img src={info.footer.img} alt={'FooterImg'} class="footer-img" />
+    <img src={info.footer.imgPath} alt={'FooterImg'} class="footer-img" />
     <div class="wave-bottom">
       <svg
         class="waves"

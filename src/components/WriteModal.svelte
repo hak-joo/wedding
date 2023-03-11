@@ -55,12 +55,6 @@
         width: 100vw;
       }
     }
-
-    &-slot {
-      max-height: 100%;
-      overflow-y: scroll;
-      scroll-behavior: smooth;
-    }
   }
   .form {
     &-container {
@@ -68,7 +62,7 @@
       flex-direction: column;
       position: relative;
       width: 80%;
-      height: 75%;
+      height: 50%;
       background-color: #fef6f5;
       padding: 10px 8px;
       box-shadow: 1px 2px 3px 0 #ccc;
@@ -84,11 +78,12 @@
     }
     &-header {
       display: flex;
-      color: #ffadc5;
-      padding: 40px 0;
+      color: #666;
+      padding: 40px 0 20px;
       justify-content: center;
       font-size: 20px;
       font-weight: bold;
+      font-family: 'Nanum Myeongjo', serif;
     }
     &-close-button {
       position: absolute;
@@ -102,20 +97,15 @@
     &-sender {
       display: flex;
       position: relative;
-      p {
-        padding: 10px;
-      }
       width: 100%;
-      margin-bottom: 70px;
+      margin-bottom: 40px;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-message {
       display: flex;
       position: relative;
-      p {
-        padding: 10px;
-      }
       width: 100%;
+      margin-bottom: 40px;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-content {
@@ -127,17 +117,20 @@
     &-footer {
       display: flex;
       justify-content: center;
+      padding: 10px 0;
       button {
         width: 100px;
         height: 40px;
-        color: #ffadc5;
-        border: 1px solid #ffadc5;
+        color: #fff;
+        background-color: #666;
         border-radius: 5px;
         transition: all 0.5s;
+        font-weight: bold;
+        font-family: 'Nanum Myeongjo', serif;
         &:hover {
-          color: #f998b5;
+          color: #fff;
           font-weight: bold;
-          border: 1px solid #f998b5;
+          background-color: #657098;
         }
       }
     }
@@ -145,7 +138,7 @@
   .noti {
     &-sender {
       font-size: 20px;
-      color: #7667ae;
+      color: #657098;
       margin-right: 10px;
     }
     &-message {
@@ -181,7 +174,7 @@
           max-width: 300Px;
           width: ${t * 80}%;
           max-height: 200px;
-          height: ${t * 75}%;
+          height: ${t * 50}%;
           `
       }
     }
@@ -193,7 +186,7 @@
           max-width: 80%;
           width: ${t * 80}%;
           min-height: 230px;
-          height: ${t * 75}%;
+          height: ${t * 50}%;
           `
     }
   }

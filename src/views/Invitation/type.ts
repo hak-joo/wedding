@@ -16,12 +16,16 @@ export interface PersonInfo {
 export interface Info {
   header: {
     img: string
+    imgPath: string
   }
 
   footer: {
     img: string
+    imgPath: string
     text: string
   }
+
+  openingMsg: string
 
   weddingDay: string
   weddingTime: string
@@ -46,6 +50,9 @@ export interface Info {
   brideMother: PersonInfo
 }
 export interface GalleryItem {
+  name: string
   path: string
+  fullPath: string
   thumbnail: string
+  thumbnailPath: string
 }

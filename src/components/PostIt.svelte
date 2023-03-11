@@ -66,7 +66,7 @@
     &-content {
       flex: 1;
       overflow: hidden;
-
+      color: #333;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       font-size: 16px;
@@ -85,6 +85,7 @@
       p {
         font-size: 12px;
         font-weight: bold;
+        color: #666;
         font-family: 'Nanum Myeongjo', serif;
         @include mobile {
           /*브라우저 사이즈767px이하일때*/

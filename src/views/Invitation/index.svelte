@@ -49,6 +49,7 @@
   .header {
     &-container {
       width: 100%;
+      min-height: 100vh;
       padding: 20px 0;
       background-color: #fff;
       display: flex;
@@ -912,7 +913,7 @@
   </div>
   <div
     class="info-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -929,7 +930,7 @@
   </div>
   <div
     class="ment-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -945,7 +946,7 @@
   <div class="divider" />
   <div
     class="info-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -988,7 +989,7 @@
   </ImageModal>
   <div
     class="gallery-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1025,7 +1026,7 @@
 
   <div
     class="d-day-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1043,7 +1044,7 @@
   </div>
   <div
     class="map-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1082,7 +1083,7 @@
   </div>
   <div
     class="noti-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1097,7 +1098,7 @@
   </div>
   <div
     class="contact-us-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1396,7 +1397,7 @@
   </div>
   <div
     class="guest-book-container"
-    data-aos="zoom-in-up"
+    data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"

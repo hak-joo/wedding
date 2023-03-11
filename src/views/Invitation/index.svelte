@@ -142,23 +142,23 @@
     &-text {
       font-size: 14px;
       letter-spacing: normal;
-      line-height: 3.2vh;
+      line-height: 32px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 20px 0;
     }
   }
   .divider {
-    width: 3vw;
-    border-top: 0.1vh solid #999;
+    width: 12px;
+    border-top: 2px solid #999;
     padding: 20px 0;
   }
   .separator {
-    width: 0.2vw;
-    height: 0.2vw;
+    width: 2px;
+    height: 2px;
     background-color: #333;
     border-radius: 100%;
-    margin: 0 0.5vw;
+    margin: 0 4px;
   }
   .gallery {
     &-container {
@@ -713,8 +713,6 @@
   let weddingDay = dayjs()
   let dday = 0
 
-  const toggleShowOpening = () => (isShowOpening = !isShowOpening)
-
   let modalShow = false
   let isOpenImageModal = false
   let writeModalShow = false
@@ -785,7 +783,7 @@
         const { name, fullPath } = item
         const path = await getDownloadURL(storageRef(storage, fullPath))
         const itemIdx = name.split('-')[1].split('.')[0]
-        const thumbnailPath = `thumbnail/thumbnail-${itemIdx}_100x100.jpg`
+        const thumbnailPath = `thumbnail/thumbnail-${itemIdx}.jpg`
         const thumbnail = await getDownloadURL(storageRef(storage, thumbnailPath))
         if (info.header.img === name) {
           info.header.imgPath = path
@@ -815,7 +813,11 @@
 
 <!-- markup (zero or more items) goes here -->
 
-<Opening show={isShowOpening} toggle={toggleShowOpening} text={info.openingMsg} />
+<Opening
+  show={isShowOpening}
+  close={() => (isShowOpening = false)}
+  text={info.openingMsg}
+/>
 <div class="navigation-container">
   <button
     class="navigation-button"
@@ -857,7 +859,7 @@
 
 <div class="main-wrapper" transition:fade>
   <div class="header-container">
-    <div class="header-text-top">THE MARRIGE</div>
+    <div class="header-text-top">THE MARRIAGE</div>
     <div class="header-text-middle">{weddingDay.format('MM.DD')}</div>
     <div class="header-text-bottom">{info.groom.name} {info.bride.name} 결혼합니다.</div>
     <div class="wave-top">
@@ -910,7 +912,7 @@
   </div>
   <div
     class="info-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -927,7 +929,7 @@
   </div>
   <div
     class="ment-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -943,7 +945,7 @@
   <div class="divider" />
   <div
     class="info-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -986,7 +988,7 @@
   </ImageModal>
   <div
     class="gallery-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1023,7 +1025,7 @@
 
   <div
     class="d-day-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1041,7 +1043,7 @@
   </div>
   <div
     class="map-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1080,7 +1082,7 @@
   </div>
   <div
     class="noti-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1095,7 +1097,7 @@
   </div>
   <div
     class="contact-us-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1394,7 +1396,7 @@
   </div>
   <div
     class="guest-book-container"
-    data-aos="fade-up"
+    data-aos="zoom-in-up"
     data-aos-offset="200"
     data-aos-delay="50"
     data-aos-duration="1000"
@@ -1493,7 +1495,7 @@
           alt="카카오톡 공유 보내기 버튼"
         />
       </div>
-      <div class="footer-text">카카오톡으로 공유하기</div>
+      <div class="footer-text">카카오톡으로 초대장 전달하기</div>
     </div>
   </div>
 </div>

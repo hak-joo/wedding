@@ -100,16 +100,21 @@
   import { fade } from 'svelte/transition'
   import Typewriter from 'svelte-typewriter'
 
-  export let show = true
-  export let toggle = () => {}
+  export let show = false
+  export let close = () => {}
 
   export let text = '결혼식에 초대합니다.'
+
+  $: if (show) {
+    console.log(show)
+  }
 </script>
 
 {#if show}
   <div class="opening-container" transition:fade>
     <div class="opening-heart" />
-    <Typewriter mode="concurrent" on:done={() => setTimeout(() => toggle(), 1000)}>
+    <Typewriter mode="concurrent" on:done={() => setTimeout(() => close(), 1000)}>
+      <!-- <Typewriter mode="concurrent"> -->
       <p class="opening-letter">{text}</p>
     </Typewriter>
   </div>

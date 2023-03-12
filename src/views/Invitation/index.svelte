@@ -1,5 +1,5 @@
 <style lang="scss">
-  $svgMask: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/44303/heart-mask-square.svg';
+  $svgMask: 'heart.svg';
   /*반응형 화면 크기*/
   $mobile: 767px;
   $tablet: 1023px;
@@ -50,31 +50,39 @@
     &-container {
       width: 100%;
       min-height: 100vh;
-      padding: 20px 0;
       background-color: #fff;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: start;
       align-items: center;
+      padding-top: 37px;
     }
     &-text {
       &-top {
         font-size: 12px;
         font-family: 'Nanum Myeongjo', serif;
-        padding: 10px 0;
+        padding-bottom: 13px;
         color: #441800;
       }
       &-middle {
         font-size: 48px;
-        font-weight: bold;
+        font-weight: 400;
         font-family: 'Nanum Myeongjo', serif;
-        padding: 10px 0;
+        padding: 13px 0;
+        line-height: 45px;
+        div {
+          margin: 5px auto 8px;
+          background-color: #999;
+          height: 1px;
+          width: 42px;
+        }
       }
       &-bottom {
+        padding-top: 10px;
+        padding-bottom: 2px;
         font-size: 16px;
-        font-weight: bold;
+        font-weight: 400;
         font-family: 'Nanum Myeongjo', serif;
-        padding: 20px 0;
       }
     }
     &-img {
@@ -84,7 +92,7 @@
   .info {
     &-container {
       width: 100%;
-      padding: 20px 0;
+      padding: 27px 0 19px;
       background-color: #fff;
       display: flex;
       flex-direction: column;
@@ -96,19 +104,19 @@
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      padding: 10px 0;
+      padding: 3px 0;
     }
     &-date {
       font-size: 16px;
-      font-weight: bold;
+      font-weight: 600;
       font-family: 'Nanum Myeongjo', serif;
-      padding: 20px 0;
+      padding: 11px 0 4px;
     }
     &-location {
       font-size: 16px;
-      font-weight: bold;
+      font-weight: 600;
       font-family: 'Nanum Myeongjo', serif;
-      padding: 20px 0;
+      padding: 4px 0 10px;
     }
     &-person {
       font-size: 16px;
@@ -116,17 +124,16 @@
       font-family: 'Nanum Myeongjo', serif;
     }
     &-relation {
-      font-size: 14px;
-      font-weight: bold;
+      font-size: 16px;
+      font-weight: 400;
       font-family: 'Nanum Myeongjo', serif;
       color: #666;
-      margin: 0 14px 0 5px;
+      margin: 0 10px 0 5px;
     }
   }
   .ment {
     &-container {
       width: 100%;
-      padding: 10px 0;
       background-color: #fff;
       display: flex;
       flex-direction: column;
@@ -137,22 +144,22 @@
       font-size: 24px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      padding: 20px 0;
       color: #657098;
+      padding: 2px 0;
     }
     &-text {
       font-size: 14px;
       letter-spacing: normal;
-      line-height: 32px;
-      font-weight: bold;
+      line-height: 28px;
+      font-weight: 400;
       font-family: 'Nanum Myeongjo', serif;
-      padding: 20px 0;
+      padding: 24px 0 34px;
     }
   }
   .divider {
     width: 12px;
     border-top: 2px solid #999;
-    padding: 20px 0;
+    margin-bottom: 4px;
   }
   .separator {
     width: 2px;
@@ -808,17 +815,17 @@
       assets[name.split('.')[0].split('_')[0]] = path
     }
     console.log(assets)
-    ActivateSnow()
+    // ActivateSnow()
   })
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
-<Opening
+<!-- <Opening
   show={isShowOpening}
   close={() => (isShowOpening = false)}
   text={info.openingMsg}
-/>
+/> -->
 <div class="navigation-container">
   <button
     class="navigation-button"
@@ -861,7 +868,11 @@
 <div class="main-wrapper" transition:fade>
   <div class="header-container">
     <div class="header-text-top">THE MARRIAGE</div>
-    <div class="header-text-middle">{weddingDay.format('MM.DD')}</div>
+    <div class="header-text-middle">
+      {weddingDay.format('MM')}
+      <div />
+      {weddingDay.format('DD')}
+    </div>
     <div class="header-text-bottom">{info.groom.name} {info.bride.name} 결혼합니다.</div>
     <div class="wave-top">
       <svg
@@ -922,7 +933,8 @@
     data-aos-once="true"
   >
     <div class="info-date">
-      {weddingDay.format('YYYY.MM.DD. ddd')}요일 {info.weddingTime}
+      {weddingDay.format('YYYY년 M월 DD일 ddd요일')}
+      {info.weddingTime}
     </div>
     <div class="info-location">
       {@html info.weddingHole.name}
@@ -959,14 +971,14 @@
       <div class="separator" />
       <div class="info-person">{info.groomMother.name}</div>
       <div class="info-relation">의 {info.groom.relation}</div>
-      <div class="info-person">{info.groom.name}</div>
+      <div class="info-person" style="font-size: 18px">{info.groom.name.slice(1)}</div>
     </div>
     <div class="info-line">
       <div class="info-person">{info.brideFather.name}</div>
       <div class="separator" />
       <div class="info-person">{info.brideMother.name}</div>
       <div class="info-relation">의 {info.bride.relation}</div>
-      <div class="info-person">{info.bride.name}</div>
+      <div class="info-person" style="font-size: 18px">{info.bride.name.slice(1)}</div>
     </div>
   </div>
 
@@ -1016,6 +1028,7 @@
           class="gallery-thumbnail-item"
           on:click={() => {
             currentIdx = idx
+            scrollToElement('gallery', 'smooth')
           }}
         >
           <img src={item.thumbnail} alt={item.thumbnail} />

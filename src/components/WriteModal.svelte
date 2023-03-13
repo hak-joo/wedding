@@ -62,7 +62,7 @@
       flex-direction: column;
       position: relative;
       width: 80%;
-      height: 50%;
+      height: 70%;
       background-color: #fef6f5;
       padding: 10px 8px;
       box-shadow: 1px 2px 3px 0 #ccc;
@@ -79,7 +79,7 @@
     &-header {
       display: flex;
       color: #666;
-      padding: 40px 0 20px;
+      padding: 40px 0 40px;
       justify-content: center;
       font-size: 20px;
       font-weight: bold;
@@ -98,14 +98,14 @@
       display: flex;
       position: relative;
       width: 100%;
-      margin-bottom: 40px;
+      margin-bottom: 60px;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-message {
       display: flex;
       position: relative;
       width: 100%;
-      margin-bottom: 40px;
+      margin-bottom: 60px;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-content {
@@ -200,7 +200,8 @@
   }
 
   const sendMessage = async () => {
-    // isShow = false
+    if (!senderVal || !passwordVal || !commentVal) return
+    if (sender === '' || comment === '' || password === '') return
     sended = true
     await sendComments({
       sender,
@@ -210,14 +211,26 @@
     await sleep(1000)
     isShow = false
   }
-
   const onResizeTextArea = (e: KeyboardEvent) => {
-    if (textAreaRef.scrollHeight > 170) return
+    if (textAreaRef.scrollHeight > 100) return
     textAreaRef.style.height = 'auto'
     textAreaRef.style.height = `${textAreaRef.scrollHeight}px`
   }
   let sender = ''
   let comment = ''
+  let password = ''
+  let senderVal = true
+  let commentVal = true
+  let passwordVal = true
+  const validateSender = () => {
+    senderVal = sender !== ''
+  }
+  const validateComment = () => {
+    commentVal = comment !== ''
+  }
+  const validatePassword = () => {
+    passwordVal = password !== ''
+  }
 </script>
 
 {#if isShow}
@@ -241,24 +254,50 @@
           />
           <div class="form-content">
             <div class="form-sender">
-              <input bind:value={sender} class="sender-input" type="text" required />
+              <input
+                class="sender-input"
+                class:error={!senderVal}
+                type="text"
+                required
+                maxlength={5}
+                bind:value={sender}
+                on:blur={validateSender}
+                on:input={validateSender}
+              />
               <!-- svelte-ignore a11y-label-has-associated-control -->
-              <label class="sender-label">작성자</label>
-              <span class="bottom-deco" />
+              <label class="sender-label" class:error={!senderVal}>작성자</label>
+              <span class="bottom-deco" class:error={!senderVal} />
             </div>
             <div class="form-message">
               <textarea
                 class="message-input"
-                bind:value={comment}
+                class:error={!commentVal}
                 required
                 rows={1}
+                bind:value={comment}
                 bind:this={textAreaRef}
+                on:blur={validateComment}
+                on:input={validateComment}
                 on:keyup={e => onResizeTextArea(e)}
                 on:keydown={e => onResizeTextArea(e)}
               />
               <!-- svelte-ignore a11y-label-has-associated-control -->
-              <label class="message-label">내용</label>
-              <span class="bottom-deco" />
+              <label class="message-label" class:error={!commentVal}>내용</label>
+              <span class="bottom-deco" class:error={!commentVal} />
+            </div>
+            <div class="form-sender">
+              <input
+                bind:value={password}
+                class="sender-input"
+                class:error={!passwordVal}
+                type="password"
+                on:blur={validatePassword}
+                on:input={validatePassword}
+                required
+              />
+              <!-- svelte-ignore a11y-label-has-associated-control -->
+              <label class="sender-label" class:error={!passwordVal}>비밀번호</label>
+              <span class="bottom-deco" class:error={!passwordVal} />
             </div>
           </div>
           <div class="form-footer">

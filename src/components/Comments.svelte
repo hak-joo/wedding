@@ -30,6 +30,20 @@
     width: $calculated;
     height: $calculated;
   }
+  .toast-wrapper {
+    --toastContainerTop: auto;
+    --toastContainerRight: 0.5rem;
+    --toastContainerBottom: 0.5rem;
+    --toastContainerLeft: 0.5rem;
+    --toastWidth: 100%;
+    --toastMinHeight: 2rem;
+    --toastPadding: 0 0.5rem;
+    --toastBarHeight: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    --toastBorderRadius: 2rem;
+  }
   .comment {
     display: flex;
     flex-direction: column;
@@ -58,6 +72,11 @@
       border-bottom: 1px solid #a3acce;
       padding-bottom: 10px;
       margin-bottom: 10px;
+
+      &-right {
+        display: flex;
+        align-items: flex-end;
+      }
     }
     &-sender {
       margin-right: 5px;
@@ -78,6 +97,10 @@
     &-date {
       color: #999;
       font-size: 12px;
+      line-height: 24px;
+    }
+    &-delete {
+      width: 22px;
     }
   }
 </style>
@@ -87,13 +110,47 @@
   import dayjs from 'dayjs'
   import AOS from 'aos'
   import 'aos/dist/aos.css' // You can also use <link> for styles
+  import { SvelteToast, toast } from '@zerodevx/svelte-toast'
   import { getTimeDiff } from '../lib/timeDiff'
+  import { removeComment } from '../api'
   export let comments: Comment[] = []
   AOS.init()
+
+  const deleteComment = async (comment: Comment) => {
+    if (comment.key) {
+      const result = await removeComment(comment.key)
+
+      if (result) {
+        toast.push('삭제되었습니다.', {
+          theme: {
+            '--toastBackground': '#32AA62',
+            '--toastColor': '#fff'
+          }
+        })
+      } else {
+        toast.push('실패하였습니다.', {
+          theme: {
+            '--toastBackground': '#AA3232',
+            '--toastColor': '#fff'
+          }
+        })
+      }
+    } else {
+      toast.push('실패하였습니다.', {
+        theme: {
+          '--toastBackground': '#AA3232',
+          '--toastColor': '#fff'
+        }
+      })
+    }
+  }
 </script>
 
 <div class="comment-list">
-  {#each comments.reverse() as comment, idx}
+  <div class="toast-wrapper">
+    <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
+  </div>
+  {#each comments as comment, idx}
     <div
       class="comment"
       data-aos="fade-up"
@@ -108,8 +165,13 @@
         <div>
           <span class="comment-sender">{comment.sender}</span>
         </div>
-        <div class="comment-date">
-          {getTimeDiff(dayjs(comment.createdDate))}
+        <div class="comment-header-right">
+          <div class="comment-date">
+            {getTimeDiff(dayjs(comment.createdDate))}
+          </div>
+          <button class="comment-delete" on:click={() => deleteComment(comment)}>
+            <img src="delete.svg" alt="delete" />
+          </button>
         </div>
       </div>
       <div class="comment-content">

@@ -1,4 +1,5 @@
 export interface Comment {
+  key?: string
   sender: string
   comment: string
   createdDate: string

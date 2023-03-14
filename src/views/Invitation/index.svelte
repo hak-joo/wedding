@@ -506,7 +506,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        gap: 30px;
+        gap: 10px;
         margin: 30px 0;
       }
     }
@@ -628,7 +628,7 @@
   import { firebaseApp } from '../../lib/firebase'
 
   AOS.init()
-  let isShowOpening = true
+  let wrapperRef: HTMLElement
 
   let galleryDatas: GalleryItem[] = []
   let currentIdx = 0
@@ -721,16 +721,18 @@
   let weddingDay = dayjs()
   let dday = 0
 
-  let modalShow = false
-  let isOpenImageModal = false
-  let writeModalShow = false
+  let isShowOpening = true
+  $: isShowOpening, scrollToElement('header')
+  let isShowCommentsModal = false
+  let isShowImageModal = false
+  let isShowWriteModal = false
   let writeModalStartY = 0
 
-  let isAccountModalShow = false
+  let isShowAccountModal = false
   let accountInfo: PersonInfo
   const toggleAccountModal = (info: PersonInfo) => {
     accountInfo = info
-    isAccountModalShow = true
+    isShowAccountModal = true
   }
 
   let listComment: Comment[] = []
@@ -752,9 +754,21 @@
       inline: 'nearest'
     })
   }
-  $: modalShow, writeModalShow, scrollController()
-  const scrollController = () => {
-    if (!modalShow && !writeModalShow) {
+  $: isShowImageModal, galleryScrollController()
+  const galleryScrollController = () => {
+    if (!isShowImageModal) {
+      scrollToElement('gallery')
+    }
+  }
+  $: isShowAccountModal, accountScrollController()
+  const accountScrollController = () => {
+    if (!isShowAccountModal) {
+      scrollToElement('contact-us')
+    }
+  }
+  $: isShowCommentsModal, isShowWriteModal, guestBookScrollController()
+  const guestBookScrollController = () => {
+    if (!isShowCommentsModal && !isShowWriteModal) {
       scrollToElement('guest-book')
     }
   }
@@ -769,16 +783,17 @@
       weddingDay = dayjs(info.weddingDay)
       dday = weddingDay.diff(dayjs(), 'day')
     })
-    const commentRef = query(
-      databaseRef(database, '/comments'),
-      orderByChild('createdDate')
-    )
+    const commentRef = databaseRef(database, '/comments')
     onValue(commentRef, snapshot => {
       let data: Comment[] = []
       Object.keys(snapshot.val()).forEach(key => {
-        data.push(snapshot.val()[key])
+        data.push({ key, ...snapshot.val()[key] })
       })
       listComment = data
+        .sort((a, b) => {
+          return dayjs(a.createdDate).diff(dayjs(b.createdDate))
+        })
+        .reverse()
     })
 
     const storage = await getStorage(
@@ -814,18 +829,17 @@
       const path = await getDownloadURL(storageRef(storage, fullPath))
       assets[name.split('.')[0].split('_')[0]] = path
     }
-    console.log(assets)
-    // ActivateSnow()
+    ActivateSnow()
   })
 </script>
 
 <!-- markup (zero or more items) goes here -->
 
-<!-- <Opening
+<Opening
   show={isShowOpening}
   close={() => (isShowOpening = false)}
   text={info.openingMsg}
-/> -->
+/>
 <div class="navigation-container">
   <button
     class="navigation-button"
@@ -865,7 +879,7 @@
   </button>
 </div>
 
-<div class="main-wrapper" transition:fade>
+<div bind:this={wrapperRef} class="main-wrapper" transition:fade>
   <div class="header-container">
     <div class="header-text-top">THE MARRIAGE</div>
     <div class="header-text-middle">
@@ -983,10 +997,10 @@
   </div>
 
   <ImageModal
-    isShow={isOpenImageModal}
+    isShow={isShowImageModal}
     title=""
     toggoleModal={() => {
-      isOpenImageModal = !isOpenImageModal
+      isShowImageModal = !isShowImageModal
     }}
   >
     {#if galleryDatas.length > 0}
@@ -1017,7 +1031,7 @@
           currentIdx = idx
         }}
         toggoleModal={() => {
-          isOpenImageModal = !isOpenImageModal
+          isShowImageModal = !isShowImageModal
         }}
       />
     {/if}
@@ -1426,25 +1440,25 @@
       <button
         class="guest-book-btn"
         on:click={() => {
-          modalShow = true
+          isShowCommentsModal = true
         }}>전체 보기</button
       >
       <button
         class="guest-book-btn"
         on:click={e => {
           writeModalStartY = e.clientY
-          writeModalShow = true
+          isShowWriteModal = true
         }}>작성 하기</button
       >
     </div>
   </div>
-  <Modal bind:isShow={modalShow} title="방명록">
+  <Modal bind:isShow={isShowCommentsModal} title="방명록">
     <Comments comments={listComment} />
   </Modal>
 
-  <WriteModal bind:isShow={writeModalShow} startY={writeModalStartY} title="방명록" />
+  <WriteModal bind:isShow={isShowWriteModal} startY={writeModalStartY} title="방명록" />
   <AccountModal
-    bind:isShow={isAccountModalShow}
+    bind:isShow={isShowAccountModal}
     bind:accountInfo
     startY={writeModalStartY}
     payIcon={assets.pay}

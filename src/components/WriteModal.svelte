@@ -162,11 +162,30 @@
   let sended = false
 
   let textAreaRef: HTMLElement
+  let sender = ''
+  let comment = ''
+  let password = ''
+  let senderVal = true
+  let commentVal = true
+  let passwordVal = true
+  const validateSender = () => {
+    senderVal = sender !== ''
+  }
+  const validateComment = () => {
+    commentVal = comment !== ''
+  }
+  const validatePassword = () => {
+    passwordVal = password !== ''
+  }
   const makePostIt = (node: Element, { delay = 0, duration = 400 }) => {
+    sender = ''
+    comment = ''
+    password = ''
+    senderVal = true
+    commentVal = true
+    passwordVal = true
     if (sended) {
       sended = false
-      sender = ''
-      comment = ''
       return {
         delay,
         duration,
@@ -201,7 +220,18 @@
 
   const sendMessage = async () => {
     if (!senderVal || !passwordVal || !commentVal) return
-    if (sender === '' || comment === '' || password === '') return
+    if (sender === '') {
+      senderVal = false
+      return
+    }
+    if (comment === '') {
+      commentVal = false
+      return
+    }
+    if (password === '') {
+      passwordVal = false
+      return
+    }
     sended = true
     await sendComments({
       sender,
@@ -215,21 +245,6 @@
     if (textAreaRef.scrollHeight > 100) return
     textAreaRef.style.height = 'auto'
     textAreaRef.style.height = `${textAreaRef.scrollHeight}px`
-  }
-  let sender = ''
-  let comment = ''
-  let password = ''
-  let senderVal = true
-  let commentVal = true
-  let passwordVal = true
-  const validateSender = () => {
-    senderVal = sender !== ''
-  }
-  const validateComment = () => {
-    commentVal = comment !== ''
-  }
-  const validatePassword = () => {
-    passwordVal = password !== ''
   }
 </script>
 

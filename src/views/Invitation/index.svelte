@@ -49,7 +49,7 @@
   .header {
     &-container {
       width: 100%;
-      /* min-height: 100vh; */
+      min-height: 100vh;
       background-color: #fff;
       display: flex;
       flex-direction: column;

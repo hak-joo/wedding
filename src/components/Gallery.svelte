@@ -173,6 +173,7 @@
 
   onMount(() => {
     containerWidth = (carouselTag as HTMLElement).offsetWidth
+    console.log(containerWidth)
   })
 </script>
 

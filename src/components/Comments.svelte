@@ -107,15 +107,47 @@
       margin-bottom: 4px;
     }
   }
-  .delete {
+  .form-delete {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    font-size: 12px;
     input {
-      flex: 1;
+      width: 0;
       border: none;
+      border-bottom: 1px solid #bf8dcf;
+      font-size: 10px;
+      transition: width 1s;
       &:focus {
         outline: none;
+      }
+    }
+    .active {
+      width: 120px;
+      padding: 0 4px;
+      margin-right: 10px;
+    }
+    &-buttons {
+      display: flex;
+      justify-content: center;
+      &-delete {
+        width: 14px;
+        transition: all 1s;
+      }
+      &-close {
+        transition: all 1s;
+        width: 0px;
+        &:after {
+          display: inline-block;
+          content: '\00d7';
+          font-size: 0px;
+        }
+      }
+      .btn-active {
+        width: 20px;
+        margin-left: 5px;
+        &:after {
+          font-size: 18px;
+        }
       }
     }
   }
@@ -218,33 +250,55 @@
           <div class="comment-date">
             {getTimeDiff(dayjs(comment.createdDate))}
           </div>
-          <button
-            class="comment-delete"
-            on:click={() => {
-              selectedIdx = idx
-            }}
-          >
-            <img src="/assets/delete.svg" alt="delete" />
-          </button>
+          <div class="form-delete">
+            <input
+              class:active={idx === selectedIdx}
+              bind:value={deletePassword}
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+            />
+            <div class="form-delete-buttons">
+              <button
+                class="form-delete-buttons-delete"
+                on:click={() =>
+                  idx === selectedIdx ? deleteComment(comment) : (selectedIdx = idx)}
+              >
+                <img src="/assets/delete.svg" alt="delete" />
+              </button>
+              <button
+                class:btn-active={idx === selectedIdx}
+                class="form-delete-buttons-close"
+                on:click={() => (selectedIdx = -1)}
+              />
+            </div>
+          </div>
+          <!-- <button
+              class="comment-delete"
+              on:click={() => {
+                selectedIdx = idx
+              }}
+            >
+              <img src="/assets/delete.svg" alt="delete" />
+            </button> -->
         </div>
       </div>
 
       <div class="comment-content" transition:fade>
-        {#if idx === selectedIdx}
-          <div class="delete">
+        <!-- {#if idx === selectedIdx}
+          <div class="form-delete">
             <input
               bind:value={deletePassword}
               type="password"
               placeholder="삭제 비밀번호를 입력하세요"
             />
-            <div class="delete-buttons">
+            <div class="form-delete-buttons">
               <button on:click={() => deleteComment(comment)}>확인</button>
               <button on:click={() => (selectedIdx = -1)}>취소</button>
             </div>
           </div>
-        {:else}
-          {comment.comment}
-        {/if}
+        {:else} -->
+        {comment.comment}
+        <!-- {/if} -->
       </div>
     </div>
   {/each}

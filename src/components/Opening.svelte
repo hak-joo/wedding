@@ -56,7 +56,7 @@
     }
 
     &-heart {
-      background-color: pink;
+      background-color: #eba0f8;
       height: 50px;
       width: 50px;
       transform: rotate(-45deg);
@@ -64,7 +64,7 @@
       animation-duration: 1s;
       animation-iteration-count: infinite;
       &:after {
-        background-color: pink;
+        background-color: #eba0f8;
         content: '';
         border-radius: 50%;
         position: absolute;
@@ -74,7 +74,7 @@
         left: 25px;
       }
       &:before {
-        background-color: pink;
+        background-color: #eba0f8;
         content: '';
         border-radius: 50%;
         position: absolute;

@@ -1,5 +1,5 @@
 <style lang="scss">
-  $svgMask: 'heart.svg';
+  $svgMask: '/assets/heart.svg';
   /*반응형 화면 크기*/
   $mobile: 767px;
   $tablet: 1023px;
@@ -144,7 +144,7 @@
       font-size: 24px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      color: #657098;
+      color: #bf8dcf;
       padding: 2px 0;
     }
     &-text {
@@ -213,7 +213,7 @@
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 20px 0;
-      color: #657098;
+      color: #bf8dcf;
     }
     &-container {
       width: 100%;
@@ -228,8 +228,8 @@
       font-size: 12px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      border-radius: 15px;
-      background-color: #657098;
+      border-radius: 5px;
+      background-color: #bf8dcfb7;
       color: #fff;
       padding: 5px 15px;
 
@@ -275,7 +275,7 @@
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 20px 0 10px;
-      color: #657098;
+      color: #bf8dcf;
     }
     &-location {
       font-size: 16px;
@@ -301,7 +301,7 @@
         font-weight: bold;
         font-family: 'Nanum Myeongjo', serif;
         padding: 10px 0;
-        color: #657098;
+        color: #bf8dcf;
       }
       &-content {
         width: 100%;
@@ -325,7 +325,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: start;
-      border: 1px double #657098;
+      border: 1px double #bf8dcf;
       border-radius: 15px;
     }
     &-title {
@@ -333,7 +333,7 @@
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 10px 0 20px;
-      color: #657098;
+      color: #bf8dcf;
     }
     &-content {
       font-size: 12px;
@@ -383,7 +383,7 @@
       font-size: 12px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      color: #657098;
+      color: #888;
     }
   }
   // 구버전
@@ -402,7 +402,7 @@
       padding: 0px 0 10px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      color: #657098;
+      color: #bf8dcf;
     }
     &-sub {
       &-container {
@@ -489,12 +489,12 @@
       padding-top: 30px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      color: #657098;
+      color: #bf8dcf;
     }
 
     &-container {
-      width: 45%;
-      border: 1px solid #657098;
+      width: 35%;
+      background-color: #fadfff;
       border-radius: 15px;
       display: flex;
       flex-direction: column;
@@ -506,32 +506,31 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        gap: 10px;
+        gap: 30px;
         margin: 30px 0;
       }
     }
     &-sub-container {
       width: 100%;
-      padding: 0px 30px 10px;
+      padding: 0px 20px 10px;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 5px;
-      border-bottom: 1px solid #657098;
+      gap: 15px;
       &:nth-last-child(1) {
         border-bottom: none;
       }
     }
     &-to {
       padding: 10px 0;
-      color: #657098;
+      color: #3f3740;
       font-size: 16px;
-      font-weight: bold;
+      font-weight: 600;
       font-family: 'Nanum Myeongjo', serif;
 
       span {
-        color: #999;
+        color: #666;
         font-size: 12px;
       }
     }
@@ -558,28 +557,28 @@
       position: fixed;
       width: fit-content;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
 
       left: 15px;
       bottom: 20px;
       z-index: 100;
-      background-color: #edededdd;
+      background-color: #ffffb08e;
       border-radius: 15px;
-
-      gap: 5px;
+      padding: 6px 0 3px;
     }
     &-button {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 20%;
-      height: 30px;
-      border: 1px solid #999;
       border-radius: 30px;
       font-size: 0.5px;
-      padding: 0px 10px;
+      padding: 7px 10px;
       cursor: pointer;
+      img {
+        width: 20px;
+      }
     }
   }
 </style>
@@ -610,13 +609,7 @@
 
   import AOS from 'aos'
   import 'aos/dist/aos.css' // You can also use <link> for styles
-  import {
-    getDatabase,
-    onValue,
-    orderByChild,
-    query,
-    ref as databaseRef
-  } from 'firebase/database'
+  import { getDatabase, onValue, ref as databaseRef } from 'firebase/database'
   import {
     getStorage,
     listAll,
@@ -848,7 +841,7 @@
     }}
     transition:fly={{ x: -50, duration: 300 }}
   >
-    G
+    <img src="/assets/photo.svg" alt="G" />
   </button>
   <button
     class="navigation-button"
@@ -857,7 +850,7 @@
     }}
     transition:fly={{ x: -50, duration: 300 }}
   >
-    M
+    <img src="/assets/map.svg" alt="M" />
   </button>
   <button
     class="navigation-button"
@@ -866,7 +859,7 @@
     }}
     transition:fly={{ x: -50, duration: 300 }}
   >
-    C
+    <img src="/assets/contact.svg" alt="C" />
   </button>
   <button
     class="navigation-button"
@@ -875,7 +868,7 @@
     }}
     transition:fly={{ x: -50, duration: 300 }}
   >
-    B
+    <img src="/assets/letter.svg" alt="L" />
   </button>
 </div>
 
@@ -1052,24 +1045,6 @@
   </div>
 
   <div
-    class="d-day-container"
-    data-aos="fade-up"
-    data-aos-offset="200"
-    data-aos-delay="50"
-    data-aos-duration="1000"
-    data-aos-easing="ease-in-out"
-    data-aos-mirror="false"
-    data-aos-once="true"
-  >
-    <div class="d-day-text">
-      {info.groom.name.slice(1)} ♥ {info.bride.name.slice(1)} 결혼식이 {dday}일 {dday > 0
-        ? '남았습니다.'
-        : dday === 0
-        ? '날입니다.'
-        : '지났습니다.'}
-    </div>
-  </div>
-  <div
     class="map-container"
     data-aos="fade-up"
     data-aos-offset="200"
@@ -1140,22 +1115,16 @@
         <div class="contacting-sub-container">
           <div class="contacting-icons">
             <a class="contacting-btn-icon" href="tel:{info.groom.phone}">
-              <img
-                alt="phone"
-                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-              />
+              <img alt="phone" src="/assets/phone.svg" />
             </a>
             <a class="contacting-btn-icon" href="sms:{info.groom.phone}">
-              <img
-                alt="message"
-                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-              />
+              <img alt="message" src="/assets/message.svg" />
             </a>
             <button
               class="contacting-btn-pay-icon"
               on:click={() => toggleAccountModal(info.groom)}
             >
-              계좌
+              <img alt="won" src="/assets/won.svg" />
             </button>
           </div>
         </div>
@@ -1163,22 +1132,16 @@
         <div class="contacting-sub-container">
           <div class="contacting-icons">
             <a class="contacting-btn-icon" href="tel:{info.groomFather.phone}">
-              <img
-                alt="phone"
-                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-              />
+              <img alt="phone" src="/assets/phone.svg" />
             </a>
             <a class="contacting-btn-icon" href="sms:{info.groomFather.phone}">
-              <img
-                alt="message"
-                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-              />
+              <img alt="message" src="/assets/message.svg" />
             </a>
             <button
               class="contacting-btn-pay-icon"
               on:click={() => toggleAccountModal(info.groomFather)}
             >
-              계좌
+              <img alt="won" src="/assets/won.svg" />
             </button>
           </div>
         </div>
@@ -1186,22 +1149,16 @@
         <div class="contacting-sub-container">
           <div class="contacting-icons">
             <a class="contacting-btn-icon" href="tel:{info.groomMother.phone}">
-              <img
-                alt="phone"
-                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-              />
+              <img alt="phone" src="/assets/phone.svg" />
             </a>
             <a class="contacting-btn-icon" href="sms:{info.groomMother.phone}">
-              <img
-                alt="message"
-                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-              />
+              <img alt="message" src="/assets/message.svg" />
             </a>
             <button
               class="contacting-btn-pay-icon"
               on:click={() => toggleAccountModal(info.groomMother)}
             >
-              계좌
+              <img alt="won" src="/assets/won.svg" />
             </button>
           </div>
         </div>
@@ -1212,22 +1169,16 @@
         <div class="contacting-sub-container">
           <div class="contacting-icons">
             <a class="contacting-btn-icon" href="tel:{info.bride.phone}">
-              <img
-                alt="phone"
-                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-              />
+              <img alt="phone" src="/assets/phone.svg" />
             </a>
             <a class="contacting-btn-icon" href="sms:{info.bride.phone}">
-              <img
-                alt="message"
-                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-              />
+              <img alt="message" src="/assets/message.svg" />
             </a>
             <button
               class="contacting-btn-pay-icon"
               on:click={() => toggleAccountModal(info.bride)}
             >
-              계좌
+              <img alt="won" src="/assets/won.svg" />
             </button>
           </div>
         </div>
@@ -1235,22 +1186,16 @@
         <div class="contacting-sub-container">
           <div class="contacting-icons">
             <a class="contacting-btn-icon" href="tel:{info.brideFather.phone}">
-              <img
-                alt="phone"
-                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-              />
+              <img alt="phone" src="/assets/phone.svg" />
             </a>
             <a class="contacting-btn-icon" href="sms:{info.brideFather.phone}">
-              <img
-                alt="message"
-                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-              />
+              <img alt="message" src="/assets/message.svg" />
             </a>
             <button
               class="contacting-btn-pay-icon"
               on:click={() => toggleAccountModal(info.brideFather)}
             >
-              계좌
+              <img alt="won" src="/assets/won.svg" />
             </button>
           </div>
         </div>
@@ -1258,22 +1203,16 @@
         <div class="contacting-sub-container">
           <div class="contacting-icons">
             <a class="contacting-btn-icon" href="tel:{info.brideMother.phone}">
-              <img
-                alt="phone"
-                src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
-              />
+              <img alt="phone" src="/assets/phone.svg" />
             </a>
             <a class="contacting-btn-icon" href="sms:{info.brideMother.phone}">
-              <img
-                alt="message"
-                src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
-              />
+              <img alt="message" src="/assets/message.svg" />
             </a>
             <button
               class="contacting-btn-pay-icon"
               on:click={() => toggleAccountModal(info.brideMother)}
             >
-              계좌
+              <img alt="won" src="/assets/won.svg" />
             </button>
           </div>
         </div>
@@ -1288,13 +1227,13 @@
           <a class="contact-us-btn-icon" href="tel:{info.groom.phone}">
             <img
               alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              src="/assets/phone.svg"
             />
           </a>
           <a class="contact-us-btn-icon" href="sms:{info.groom.phone}">
             <img
               alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              src="/assets/message.svg"
             />
           </a>
         </div>
@@ -1311,13 +1250,13 @@
           <a class="contact-us-btn-icon" href="tel:{info.bride.phone}">
             <img
               alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              src="/assets/phone.svg"
             />
           </a>
           <a class="contact-us-btn-icon" href="sms:{info.bride.phone}">
             <img
               alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              src="/assets/message.svg"
             />
           </a>
         </div>
@@ -1337,13 +1276,13 @@
           <a class="contact-us-btn-icon" href="tel:{info.groomFather.phone}">
             <img
               alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              src="/assets/phone.svg"
             />
           </a>
           <a class="contact-us-btn-icon" href="sms:{info.groomFather.phone}">
             <img
               alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              src="/assets/message.svg"
             />
           </a>
         </div>
@@ -1358,13 +1297,13 @@
           <a class="contact-us-btn-icon" href="tel:{info.groomMother.phone}">
             <img
               alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              src="/assets/phone.svg"
             />
           </a>
           <a class="contact-us-btn-icon" href="sms:{info.groomMother.phone}">
             <img
               alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              src="/assets/message.svg"
             />
           </a>
         </div>
@@ -1382,13 +1321,13 @@
           <a class="contact-us-btn-icon" href="tel:{info.brideFather.phone}">
             <img
               alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              src="/assets/phone.svg"
             />
           </a>
           <a class="contact-us-btn-icon" href="sms:{info.brideFather.phone}">
             <img
               alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              src="/assets/message.svg"
             />
           </a>
         </div>
@@ -1403,13 +1342,13 @@
           <a class="contact-us-btn-icon" href="tel:{info.brideMother.phone}">
             <img
               alt="phone"
-              src="https://img.icons8.com/material-rounded/96/null/ringer-volume.png"
+              src="/assets/phone.svg"
             />
           </a>
           <a class="contact-us-btn-icon" href="sms:{info.brideMother.phone}">
             <img
               alt="message"
-              src="https://img.icons8.com/material-rounded/96/null/edit-message.png"
+              src="/assets/message.svg"
             />
           </a>
         </div>
@@ -1464,6 +1403,24 @@
     payIcon={assets.pay}
   />
 
+  <div
+    class="d-day-container"
+    data-aos="fade-up"
+    data-aos-offset="200"
+    data-aos-delay="50"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out"
+    data-aos-mirror="false"
+    data-aos-once="true"
+  >
+    <div class="d-day-text">
+      {info.groom.name.slice(1)} ♥ {info.bride.name.slice(1)} 결혼식이 {dday}일 {dday > 0
+        ? '남았습니다.'
+        : dday === 0
+        ? '날입니다.'
+        : '지났습니다.'}
+    </div>
+  </div>
   <div class="footer-img-container">
     <div class="wave-top">
       <svg

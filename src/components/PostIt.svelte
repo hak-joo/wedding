@@ -35,12 +35,12 @@
   .postit {
     &-wrapper {
       width: 165px;
-      aspect-ratio: 1 / 1.5;
+      aspect-ratio: 1 / 1.2;
       padding: 10px 8px;
       margin: 10px 10px;
       box-shadow: 3px 1px 7px 0px rgba(183, 183, 183, 0.87);
       border-radius: 7px;
-      background-color: #fef6f5;
+      background-color: #ffffe7;
       @include mobile {
         /*브라우저 사이즈767px이하일때*/
         width: 30vw;
@@ -69,7 +69,7 @@
       color: #333;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      font-size: 16px;
+      font-size: 14px;
       text-align: center;
       @include mobile {
         /*브라우저 사이즈767px이하일때*/

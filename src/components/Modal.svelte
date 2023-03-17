@@ -60,7 +60,7 @@
       justify-content: center;
       width: 100%;
       height: 80px;
-      color: #657098;
+      color: #bf8dcf;
     }
     &-slot {
       flex: 1;
@@ -80,7 +80,7 @@
       font-size: 24px;
       font-family: 'Nanum Myeongjo', serif;
       font-weight: bold;
-      border-bottom: 2px dotted #657098;
+      border-bottom: 2px dotted #bf8dcf;
 
       &-close {
         position: absolute;

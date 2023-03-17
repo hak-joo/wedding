@@ -95,14 +95,14 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      border-bottom: 1px solid #6570987d;
+      border-bottom: 1px solid #bf8dcf7d;
       padding: 5px 15px;
     }
     &-label {
       font-size: 12px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      color: #657098;
+      color: #bf8dcf;
     }
     &-text {
       font-size: 16px;

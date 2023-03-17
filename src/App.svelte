@@ -3,7 +3,7 @@
     &-wrapper {
       width: 100%;
       margin: 0 auto;
-      background-color: #657098;
+      background-color: #ccc;
     }
     &-container {
       position: relative;

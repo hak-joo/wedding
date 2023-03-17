@@ -170,7 +170,7 @@
             {getTimeDiff(dayjs(comment.createdDate))}
           </div>
           <button class="comment-delete" on:click={() => deleteComment(comment)}>
-            <img src="delete.svg" alt="delete" />
+            <img src="/assets/delete.svg" alt="delete" />
           </button>
         </div>
       </div>

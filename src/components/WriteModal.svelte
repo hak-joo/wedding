@@ -130,7 +130,7 @@
         &:hover {
           color: #fff;
           font-weight: bold;
-          background-color: #657098;
+          background-color: #bf8dcf;
         }
       }
     }
@@ -138,7 +138,7 @@
   .noti {
     &-sender {
       font-size: 20px;
-      color: #657098;
+      color: #bf8dcf;
       margin-right: 10px;
     }
     &-message {

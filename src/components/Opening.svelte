@@ -53,6 +53,10 @@
       font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
+
+      padding-right: 4px;
+      border-right: 2px solid #333;
+      animation: blink-caret 0.6s step-end infinite;
     }
 
     &-heart {
@@ -85,6 +89,17 @@
       }
     }
 
+    /* The typewriter cursor effect */
+    @keyframes blink-caret {
+      from,
+      to {
+        border-color: transparent;
+      }
+      50% {
+        border-color: #333;
+      }
+    }
+
     @keyframes beat {
       0% {
         transform: scale(1) rotate(-45deg);
@@ -96,26 +111,54 @@
   }
 </style>
 
-<script>
+<script lang="ts">
+  import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
-  import Typewriter from 'svelte-typewriter'
 
   export let show = false
+  export let text = '결혼식에 초대합니다.'
   export let close = () => {}
 
-  export let text = '결혼식에 초대합니다.'
+  let typedChar = '' // SECTION displaying typed text
+  let index = 0
 
-  $: if (show) {
-    console.log(show)
+  // If Input is empty, clear out SECTION displaying typed text
+  $: if (!text) {
+    typedChar = ''
+    index = typedChar.length
   }
+
+  let typewriter: any // for setInterval/clearInterval
+  // Disable START button; prevent clicking twice
+  let isTyping = false
+
+  const typeChar = () => {
+    if (index < text.length) {
+      isTyping = true
+      typedChar += text[index]
+      index += 1
+    }
+  }
+
+  $: if (text.length > 0 && index === text.length) {
+    clearInterval(typewriter)
+    isTyping = false
+    setTimeout(() => close(), 1000)
+  }
+
+  const typing = () => (typewriter = setInterval(typeChar, 300))
+
+  onMount(() => {
+    console.log(show, text)
+    typing()
+  })
 </script>
 
 {#if show}
   <div class="opening-container" transition:fade>
     <div class="opening-heart" />
-    <Typewriter mode="concurrent" on:done={() => setTimeout(() => close(), 1000)}>
-      <!-- <Typewriter mode="concurrent"> -->
-      <p class="opening-letter">{text}</p>
-    </Typewriter>
+    <section>
+      <p class="opening-letter">{typedChar}</p>
+    </section>
   </div>
 {/if}

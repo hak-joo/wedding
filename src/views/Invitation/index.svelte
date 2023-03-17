@@ -49,7 +49,7 @@
   .header {
     &-container {
       width: 100%;
-      min-height: 100vh;
+      /* min-height: 100vh; */
       background-color: #fff;
       display: flex;
       flex-direction: column;
@@ -176,7 +176,7 @@
     }
     &-thumbnail {
       &-container {
-        padding: 40px 10px;
+        padding: 25px 10px;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -232,6 +232,15 @@
       background-color: #bf8dcfb7;
       color: #fff;
       padding: 5px 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      &-icon {
+        width: 12px;
+        aspect-ratio: 1;
+        min-width: none;
+      }
 
       &-container {
         display: flex;
@@ -246,24 +255,23 @@
   .d-day {
     &-container {
       width: 100%;
-      padding: 20px 0;
       background-color: #fff;
-      color: #999;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin: 20px 0 0;
     }
     &-text {
       font-size: 16px;
       font-weight: bold;
+      color: #999;
       font-family: 'Nanum Myeongjo', serif;
     }
   }
   .map {
     &-container {
       width: 100%;
-      padding: 20px 0;
       background-color: #fff;
       display: flex;
       flex-direction: column;
@@ -274,12 +282,13 @@
       font-size: 24px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
-      padding: 20px 0 10px;
+      padding: 5px 0 15px;
       color: #bf8dcf;
     }
     &-location {
       font-size: 16px;
       font-weight: bold;
+      padding: 10px 0;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-address {
@@ -312,14 +321,16 @@
         &-item {
           font-size: 12px;
           font-family: 'Nanum Myeongjo', serif;
+          padding: 5px 0;
         }
       }
     }
   }
   .noti {
     &-container {
-      width: 80%;
-      padding: 10px 20px 20px;
+      width: 78%;
+      margin-top: 15px;
+      padding: 10px 18px 20px;
       background-color: #fff;
       display: flex;
       flex-direction: column;
@@ -344,7 +355,7 @@
   .footer {
     &-img {
       &-container {
-        margin: 30px 0;
+        margin: 0px 0 20px;
         position: relative;
         display: flex;
         flex-direction: column;
@@ -485,8 +496,7 @@
   .contacting {
     &-title {
       font-size: 24px;
-      padding: 0px 10px;
-      padding-top: 30px;
+      padding: 20px 10px 0;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       color: #bf8dcf;
@@ -500,6 +510,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 10px 0;
       &-main {
         width: 100%;
         display: flex;
@@ -512,12 +523,12 @@
     }
     &-sub-container {
       width: 100%;
-      padding: 0px 20px 10px;
+      padding: 0px 15px 10px;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
-      gap: 15px;
+      gap: 20px;
       &:nth-last-child(1) {
         border-bottom: none;
       }
@@ -1059,7 +1070,7 @@
       {@html info.weddingHole.name}
     </div>
     <div class="map-address">{@html info.weddingHole.address}</div>
-    <Map />
+    <!-- <Map /> -->
     <div class="map-navi-container">
       <div class="map-navi-title">지하철</div>
       <div class="map-navi-content">
@@ -1380,15 +1391,21 @@
         class="guest-book-btn"
         on:click={() => {
           isShowCommentsModal = true
-        }}>전체 보기</button
+        }}
       >
+        <img class="guest-book-btn-icon" src="/assets/menu.svg" alt="전체보기" />
+        <p>전체 보기</p>
+      </button>
       <button
         class="guest-book-btn"
         on:click={e => {
           writeModalStartY = e.clientY
           isShowWriteModal = true
-        }}>작성 하기</button
+        }}
       >
+        <img class="guest-book-btn-icon" src="/assets/pen.svg" alt="글쓰기" />
+        <p>작성 하기</p>
+      </button>
     </div>
   </div>
   <Modal bind:isShow={isShowCommentsModal} title="방명록">

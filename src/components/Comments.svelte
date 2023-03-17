@@ -75,7 +75,8 @@
 
       &-right {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
+        gap: 8px;
       }
     }
     &-sender {
@@ -100,7 +101,8 @@
       line-height: 24px;
     }
     &-delete {
-      width: 22px;
+      width: 14px;
+      margin-bottom: 4px;
     }
   }
 </style>

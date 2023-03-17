@@ -49,6 +49,7 @@
     &-item {
       pointer-events: none;
       width: 405px;
+      min-width: 100%;
       height: 100%;
       @include mobile {
         /*브라우저 사이즈767px이하일때*/
@@ -63,7 +64,7 @@
       align-items: center;
       height: 100%;
       background-color: #ffffff22;
-      padding: 3px;
+      padding: 10px;
       &.prev {
         left: 0%;
       }
@@ -115,6 +116,13 @@
     dX = moveX
   }
   const onMouseUp = (e: MouseEvent) => {
+    if (Array.from((e.target as HTMLElement).classList).includes('carousel-btn')) {
+      dX = 0
+      startX = 0
+      isMouseDown = false
+      window.removeEventListener('mouseup', onMouseUp)
+      return
+    }
     if (dX > 0) {
       setCurrentIdx(currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1)
     } else if (dX < 0) {
@@ -143,6 +151,13 @@
   }
 
   const onTouchEnd = (e: TouchEvent) => {
+    if (Array.from((e.target as HTMLElement).classList).includes('carousel-btn')) {
+      dX = 0
+      startX = 0
+      isMouseDown = false
+      return
+    }
+
     if (dX > 0) {
       setCurrentIdx(currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1)
     } else if (dX < 0) {
@@ -174,14 +189,17 @@
 >
   <button
     class="carousel-btn prev"
-    on:click={() =>
-      (currentIdx = currentIdx - 1 < 0 ? itemList.length - 1 : currentIdx - 1)}
+    on:click={() => {
+      currentIdx = currentIdx - 1 < 0 ? itemList.length - 1 : currentIdx - 1
+    }}
   >
     {'<'}
   </button>
   <button
     class="carousel-btn next"
-    on:click={() => (currentIdx = currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1)}
+    on:click={() => {
+      currentIdx = currentIdx + 1 >= itemList.length ? 0 : currentIdx + 1
+    }}
   >
     {'>'}
   </button>

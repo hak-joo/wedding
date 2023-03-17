@@ -146,7 +146,7 @@
     setTimeout(() => close(), 1000)
   }
 
-  const typing = () => (typewriter = setInterval(typeChar, 300))
+  const typing = () => (typewriter = setInterval(typeChar, 200))
 
   onMount(() => {
     console.log(show, text)

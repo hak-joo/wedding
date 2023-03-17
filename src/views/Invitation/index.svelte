@@ -172,7 +172,7 @@
     &-container {
       width: 100%;
       background-color: #fff;
-      padding: 20px 10px;
+      padding: 20px 10px 0;
     }
     &-thumbnail {
       &-container {
@@ -248,7 +248,7 @@
         justify-content: center;
         align-items: center;
         gap: 20px;
-        margin-top: 15px;
+        margin-top: 30px;
       }
     }
   }
@@ -260,7 +260,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      margin: 20px 0 0;
+      padding: 25px 0 0;
     }
     &-text {
       font-size: 16px;
@@ -277,6 +277,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      padding: 20px 0 0;
     }
     &-title {
       font-size: 24px;
@@ -306,7 +307,7 @@
         align-items: flex-start;
       }
       &-title {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
         font-family: 'Nanum Myeongjo', serif;
         padding: 10px 0;
@@ -348,6 +349,7 @@
     }
     &-content {
       font-size: 12px;
+      line-height: 24px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
     }
@@ -1070,7 +1072,7 @@
       {@html info.weddingHole.name}
     </div>
     <div class="map-address">{@html info.weddingHole.address}</div>
-    <!-- <Map /> -->
+    <Map />
     <div class="map-navi-container">
       <div class="map-navi-title">지하철</div>
       <div class="map-navi-content">

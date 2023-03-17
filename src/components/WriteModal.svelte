@@ -236,7 +236,8 @@
     await sendComments({
       sender,
       comment,
-      createdDate: dayjs().toISOString()
+      createdDate: dayjs().toISOString(),
+      password
     })
     await sleep(1000)
     isShow = false

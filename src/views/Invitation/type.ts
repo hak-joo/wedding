@@ -3,6 +3,7 @@ export interface Comment {
   sender: string
   comment: string
   createdDate: string
+  password: string
 }
 export interface PersonInfo {
   name: string

@@ -57,6 +57,7 @@
     line-height: 15px;
     box-shadow: 1px 1px 4px rgb(0 0 0 / 15%);
     font-family: 'Nanum Myeongjo', serif;
+
     &:nth-of-type(1) {
       margin-top: 0;
     }
@@ -94,6 +95,7 @@
     &-content {
       line-height: 20px;
       font-size: 13px;
+      transition: all 0.5s ease-in-out;
     }
     &-date {
       color: #999;
@@ -105,23 +107,45 @@
       margin-bottom: 4px;
     }
   }
+  .delete {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    input {
+      flex: 1;
+      border: none;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 </style>
 
 <script lang="ts">
+  import { fade } from 'svelte/transition'
   import { Comment } from '../views/Invitation/type'
-  import dayjs from 'dayjs'
+  import dayjs, { duration } from 'dayjs'
   import AOS from 'aos'
+  import { longpress } from './../lib/longPress'
+
   import 'aos/dist/aos.css' // You can also use <link> for styles
   import { SvelteToast, toast } from '@zerodevx/svelte-toast'
   import { getTimeDiff } from '../lib/timeDiff'
   import { removeComment } from '../api'
+
   export let comments: Comment[] = []
   AOS.init()
 
-  const deleteComment = async (comment: Comment) => {
-    if (comment.key) {
-      const result = await removeComment(comment.key)
+  let selectedIdx: number = -1
+  const resetPassword = () => {
+    deletePassword = ''
+  }
+  $: selectedIdx >= 0 && resetPassword()
 
+  let deletePassword: string = ''
+  const deleteComment = async (comment: Comment) => {
+    if (comment.key && comment.password === deletePassword) {
+      const result = await removeComment(comment.key)
       if (result) {
         toast.push('삭제되었습니다.', {
           theme: {
@@ -129,6 +153,8 @@
             '--toastColor': '#fff'
           }
         })
+        resetPassword()
+        selectedIdx = -1
       } else {
         toast.push('실패하였습니다.', {
           theme: {
@@ -138,13 +164,32 @@
         })
       }
     } else {
-      toast.push('실패하였습니다.', {
+      deletePassword = ''
+      toast.push('패스워드가 일치하지 않습니다.', {
         theme: {
           '--toastBackground': '#AA3232',
           '--toastColor': '#fff'
         }
       })
     }
+  }
+
+  const copyComment = (comment: string) => {
+    const textarea = document.createElement('textarea')
+    document.body.appendChild(textarea)
+    textarea.value = comment
+    textarea.select()
+    document.execCommand('copy')
+    document.body.appendChild(textarea)
+    document.body.removeChild(textarea)
+
+    toast.push('복사되었습니다.', {
+      theme: {
+        '--toastBackground': '#32AA62',
+        '--toastColor': '#fff'
+      },
+      duration: 1000
+    })
   }
 </script>
 
@@ -162,6 +207,8 @@
       data-aos-easing="ease-in-out"
       data-aos-mirror="false"
       data-aos-once="true"
+      use:longpress
+      on:long={copyComment(comment.comment)}
     >
       <div class="comment-header">
         <div>
@@ -171,13 +218,33 @@
           <div class="comment-date">
             {getTimeDiff(dayjs(comment.createdDate))}
           </div>
-          <button class="comment-delete" on:click={() => deleteComment(comment)}>
+          <button
+            class="comment-delete"
+            on:click={() => {
+              selectedIdx = idx
+            }}
+          >
             <img src="/assets/delete.svg" alt="delete" />
           </button>
         </div>
       </div>
-      <div class="comment-content">
-        {comment.comment}
+
+      <div class="comment-content" transition:fade>
+        {#if idx === selectedIdx}
+          <div class="delete">
+            <input
+              bind:value={deletePassword}
+              type="password"
+              placeholder="삭제 비밀번호를 입력하세요"
+            />
+            <div class="delete-buttons">
+              <button on:click={() => deleteComment(comment)}>확인</button>
+              <button on:click={() => (selectedIdx = -1)}>취소</button>
+            </div>
+          </div>
+        {:else}
+          {comment.comment}
+        {/if}
       </div>
     </div>
   {/each}

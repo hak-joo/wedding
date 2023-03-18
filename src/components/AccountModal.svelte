@@ -172,7 +172,9 @@
 
   import { portal } from 'svelte-portal'
   import './style.scss'
-  import { SvelteToast, toast } from '@zerodevx/svelte-toast'
+  import { toast } from '@zerodevx/svelte-toast'
+  import Toast from './Toast.svelte'
+  import { copyContent } from '../lib/copy'
 
   export let startY = 0
   export let payIcon = ''
@@ -187,13 +189,7 @@
   }
 
   const copyAccount = () => {
-    const textarea = document.createElement('textarea')
-    document.body.appendChild(textarea)
-    textarea.value = `${accountInfo.account.bank} ${accountInfo.account.number}`
-    textarea.select()
-    document.execCommand('copy')
-    document.body.appendChild(textarea)
-    document.body.removeChild(textarea)
+    copyContent(accountInfo.account.bank)
 
     toast.push('복사되었습니다.', {
       theme: {
@@ -206,9 +202,7 @@
 </script>
 
 {#if isShow}
-  <div class="toast-wrapper">
-    <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
-  </div>
+  <Toast />
   <div class="modal-wrapper" transition:fade use:portal={'#portal'}>
     <div class="modal-container">
       <div class="account-container">

@@ -735,6 +735,8 @@
   let weddingDay = dayjs()
   let dday = 0
 
+  let mapActive = false
+
   let isShowOpening = true
   $: isShowOpening, scrollToElement('header')
   let isShowCommentsModal = false
@@ -769,7 +771,7 @@
     })
   }
   const copyAddres = (address: string) => {
-    copyContent(address);
+    copyContent(address)
     toast.push('주소가 복사되었습니다.', {
       theme: {
         '--toastBackground': '#32AA62',
@@ -938,7 +940,9 @@
         </g>
       </svg>
     </div>
-    <img class="header-img" src={info.header.imgPath} alt="HeaderImg" />
+    {#if info.header.imgPath}
+      <img class="header-img" src={info.header.imgPath} alt="" />
+    {/if}
     <div class="wave-bottom">
       <svg
         class="waves"

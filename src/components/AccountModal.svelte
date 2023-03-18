@@ -31,6 +31,20 @@
     width: $calculated;
     height: $calculated;
   }
+  .toast-wrapper {
+    --toastContainerTop: auto;
+    --toastContainerRight: 0.5rem;
+    --toastContainerBottom: 0.5rem;
+    --toastContainerLeft: 0.5rem;
+    --toastWidth: 100%;
+    --toastMinHeight: 2rem;
+    --toastPadding: 0 0.5rem;
+    --toastBarHeight: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    --toastBorderRadius: 2rem;
+  }
 
   .modal {
     &-wrapper {
@@ -89,14 +103,14 @@
       box-shadow: 1px 2px 3px 0 #ccc;
       border-radius: 5px;
       transition: width, height 0.5s ease;
-      gap: 15px;
+      gap: 5px;
     }
     &-row {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      border-bottom: 1px solid #bf8dcf7d;
-      padding: 5px 15px;
+      align-items: center;
+      padding: 5px 10px;
     }
     &-label {
       font-size: 12px;
@@ -126,13 +140,21 @@
         gap: 15px;
       }
       &-copy {
-        background-color: rgba(101, 112, 152, 0.8);
-        padding: 10px;
-        border-radius: 8px;
+        background-color: #3f3740;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        border-radius: 12px;
+        font-weight: 400;
+        font-family: 'Nanum Gothic', serif;
+        width: 57.14px;
+        height: 24px;
       }
       &-pay {
         &-icon {
-          height: 20px;
+          height: 24px;
         }
         cursor: pointer;
       }
@@ -150,21 +172,43 @@
 
   import { portal } from 'svelte-portal'
   import './style.scss'
+  import { SvelteToast, toast } from '@zerodevx/svelte-toast'
 
   export let startY = 0
   export let payIcon = ''
   export let isShow: boolean = true
   export let accountInfo = {
-    name: '홍성현 ',
+    name: '',
     account: {
-      bank: '아무은행',
-      number: '000-00000-000'
+      bank: '',
+      number: ''
     },
-    pay: 'test'
+    pay: ''
+  }
+
+  const copyAccount = () => {
+    const textarea = document.createElement('textarea')
+    document.body.appendChild(textarea)
+    textarea.value = `${accountInfo.account.bank} ${accountInfo.account.number}`
+    textarea.select()
+    document.execCommand('copy')
+    document.body.appendChild(textarea)
+    document.body.removeChild(textarea)
+
+    toast.push('복사되었습니다.', {
+      theme: {
+        '--toastBackground': '#32AA62',
+        '--toastColor': '#fff'
+      },
+      duration: 1000
+    })
   }
 </script>
 
 {#if isShow}
+  <div class="toast-wrapper">
+    <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
+  </div>
   <div class="modal-wrapper" transition:fade use:portal={'#portal'}>
     <div class="modal-container">
       <div class="account-container">
@@ -177,17 +221,14 @@
           />
         </div>
         <div class="account-row">
-          <div class="account-label">성명</div>
-          <div class="account-text">{accountInfo.name}</div>
-        </div>
-        <div class="account-row">
-          <div class="account-label">계좌번호</div>
-        </div>
-        <div class="account-row">
-          <div class="account-account">
-            {accountInfo.account.bank}
+          <div class="account-text">
+            {accountInfo.account.bank} |
             {accountInfo.account.number}
           </div>
+          <button class="account-btn-copy" on:click={copyAccount}> 복사 </button>
+        </div>
+        <div class="account-row">
+          <div class="account-text">{accountInfo.name}</div>
           <a class="account-btn-pay" href={accountInfo.pay}>
             <img class="account-btn-pay-icon" alt="pay" src={payIcon} />
           </a>

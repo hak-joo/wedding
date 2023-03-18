@@ -47,6 +47,8 @@
     map = new navermaps.Map('map', {
       center: new navermaps.LatLng(37.5525301, 126.937759),
       zoom: 16
+      // draggable: active,
+      // zoomControl: active
     })
 
     const marker = new navermaps.Marker({
@@ -56,6 +58,7 @@
   })
 </script>
 
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="map-wrapper">
   <div id="map" class="map-container" />
   <button class="map-button" on:click={mapToWeddingHall}>예식장</button>

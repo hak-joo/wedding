@@ -295,6 +295,11 @@
     &-address {
       font-size: 12px;
       font-family: 'Nanum Myeongjo', serif;
+      button {
+        border: 1px solid gray;
+        border-radius: 5px;
+        padding: 0 5px;
+      }
     }
     &-navi {
       &-container {
@@ -632,6 +637,9 @@
 
   import { ActivateSnow } from './../../lib/snow'
   import { firebaseApp } from '../../lib/firebase'
+  import { copyContent } from '../../lib/copy'
+  import Toast from '../../components/Toast.svelte'
+  import { toast } from '@zerodevx/svelte-toast'
 
   AOS.init()
   let wrapperRef: HTMLElement
@@ -760,6 +768,16 @@
       inline: 'nearest'
     })
   }
+  const copyAddres = (address: string) => {
+    copyContent(address);
+    toast.push('주소가 복사되었습니다.', {
+      theme: {
+        '--toastBackground': '#32AA62',
+        '--toastColor': '#fff'
+      },
+      duration: 1000
+    })
+  }
   $: isShowImageModal, galleryScrollController()
   const galleryScrollController = () => {
     if (!isShowImageModal) {
@@ -778,6 +796,7 @@
       scrollToElement('guest-book')
     }
   }
+
   onMount(async () => {
     if (Kakao && !Kakao.isInitialized()) {
       Kakao.init('037b39715d4b19da434d1ba24c04fbd2')
@@ -847,6 +866,8 @@
   text={info.openingMsg}
 />
 <div class="navigation-container">
+  <Toast />
+
   <button
     class="navigation-button"
     on:click={() => {
@@ -1071,7 +1092,10 @@
     <div class="map-location">
       {@html info.weddingHole.name}
     </div>
-    <div class="map-address">{@html info.weddingHole.address}</div>
+    <div class="map-address">
+      {@html info.weddingHole.address}
+      <button on:click={() => copyAddres(info.weddingHole.address)}>복사</button>
+    </div>
     <Map />
     <div class="map-navi-container">
       <div class="map-navi-title">지하철</div>

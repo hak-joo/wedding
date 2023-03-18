@@ -30,20 +30,7 @@
     width: $calculated;
     height: $calculated;
   }
-  .toast-wrapper {
-    --toastContainerTop: auto;
-    --toastContainerRight: 0.5rem;
-    --toastContainerBottom: 0.5rem;
-    --toastContainerLeft: 0.5rem;
-    --toastWidth: 100%;
-    --toastMinHeight: 2rem;
-    --toastPadding: 0 0.5rem;
-    --toastBarHeight: 0;
-    font-size: 0.875rem;
-    font-weight: 600;
 
-    --toastBorderRadius: 2rem;
-  }
   .comment {
     display: flex;
     flex-direction: column;
@@ -161,9 +148,12 @@
   import { longpress } from './../lib/longPress'
 
   import 'aos/dist/aos.css' // You can also use <link> for styles
-  import { SvelteToast, toast } from '@zerodevx/svelte-toast'
+  import { toast } from '@zerodevx/svelte-toast'
   import { getTimeDiff } from '../lib/timeDiff'
   import { removeComment } from '../api'
+  import { onMount } from 'svelte'
+  import { copyContent } from '../lib/copy'
+  import Toast from './Toast.svelte'
 
   export let comments: Comment[] = []
   AOS.init()
@@ -207,13 +197,7 @@
   }
 
   const copyComment = (comment: string) => {
-    const textarea = document.createElement('textarea')
-    document.body.appendChild(textarea)
-    textarea.value = comment
-    textarea.select()
-    document.execCommand('copy')
-    document.body.appendChild(textarea)
-    document.body.removeChild(textarea)
+    copyContent(comment)
 
     toast.push('복사되었습니다.', {
       theme: {
@@ -223,12 +207,13 @@
       duration: 1000
     })
   }
+  onMount(() => {
+    toast.pop()
+  })
 </script>
 
 <div class="comment-list">
-  <div class="toast-wrapper">
-    <SvelteToast options={{ reversed: true, intro: { y: 192 } }} />
-  </div>
+  <Toast />
   {#each comments as comment, idx}
     <div
       class="comment"
@@ -240,7 +225,7 @@
       data-aos-mirror="false"
       data-aos-once="true"
       use:longpress
-      on:long={copyComment(comment.comment)}
+      on:long={() => copyComment(comment.comment)}
     >
       <div class="comment-header">
         <div>
@@ -272,33 +257,11 @@
               />
             </div>
           </div>
-          <!-- <button
-              class="comment-delete"
-              on:click={() => {
-                selectedIdx = idx
-              }}
-            >
-              <img src="/assets/delete.svg" alt="delete" />
-            </button> -->
         </div>
       </div>
 
       <div class="comment-content" transition:fade>
-        <!-- {#if idx === selectedIdx}
-          <div class="form-delete">
-            <input
-              bind:value={deletePassword}
-              type="password"
-              placeholder="삭제 비밀번호를 입력하세요"
-            />
-            <div class="form-delete-buttons">
-              <button on:click={() => deleteComment(comment)}>확인</button>
-              <button on:click={() => (selectedIdx = -1)}>취소</button>
-            </div>
-          </div>
-        {:else} -->
         {comment.comment}
-        <!-- {/if} -->
       </div>
     </div>
   {/each}

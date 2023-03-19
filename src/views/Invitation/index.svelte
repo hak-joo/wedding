@@ -296,6 +296,7 @@
       font-size: 12px;
       font-family: 'Nanum Myeongjo', serif;
       button {
+        margin-left: 8px;
         border: 1px solid gray;
         border-radius: 5px;
         padding: 0 5px;
@@ -814,14 +815,16 @@
     const commentRef = databaseRef(database, '/comments')
     onValue(commentRef, snapshot => {
       let data: Comment[] = []
-      Object.keys(snapshot.val()).forEach(key => {
-        data.push({ key, ...snapshot.val()[key] })
-      })
-      listComment = data
-        .sort((a, b) => {
-          return dayjs(a.createdDate).diff(dayjs(b.createdDate))
+      if (snapshot.val()) {
+        Object.keys(snapshot.val()).forEach(key => {
+          data.push({ key, ...snapshot.val()[key] })
         })
-        .reverse()
+        listComment = data
+          .sort((a, b) => {
+            return dayjs(a.createdDate).diff(dayjs(b.createdDate))
+          })
+          .reverse()
+      }
     })
 
     const storage = await getStorage(

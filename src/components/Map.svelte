@@ -1,4 +1,5 @@
 <style lang="scss">
+  $svgMask: '/assets/heart.svg';
   .map {
     &-wrapper {
       padding: 30px 0;
@@ -14,14 +15,12 @@
       left: 50%;
       transform: translate(-50%, -50%);
 
-      width: 56px;
-      height: 30px;
-      color: white;
-      border-radius: 5px;
+      width: 30px;
+      aspect-ratio: 1;
+      -webkit-mask: url($svgMask);
+      mask: url($svgMask);
       background-color: #bf8dcf99;
 
-      font-family: 'Nanum Myeongjo', serif;
-      font-size: 13px;
       transition: all 0.25s ease-in-out;
       &:hover {
         background-color: #bf8dcf;
@@ -61,5 +60,5 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="map-wrapper">
   <div id="map" class="map-container" />
-  <button class="map-button" on:click={mapToWeddingHall}>예식장</button>
+  <button class="map-button" on:click={mapToWeddingHall} />
 </div>

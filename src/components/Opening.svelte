@@ -42,7 +42,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 20px;
+      gap: 50px;
       background: #ffe6f2;
 
       @include mobile {
@@ -152,7 +152,6 @@
   const typing = () => (typewriter = setInterval(typeChar, 200))
 
   onMount(() => {
-    console.log(show, text)
     typing()
   })
 </script>

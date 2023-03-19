@@ -31,20 +31,6 @@
     width: $calculated;
     height: $calculated;
   }
-  .toast-wrapper {
-    --toastContainerTop: auto;
-    --toastContainerRight: 0.5rem;
-    --toastContainerBottom: 0.5rem;
-    --toastContainerLeft: 0.5rem;
-    --toastWidth: 100%;
-    --toastMinHeight: 2rem;
-    --toastPadding: 0 0.5rem;
-    --toastBarHeight: 0;
-    font-size: 0.875rem;
-    font-weight: 600;
-
-    --toastBorderRadius: 2rem;
-  }
 
   .modal {
     &-wrapper {

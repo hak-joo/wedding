@@ -18,7 +18,7 @@
 </style>
 
 <script lang="ts">
-  import { SvelteToast, toast } from '@zerodevx/svelte-toast'
+  import { SvelteToast } from '@zerodevx/svelte-toast'
 </script>
 
 <div class="toast-wrapper">

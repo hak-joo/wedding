@@ -1,7 +1,10 @@
+$svgMask: '/assets/heart.svg';
 .snow-heart {
   position: absolute;
   z-index: auto;
-  color: #eba0f8;
+  background-color: #eba0f8;
+  -webkit-mask: url($svgMask);
+  mask: url($svgMask);
   display: block;
   animation: rotation random(5000) + 4000ms linear infinite;
 }

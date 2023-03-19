@@ -13,7 +13,7 @@ export const ActivateSnow = () => {
 
       const timeRun = getRandomNumber(40000, 50000)
       const opacityR = Math.random() * (1 - 0.2) + 0.2
-      const sizeR = getRandomNumber(5, 20)
+      const sizeR = getRandomNumber(10, 15)
       const endLeft = getRandomNumber(startLeft - 100, startLeft + 100)
       const snow = document.createElement('span')
       snow.style.cssText = `
@@ -25,10 +25,10 @@ export const ActivateSnow = () => {
         top: 0px;
         left: ${startLeft}px;
         opacity: ${opacityR.toString()};
-        fontSize: ${sizeR}px;
+        width: ${sizeR}px;
+        aspect-ratio: 1;
         animationDuration: ${timeRun}px;
       `
-      snow.textContent = '♥'
       snow.classList.add('snow-heart')
 
       snow

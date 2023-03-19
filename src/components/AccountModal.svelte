@@ -71,11 +71,6 @@
         }
       }
     }
-    &-slot {
-      max-height: 100%;
-      overflow-y: scroll;
-      scroll-behavior: smooth;
-    }
   }
   .account {
     &-container {
@@ -98,33 +93,12 @@
       align-items: center;
       padding: 5px 10px;
     }
-    &-label {
-      font-size: 12px;
-      font-weight: bold;
-      font-family: 'Nanum Myeongjo', serif;
-      color: #bf8dcf;
-    }
     &-text {
       font-size: 16px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
     }
-    &-account {
-      font-size: 16px;
-      font-weight: bold;
-      font-family: 'Nanum Myeongjo', serif;
-      text-decoration: underline;
-      text-underline-offset: 6px;
-      cursor: pointer;
-    }
     &-btn {
-      &-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-      }
       &-copy {
         background-color: #3f3740;
         color: #fff;
@@ -143,11 +117,6 @@
           height: 24px;
         }
         cursor: pointer;
-      }
-      &-cancel {
-        background-color: rgba(101, 112, 152, 0.8);
-        padding: 10px;
-        border-radius: 8px;
       }
     }
   }

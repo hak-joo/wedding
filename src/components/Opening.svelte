@@ -1,4 +1,5 @@
 <style lang="scss">
+  $svgMask: '/assets/heart.svg';
   /*반응형 화면 크기*/
   $mobile: 767px;
   $tablet: 1023px;
@@ -61,13 +62,15 @@
 
     &-heart {
       background-color: #eba0f8;
-      height: 50px;
       width: 50px;
-      transform: rotate(-45deg);
+      aspect-ratio: 1;
+      -webkit-mask: url($svgMask);
+      mask: url($svgMask);
+      /* transform: rotate(-45deg); */
       animation-name: beat;
       animation-duration: 1s;
       animation-iteration-count: infinite;
-      &:after {
+      /* &:after {
         background-color: #eba0f8;
         content: '';
         border-radius: 50%;
@@ -86,7 +89,7 @@
         height: 50px;
         top: -25px;
         left: 0px;
-      }
+      } */
     }
 
     /* The typewriter cursor effect */
@@ -102,10 +105,10 @@
 
     @keyframes beat {
       0% {
-        transform: scale(1) rotate(-45deg);
+        transform: scale(1);
       }
       50% {
-        transform: scale(0.6) rotate(-45deg);
+        transform: scale(1.6);
       }
     }
   }

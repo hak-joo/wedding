@@ -640,7 +640,7 @@
   import { copyContent } from '../../lib/copy'
   import Toast from '../../components/Toast.svelte'
   import { toast } from '@zerodevx/svelte-toast'
-  import Wave from '../../assets/images/Wave.svelte'
+  import Wave from '../../assets/images/wave.svelte'
 
   AOS.init()
   let wrapperRef: HTMLElement
@@ -1431,51 +1431,11 @@
   </div>
   <div class="footer-img-container">
     <div class="wave-top">
-      <svg
-        class="waves"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 24 150 28"
-        preserveAspectRatio="none"
-        shape-rendering="auto"
-      >
-        <defs
-          ><path
-            id="gentle-wave"
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-          /></defs
-        >
-        <g class="parallax">
-          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(250, 250, 250,0.7)" />
-          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(250, 250, 250,0.5)" />
-          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(250, 250, 250,0.3)" />
-          <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(250, 250, 250,0.2)" />
-        </g>
-      </svg>
+      <Wave />
     </div>
     <img src={info.footer.imgPath} alt={'FooterImg'} class="footer-img" />
     <div class="wave-bottom">
-      <svg
-        class="waves"
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 24 150 28"
-        preserveAspectRatio="none"
-        shape-rendering="auto"
-      >
-        <defs
-          ><path
-            id="gentle-wave"
-            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
-          /></defs
-        >
-        <g class="parallax">
-          <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(250, 250, 250,0.7)" />
-          <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(250, 250, 250,0.5)" />
-          <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(250, 250, 250,0.3)" />
-          <use xlink:href="#gentle-wave" x="48" y="7" fill="rgba(250, 250, 250,0.2)" />
-        </g>
-      </svg>
+      <Wave />
     </div>
     <!-- <div class="footer-img-inner-text">행복하겠습니다.</div> -->
   </div>

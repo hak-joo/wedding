@@ -641,7 +641,7 @@
   import { copyContent } from '../../lib/copy'
   import Toast from '../../components/Toast.svelte'
   import { toast } from '@zerodevx/svelte-toast'
-  import Wave from '../../assets/images/Wave.svelte'
+  import Wave from '../../assets/images/wave.svelte'
 
   AOS.init()
   let wrapperRef: HTMLElement

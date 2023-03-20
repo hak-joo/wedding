@@ -44,7 +44,6 @@
       align-items: center;
       gap: 50px;
       background: #ffe6f2;
-      background-color: red;
 
       @include mobile {
         /*브라우저 사이즈767px이하일때*/

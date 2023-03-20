@@ -157,7 +157,7 @@
 </script>
 
 {#if show}
-  <div class="opening-container" transition:fade>
+  <div class="opening-container" out:fade>
     <div class="opening-heart" />
     <section>
       <p class="opening-letter">{typedChar}</p>

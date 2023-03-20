@@ -867,7 +867,7 @@
 <!-- markup (zero or more items) goes here -->
 
 <Opening
-  show={isShowOpening}
+  bind:show={isShowOpening}
   close={() => (isShowOpening = false)}
   text={info.openingMsg}
 />

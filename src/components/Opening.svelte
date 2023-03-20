@@ -142,7 +142,9 @@
       index += 1
     }
   }
-
+  $: if (text.length > 0) {
+    typing()
+  }
   $: if (text.length > 0 && index === text.length) {
     clearInterval(typewriter)
     isTyping = false
@@ -150,10 +152,6 @@
   }
 
   const typing = () => (typewriter = setInterval(typeChar, 200))
-
-  onMount(() => {
-    typing()
-  })
 </script>
 
 {#if show}

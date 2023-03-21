@@ -60,5 +60,5 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="map-wrapper">
   <div id="map" class="map-container" />
-  <button class="map-button" on:click={mapToWeddingHall} />
+  <button class="map-button" aria-label="center" on:click={mapToWeddingHall} />
 </div>

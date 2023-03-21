@@ -154,6 +154,7 @@
   import './style.scss'
   import dayjs from 'dayjs'
   import { sendComments } from '../api'
+  import { clickOutside } from '../lib/clickOutside'
 
   export let startY = 0
   export let isShow: boolean = true
@@ -257,6 +258,10 @@
         class:sended
         in:makePostIt={{ duration: 500 }}
         out:makePostIt={{ duration: 500 }}
+        use:clickOutside
+        on:click_outside={() => {
+          isShow = false
+        }}
       >
         {#if !sended}
           <p class="form-header">축하 글을 남겨주세요!</p>

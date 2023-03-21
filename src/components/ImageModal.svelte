@@ -86,6 +86,7 @@
 <script lang="ts">
   import { fly, fade } from 'svelte/transition'
   import { portal } from 'svelte-portal'
+  import { clickOutside } from '../lib/clickOutside'
 
   export let isShow: boolean = true
   export let title = ''
@@ -97,9 +98,9 @@
     <div class="modal-container" transition:fly={{ y: 3000 }}>
       <div class="modal-header">
         <span class="modal-title">{title}</span>
-        <button class="modal-title-close" on:click={() => toggoleModal()} />
+        <button class="modal-title-close" on:click={toggoleModal} />
       </div>
-      <div class="modal-slot">
+      <div class="modal-slot" use:clickOutside on:click_outside={toggoleModal}>
         <slot />
       </div>
     </div>

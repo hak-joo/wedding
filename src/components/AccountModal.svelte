@@ -130,6 +130,7 @@
   import { toast } from '@zerodevx/svelte-toast'
   import Toast from './Toast.svelte'
   import { copyContent } from '../lib/copy'
+  import { clickOutside } from '../lib/clickOutside'
 
   export let startY = 0
   export let payIcon = ''
@@ -141,6 +142,10 @@
       number: ''
     },
     pay: ''
+  }
+
+  const close = () => {
+    isShow = false
   }
 
   const copyAccount = () => {
@@ -160,14 +165,9 @@
   <Toast />
   <div class="modal-wrapper" transition:fade use:portal={'#portal'}>
     <div class="modal-container">
-      <div class="account-container">
+      <div class="account-container" use:clickOutside on:click_outside={close}>
         <div class="modal-header">
-          <button
-            class="modal-btn-close"
-            on:click={() => {
-              isShow = false
-            }}
-          />
+          <button class="modal-btn-close" on:click={close} />
         </div>
         <div class="account-row">
           <div class="account-text">

@@ -52,7 +52,7 @@
     }
     &-letter {
       font-size: 16px;
-      font-weight: bold;
+      font-weight: 400;
       font-family: 'Nanum Myeongjo', serif;
 
       padding-right: 4px;

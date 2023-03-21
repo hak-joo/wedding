@@ -810,7 +810,7 @@
     onValue(infoRef, snapshot => {
       info = snapshot.val()
       weddingDay = dayjs(info.weddingDay)
-      dday = weddingDay.diff(dayjs(), 'day')
+      dday = weddingDay.diff(dayjs(), 'day') + 1
     })
     const commentRef = databaseRef(database, '/comments')
     onValue(commentRef, snapshot => {
@@ -920,7 +920,10 @@
       <div />
       {weddingDay.format('DD')}
     </div>
-    <div class="header-text-bottom">{info.groom.name} {info.bride.name} 결혼합니다.</div>
+    <div class="header-text-bottom">
+      {info.groom.name}
+      {info.bride.name} 결혼합니다 !
+    </div>
     <div class="wave-top">
       <Wave />
     </div>
@@ -1376,7 +1379,7 @@
     data-aos-mirror="false"
     data-aos-once="true"
   >
-    <div class="guest-book-title">축하 글을 남겨주세요!</div>
+    <div class="guest-book-title">축하 글을 남겨주세요 !</div>
     <Carousel interval={185} length={listComment.length}>
       <PostIt comments={listComment} />
     </Carousel>

@@ -178,9 +178,11 @@
         </div>
         <div class="account-row">
           <div class="account-text">{accountInfo.name}</div>
-          <a class="account-btn-pay" href={accountInfo.pay}>
-            <img class="account-btn-pay-icon" alt="pay" src={payIcon} />
-          </a>
+          {#if accountInfo.pay}
+            <a class="account-btn-pay" href={accountInfo.pay}>
+              <img class="account-btn-pay-icon" alt="pay" src={payIcon} />
+            </a>
+          {/if}
         </div>
       </div>
     </div>

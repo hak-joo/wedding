@@ -824,6 +824,8 @@
             return dayjs(a.createdDate).diff(dayjs(b.createdDate))
           })
           .reverse()
+      } else {
+        listComment = []
       }
     })
 

@@ -3,7 +3,7 @@ export const longpress = (node: Node) => {
   let timeoutPtr: number
   function handleMouseDown(e: Event) {
     window.addEventListener('mousemove', handleMoveBeforeLong)
-    window.addEventListener('touchmove', handleMoveBeforeLong)
+    window.addEventListener('touchmove', handleMoveBeforeLong, { passive: true })
     timeoutPtr = window.setTimeout(() => {
       window.removeEventListener('mousemove', handleMoveBeforeLong)
       window.removeEventListener('touchmove', handleMoveBeforeLong)
@@ -23,9 +23,9 @@ export const longpress = (node: Node) => {
     window.removeEventListener('touchmove', handleMoveBeforeLong)
   }
   node.addEventListener('mousedown', handleMouseDown)
-  node.addEventListener('touchstart', handleMouseDown)
+  node.addEventListener('touchstart', handleMouseDown, { passive: true })
   node.addEventListener('mouseup', handleMouseUp)
-  node.addEventListener('touchend', handleMouseUp)
+  node.addEventListener('touchend', handleMouseUp, { passive: true })
   return {
     destroy: () => {
       node.removeEventListener('mousedown', handleMouseDown)

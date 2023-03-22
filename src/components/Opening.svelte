@@ -115,7 +115,6 @@
 </style>
 
 <script lang="ts">
-  import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
 
   export let show = false
@@ -142,7 +141,7 @@
       index += 1
     }
   }
-  $: text, console.log('text', text)
+
   $: if (text.length > 0) {
     typing()
   }
@@ -153,15 +152,6 @@
   }
 
   const typing = () => (typewriter = setInterval(typeChar, 200))
-
-  onMount(() => {
-    setTimeout(() => {
-      if (!isTyping) close()
-    }, 1000)
-    setTimeout(() => {
-      if (!isTyping) text = '홍성현 ♥ 이성연 결혼식에 초대합니다.'
-    }, 500)
-  })
 </script>
 
 {#if show}

@@ -100,7 +100,7 @@
         <span class="modal-title">{title}</span>
         <button class="modal-title-close" on:click={toggoleModal} />
       </div>
-      <div class="modal-slot" use:clickOutside on:click_outside={toggoleModal}>
+      <div class="modal-slot">
         <slot />
       </div>
     </div>

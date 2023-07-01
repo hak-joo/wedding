@@ -811,6 +811,9 @@
       info = snapshot.val()
       weddingDay = dayjs(info.weddingDay)
       dday = weddingDay.diff(dayjs(), 'day') + 1
+
+      console.log('info', info);
+
     })
     const commentRef = databaseRef(database, '/comments')
     onValue(commentRef, snapshot => {
@@ -834,6 +837,7 @@
       import.meta.env.VITE_FIREBASE_STORAGE_BUCKET
     )
     const galleryList = await listAll(storageRef(storage, '/gallery'))
+    
     galleryDatas = await Promise.all(
       galleryList.items.map(async item => {
         const { name, fullPath } = item
@@ -1051,7 +1055,7 @@
     </div>
   </div>
 
-  <div
+  <!-- <div
     class="map-container"
     data-aos="fade-up"
     data-aos-offset="200"
@@ -1092,7 +1096,7 @@
         <div class="map-navi-content-item">{@html car}</div>
       {/each}
     </div>
-  </div>
+  </div> -->
   <div
     class="noti-container"
     data-aos="fade-up"

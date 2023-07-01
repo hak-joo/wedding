@@ -56,7 +56,7 @@
       display: flex;
       width: 30px;
       justify-content: center;
-      flex: 0.7;
+      flex: 0.2;
       img {
         width: 30px;
         height: 30px;
@@ -64,8 +64,8 @@
       }
     }
     &-content {
-      flex: 1;
-      overflow: hidden;
+      flex: 1.2;
+      overflow: scroll;
       color: #333;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;

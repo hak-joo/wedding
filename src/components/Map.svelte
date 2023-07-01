@@ -36,7 +36,7 @@
 
   const mapToWeddingHall = () => {
     const navermaps = window.naver.maps
-    map.setCenter(new navermaps.LatLng(37.5525301, 126.937759))
+    map.setCenter(new navermaps.LatLng(37.2616553, 127.0334093))
     map.setZoom(16)
   }
 
@@ -44,14 +44,13 @@
     const navermaps = window.naver.maps
 
     map = new navermaps.Map('map', {
-      center: new navermaps.LatLng(37.5525301, 126.937759),
+      center: new navermaps.LatLng(37.2616553, 127.0334093),
       zoom: 16
-      // draggable: active,
-      // zoomControl: active
+
     })
 
     const marker = new navermaps.Marker({
-      position: new navermaps.LatLng(37.5525301, 126.937759),
+      position: new navermaps.LatLng(37.2616553, 127.0334093),
       map: map
     })
   })

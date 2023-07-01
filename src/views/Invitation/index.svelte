@@ -758,8 +758,8 @@
   const sendKakao = () => {
     // 메시지 공유 함수
     Kakao.Link.sendScrap({
-      requestUrl: 'https://transcendent-clafoutis-f42ed4.netlify.app', // 페이지 url
-      templateId: 90201 // 메시지템플릿 번호
+      requestUrl: 'https://dw-mj-wedding.netlify.app/', // 페이지 url
+      templateId: 95575 // 메시지템플릿 번호
     })
   }
 
@@ -803,7 +803,7 @@
 
   onMount(async () => {
     if (Kakao && !Kakao.isInitialized()) {
-      Kakao.init('037b39715d4b19da434d1ba24c04fbd2')
+      Kakao.init('98cbe25a4c73f2a6cb3409fd060be0e4')
     }
     const database = getDatabase(firebaseApp, import.meta.env.VITE_FIREBASE_RDB_URL)
     const infoRef = databaseRef(database, '/info')
@@ -1055,7 +1055,7 @@
     </div>
   </div>
 
-  <!-- <div
+  <div
     class="map-container"
     data-aos="fade-up"
     data-aos-offset="200"
@@ -1096,7 +1096,7 @@
         <div class="map-navi-content-item">{@html car}</div>
       {/each}
     </div>
-  </div> -->
+  </div>
   <div
     class="noti-container"
     data-aos="fade-up"

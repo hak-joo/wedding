@@ -149,14 +149,14 @@
   }
 
   const copyAccount = () => {
-    copyContent(accountInfo.account.bank)
+    copyContent(accountInfo.account.bank + " " + accountInfo.account.number)
 
-    toast.push('복사되었습니다.', {
+    toast.push(accountInfo.account.bank + " " + accountInfo.account.number + " 복사되었습니다", {
       theme: {
         '--toastBackground': '#32AA62',
         '--toastColor': '#fff'
       },
-      duration: 1000
+      duration: 2000
     })
   }
 </script>
@@ -170,19 +170,21 @@
           <button class="modal-btn-close" on:click={close} />
         </div>
         <div class="account-row">
+          <div class="account-text">예금주 {accountInfo.name}</div>
+          
+          
+        </div>
+        <div class="account-row">
           <div class="account-text">
             {accountInfo.account.bank} |
             {accountInfo.account.number}
           </div>
           <button class="account-btn-copy" on:click={copyAccount}> 복사 </button>
-        </div>
-        <div class="account-row">
-          <div class="account-text">{accountInfo.name}</div>
-          {#if accountInfo.pay}
+          <!-- {#if accountInfo.pay}
             <a class="account-btn-pay" href={accountInfo.pay}>
               <img class="account-btn-pay-icon" alt="pay" src={payIcon} />
             </a>
-          {/if}
+          {/if} -->
         </div>
       </div>
     </div>

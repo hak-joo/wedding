@@ -1083,14 +1083,6 @@
       </div>
     </div>
     <div class="map-navi-container">
-      <div class="map-navi-title">버스</div>
-      <div class="map-navi-content">
-        {#each info.weddingHole.bus as bus}
-          <div class="map-navi-content-item">{@html bus}</div>
-        {/each}
-      </div>
-    </div>
-    <div class="map-navi-container">
       <div class="map-navi-title">자가용</div>
       {#each info.weddingHole.car as car}
         <div class="map-navi-content-item">{@html car}</div>

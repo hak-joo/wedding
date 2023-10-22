@@ -836,6 +836,19 @@
       firebaseApp,
       import.meta.env.VITE_FIREBASE_STORAGE_BUCKET
     )
+
+    const mainDatas = await listAll(storageRef(storage, '/main'))
+    for(const item of mainDatas.items) {
+      const { name, fullPath } = item
+      const path = await getDownloadURL(storageRef(storage, fullPath))
+      if (name === 'header.jpg') {
+        info.header.imgPath = path
+      }
+      if (name === 'footer.jpg') {
+        info.footer.imgPath = path
+      }
+    }
+
     const galleryList = await listAll(storageRef(storage, '/gallery'))
     
     galleryDatas = await Promise.all(
@@ -845,12 +858,7 @@
         const itemIdx = name.split('-')[1].split('.')[0]
         const thumbnailPath = `thumbnail/thumbnail-${itemIdx}.jpg`
         const thumbnail = await getDownloadURL(storageRef(storage, thumbnailPath))
-        if (info.header.img === name) {
-          info.header.imgPath = path
-        }
-        if (info.footer.img === name) {
-          info.footer.imgPath = path
-        }
+        
         return {
           name,
           path,

@@ -59,13 +59,13 @@
     }
     &-text {
       &-top {
-        font-size: 12px;
+        font-size: 14px;
         font-family: 'Nanum Myeongjo', serif;
         padding-bottom: 13px;
         color: #441800;
       }
       &-middle {
-        font-size: 48px;
+        font-size: 56px;
         font-weight: 400;
         font-family: 'Nanum Myeongjo', serif;
         padding: 13px 0;
@@ -80,7 +80,7 @@
       &-bottom {
         padding-top: 10px;
         padding-bottom: 2px;
-        font-size: 16px;
+        font-size: 20px;
         font-weight: 400;
         font-family: 'Nanum Myeongjo', serif;
       }
@@ -107,24 +107,24 @@
       padding: 3px 0;
     }
     &-date {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 600;
       font-family: 'Nanum Myeongjo', serif;
       padding: 11px 0 4px;
     }
     &-location {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 600;
       font-family: 'Nanum Myeongjo', serif;
       padding: 4px 0 10px;
     }
     &-person {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-relation {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 400;
       font-family: 'Nanum Myeongjo', serif;
       color: #666;
@@ -148,7 +148,7 @@
       padding: 2px 0;
     }
     &-text {
-      font-size: 14px;
+      font-size: 16px;
       letter-spacing: normal;
       line-height: 28px;
       font-weight: 400;
@@ -287,13 +287,13 @@
       color: #bf8dcf;
     }
     &-location {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
       padding: 10px 0;
       font-family: 'Nanum Myeongjo', serif;
     }
     &-address {
-      font-size: 12px;
+      font-size: 15px;
       font-family: 'Nanum Myeongjo', serif;
       button {
         margin-left: 8px;
@@ -326,7 +326,7 @@
         justify-content: start;
         align-items: flex-start;
         &-item {
-          font-size: 12px;
+          font-size: 15px;
           font-family: 'Nanum Myeongjo', serif;
           padding: 5px 0;
         }
@@ -347,14 +347,14 @@
       border-radius: 15px;
     }
     &-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
       padding: 10px 0 20px;
       color: #bf8dcf;
     }
     &-content {
-      font-size: 12px;
+      font-size: 13px;
       line-height: 24px;
       font-weight: bold;
       font-family: 'Nanum Myeongjo', serif;
@@ -550,7 +550,7 @@
 
       span {
         color: #666;
-        font-size: 12px;
+        font-size: 14px;
       }
     }
     &-icons {
@@ -1233,147 +1233,6 @@
       </div>
     </div>
 
-    <!-- <div class="contact-us-title">마음 전하실곳</div> -->
-    <!-- <div class="contact-us-row-container">
-      <div class="contact-us-sub-container">
-        <div class="contact-us-sub-title">신랑에게 연락하기</div>
-        <div class="contact-us-row-container">
-          <a class="contact-us-btn-icon" href="tel:{info.groom.phone}">
-            <img
-              alt="phone"
-              src="/assets/phone.svg"
-            />
-          </a>
-          <a class="contact-us-btn-icon" href="sms:{info.groom.phone}">
-            <img
-              alt="message"
-              src="/assets/message.svg"
-            />
-          </a>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <a class="contact-us-btn-pay-icon" href={info.groom.pay}>
-            <img alt="pay" src={assets.pay} />
-          </a>
-        </div>
-      </div>
-      <div class="contact-us-sub-container">
-        <div class="contact-us-sub-title">신부에게 연락하기</div>
-        <div class="contact-us-row-container">
-          <a class="contact-us-btn-icon" href="tel:{info.bride.phone}">
-            <img
-              alt="phone"
-              src="/assets/phone.svg"
-            />
-          </a>
-          <a class="contact-us-btn-icon" href="sms:{info.bride.phone}">
-            <img
-              alt="message"
-              src="/assets/message.svg"
-            />
-          </a>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <a class="contact-us-btn-pay-icon" href={info.bride.pay}>
-            <img alt="pay" src={assets.pay} />
-          </a>
-        </div>
-      </div>
-    </div>
-    <div class="contact-us-row-container">
-      <div class="contact-us-sub-container">
-        <div class="contact-us-groom-title">신랑측 혼주</div>
-        <div class="contact-us-groom-sub-title">아버지 {info.groomFather.name}</div>
-        <div class="contact-us-row-container">
-          <a class="contact-us-btn-icon" href="tel:{info.groomFather.phone}">
-            <img
-              alt="phone"
-              src="/assets/phone.svg"
-            />
-          </a>
-          <a class="contact-us-btn-icon" href="sms:{info.groomFather.phone}">
-            <img
-              alt="message"
-              src="/assets/message.svg"
-            />
-          </a>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <a class="contact-us-btn-pay-icon" href={info.groomFather.pay}>
-            <img alt="pay" src={assets.pay} />
-          </a>
-        </div>
-        <div class="contact-us-groom-sub-title">어머니 {info.groomMother.name}</div>
-        <div class="contact-us-row-container">
-          <a class="contact-us-btn-icon" href="tel:{info.groomMother.phone}">
-            <img
-              alt="phone"
-              src="/assets/phone.svg"
-            />
-          </a>
-          <a class="contact-us-btn-icon" href="sms:{info.groomMother.phone}">
-            <img
-              alt="message"
-              src="/assets/message.svg"
-            />
-          </a>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <a class="contact-us-btn-pay-icon" href={info.groomMother.pay}>
-            <img alt="pay" src={assets.pay} />
-          </a>
-        </div>
-      </div>
-      <div class="contact-us-sub-container">
-        <div class="contact-us-bride-title">신부측 혼주</div>
-        <div class="contact-us-bride-sub-title">아버지 {info.brideFather.name}</div>
-        <div class="contact-us-row-container">
-          <a class="contact-us-btn-icon" href="tel:{info.brideFather.phone}">
-            <img
-              alt="phone"
-              src="/assets/phone.svg"
-            />
-          </a>
-          <a class="contact-us-btn-icon" href="sms:{info.brideFather.phone}">
-            <img
-              alt="message"
-              src="/assets/message.svg"
-            />
-          </a>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <a class="contact-us-btn-pay-icon" href={info.brideFather.pay}>
-            <img alt="pay" src={assets.pay} />
-          </a>
-        </div>
-        <div class="contact-us-bride-sub-title">어머니 {info.brideMother.name}</div>
-        <div class="contact-us-row-container">
-          <a class="contact-us-btn-icon" href="tel:{info.brideMother.phone}">
-            <img
-              alt="phone"
-              src="/assets/phone.svg"
-            />
-          </a>
-          <a class="contact-us-btn-icon" href="sms:{info.brideMother.phone}">
-            <img
-              alt="message"
-              src="/assets/message.svg"
-            />
-          </a>
-        </div>
-        <div class="contact-us-row-container">
-          <div class="contact-us-btn-text">계좌번호</div>
-          <a class="contact-us-btn-pay-icon" href={info.brideMother.pay}>
-            <img alt="pay" src={assets.pay} />
-          </a>
-        </div>
-      </div> 
-    </div>-->
   </div>
   <div
     class="guest-book-container"

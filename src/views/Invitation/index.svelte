@@ -741,6 +741,13 @@
 
   let isShowOpening = true
   $: isShowOpening, scrollToElement('header')
+  $: isShowOpening, toast.push('왼쪽 버튼을 클릭해 빠르게 이동해보세요', {
+      theme: {
+        '--toastBackground': '#eba0f894',
+        '--toastColor': '#fff'
+      },
+      duration: 2000
+    });
   let isShowCommentsModal = false
   let isShowImageModal = false
   let isShowWriteModal = false
@@ -812,7 +819,7 @@
       weddingDay = dayjs(info.weddingDay)
       dday = weddingDay.diff(dayjs(), 'day') + 1
 
-      console.log('info', info);
+
 
     })
     const commentRef = databaseRef(database, '/comments')
@@ -844,6 +851,7 @@
       if (name === 'header.jpg') {
         info.header.imgPath = path
       }
+      
       if (name === 'footer.jpg') {
         info.footer.imgPath = path
       }
@@ -1073,7 +1081,7 @@
     data-aos-mirror="false"
     data-aos-once="true"
   >
-    <div class="map-title">오시는 길</div>
+    
     <div class="map-location">
       {@html info.weddingHole.name}
     </div>
@@ -1081,7 +1089,7 @@
       {@html info.weddingHole.address}
       <button on:click={() => copyAddres(info.weddingHole.address)}>복사</button>
     </div>
-    <Map />
+    
     <div class="map-navi-container">
       <div class="map-navi-title">지하철</div>
       <div class="map-navi-content">
@@ -1112,7 +1120,28 @@
       <div class="noti-content">{@html content}</div>
     {/each}
   </div>
+  
+
   <div
+    class="d-day-container"
+    data-aos="fade-up"
+    data-aos-offset="200"
+    data-aos-delay="50"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out"
+    data-aos-mirror="false"
+    data-aos-once="true"
+  >
+    <div class="d-day-text">
+      {info.groom.name.slice(1)} ♥ {info.bride.name.slice(1)} 결혼식이 {dday}일 {dday > 0
+        ? '남았습니다.'
+        : dday === 0
+        ? '날입니다.'
+        : '지났습니다.'}
+    </div>
+  </div>
+
+<div
     class="contact-us-container"
     data-aos="fade-up"
     data-aos-offset="200"
@@ -1234,6 +1263,7 @@
     </div>
 
   </div>
+
   <div
     class="guest-book-container"
     data-aos="fade-up"
@@ -1270,6 +1300,8 @@
       </button>
     </div>
   </div>
+
+
   <Modal bind:isShow={isShowCommentsModal} title="방명록">
     <Comments comments={listComment} />
   </Modal>
@@ -1281,9 +1313,8 @@
     startY={writeModalStartY}
     payIcon={assets.pay}
   />
-
   <div
-    class="d-day-container"
+    class="map-container"
     data-aos="fade-up"
     data-aos-offset="200"
     data-aos-delay="50"
@@ -1292,15 +1323,18 @@
     data-aos-mirror="false"
     data-aos-once="true"
   >
-    <div class="d-day-text">
-      {info.groom.name.slice(1)} ♥ {info.bride.name.slice(1)} 결혼식이 {dday}일 {dday > 0
-        ? '남았습니다.'
-        : dday === 0
-        ? '날입니다.'
-        : '지났습니다.'}
-    </div>
+    <div class="map-title">오시는 길</div>
+    <Map />
   </div>
-  <div class="footer-img-container">
+
+  <div class="footer-img-container" 
+    data-aos="fade-up"
+    data-aos-offset="200"
+    data-aos-delay="50"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out"
+    data-aos-mirror="false"
+    data-aos-once="true">
     <div class="wave-top">
       <Wave />
     </div>
@@ -1310,7 +1344,14 @@
     </div>
     <!-- <div class="footer-img-inner-text">행복하겠습니다.</div> -->
   </div>
-  <div class="footer-container">
+  <div class="footer-container" 
+    data-aos="fade-up"
+    data-aos-offset="200"
+    data-aos-delay="50"
+    data-aos-duration="1000"
+    data-aos-easing="ease-in-out"
+    data-aos-mirror="false"
+    data-aos-once="true">
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class="footer-btn" on:click={sendKakao}>
       <div class="footer-btn-icon">

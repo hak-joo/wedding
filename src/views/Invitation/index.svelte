@@ -278,6 +278,7 @@
       justify-content: center;
       align-items: center;
       padding: 20px 0 0;
+      margin-bottom: 10px;
     }
     &-title {
       font-size: 24px;
@@ -1338,7 +1339,9 @@
     <div class="wave-top">
       <Wave />
     </div>
-    <img src={info.footer.imgPath} alt={'FooterImg'} class="footer-img" />
+    {#if info.footer.imgPath}
+      <img src={info.footer.imgPath} alt={'FooterImg'} class="footer-img" />
+    {/if}
     <div class="wave-bottom">
       <Wave />
     </div>
